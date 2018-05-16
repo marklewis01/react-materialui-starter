@@ -1,7 +1,6 @@
 {
   "name": "archiapp-app",
   "version": "0.2.0",
-  "private": true,
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
