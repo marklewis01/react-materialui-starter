@@ -1,0 +1,30 @@
+.ui.menu .sidenav--brand .item {
+  padding-right: 14px;
+}
+
+.ui.left.sidebar.sidenav {
+  display: flex;
+  width: 215px;
+}
+
+.ui.left.overlay.sidebar.sidenav,
+.ui.left.push.sidebar.sidenav {
+  left: 46px;
+  visibility: unset;
+}
+.ui.visible.left.overlay.sidebar.sidenav,
+.ui.visible.left.push.sidebar.sidenav {
+  transform: translate3d(-46px, 0, 0);
+}
+
+.sidenav--primary-menu {
+  flex-grow: 1;
+}
+
+.sidenav--footer {
+  margin-bottom: 1rem;
+}
+
+.sidenav a {
+  background: rgba(255,255,255,0.08);
+}
