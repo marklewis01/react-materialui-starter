@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 
 class Alert {
   constructor(message) {
-    this.message = `${message} from store`
+    this.message = `This alert has been added and called to/from the MobX uiStore. ${message}`
     this.acknowleged = false
     this.autoClose = false
   }
@@ -12,7 +12,6 @@ decorate(Alert, {
   message: observable,
   acknowleged: observable
 })
-
 
 class UiStore {
   constructor() {
@@ -29,7 +28,6 @@ class UiStore {
     this.alerts.push(new Alert(message))
     toast(this.alerts[this.alerts.length - 1].message)
   }
-
 }
 decorate(UiStore, {
   loading: observable,

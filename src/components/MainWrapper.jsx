@@ -5,7 +5,7 @@ import { Container } from 'semantic-ui-react'
 
 import Dashboard from '../containers/Dashboard'
 import Settings from '../containers/Settings'
-import Todos from '../components/Todos'
+import List from '../components/RemoteList'
 
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -22,8 +22,8 @@ const routes = [
     component: Dashboard
   },
   {
-    path: '/todos',
-    component: Todos
+    path: '/list',
+    component: List
   },
   {
     path: '/help',

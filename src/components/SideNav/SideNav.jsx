@@ -21,7 +21,7 @@ const SideNav = inject('uiStore')(
       <div className="sidenav--brand">
         <NavLink to="/">
           <Menu.Item as="h3" inverted="true">
-            TodoApp
+            SomeApp
             <Icon
               name="sidebar"
               onClick={uiStore.sidebarToggleVisibility}
@@ -31,9 +31,9 @@ const SideNav = inject('uiStore')(
         </NavLink>
       </div>
       <div className="sidenav--primary-menu">
-        <NavLink to="/todos">
-          <Menu.Item name="todos">
-            Todos
+        <NavLink to="/list">
+          <Menu.Item name="list">
+            Remote List
             <Icon name="briefcase" />
           </Menu.Item>
         </NavLink>
