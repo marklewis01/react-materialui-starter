@@ -1,5 +1,6 @@
 {
   "name": "todo-app",
+  "license": "MIT",
   "version": "0.2.0",
   "scripts": {
     "start": "react-scripts start",
