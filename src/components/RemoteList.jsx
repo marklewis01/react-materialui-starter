@@ -60,8 +60,6 @@ const List = inject('listStore')(
               <Card.Meta>{list.company.name}</Card.Meta>
               <Card.Description>
                 <p>{list.address.street}</p>
-                <p>{list.address.city}</p>
-                <p>{list.address.zipcode}</p>
               </Card.Description>
             </Card.Content>
           </Card>
@@ -75,12 +73,18 @@ const List = inject('listStore')(
         const { card } = this.state
         return (
           <div>
-            <h4>{card.name}</h4>
-            <ul>
-              <li>Email: {card.email}</li>
-              <li>Username: {card.username}</li>
-              <li>Website: {card.website}</li>
-            </ul>
+            <h3>{card.name}</h3>
+            <hr />
+            Email: {card.email} <br />
+            Username: {card.username} <br />
+            Website: {card.website} <br />
+            <hr />
+            <h4>Address</h4>
+            {card.company.name} <br />
+            {card.address.street} <br />
+            {card.address.suite} <br />
+            {card.address.city} <br />
+            {card.address.zipcode} <br />
           </div>
         )
       }
@@ -104,7 +108,8 @@ const List = inject('listStore')(
                   backgroundColor: 'rgba(0, 0, 0, 0.75)',
                   display: 'flex',
                   justifyContent: 'center',
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  zIndex: '1000'
                 },
                 content: {
                   top: 'unset',
