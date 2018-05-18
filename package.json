@@ -1,5 +1,5 @@
 {
-  "name": "todo-app",
+  "name": "starter-app",
   "license": "MIT",
   "version": "0.2.0",
   "scripts": {
@@ -13,6 +13,7 @@
     "mobx-react": "^5.1.2",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-modal": "3.4.4",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
     "react-toastify": "^4.0.1",
@@ -22,5 +23,14 @@
   "devDependencies": {
     "mobx-react-devtools": "^5.0.1",
     "react-hot-loader": "^4.1.3"
-  }
+  },
+  "keywords": [
+    "react-router",
+    "react-toastify",
+    "mobx",
+    "react",
+    "react-semantic-ui"
+  ],
+  "description":
+    "test and play starter app. Not production worthy, not polished/refactored code ... just me and my sandbox"
 }
