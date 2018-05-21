@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { inject, observer } from 'mobx-react'
-import { Icon, Menu, Sidebar } from 'semantic-ui-react'
+import { Divider, Icon, Menu, Sidebar } from 'semantic-ui-react'
 
 import './SideNav.css'
 
@@ -39,6 +39,7 @@ const SideNav = inject('uiStore')(
         </NavLink>
       </div>
       <div className="sidenav--account-menu">
+        <Divider />
         <NavLink to="/help">
           <Menu.Item name="home2">
             Help

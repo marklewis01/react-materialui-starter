@@ -1,6 +1,14 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import { Card, Container, Header, Segment } from 'semantic-ui-react'
+import {
+  Card,
+  Container,
+  Dimmer,
+  Header,
+  Image,
+  Loader,
+  Segment
+} from 'semantic-ui-react'
 import Modal from 'react-modal'
 
 Modal.setAppElement('#root')
@@ -90,13 +98,25 @@ const List = inject('listStore')(
       }
 
       render() {
+        const { listStore } = this.props
+
+        const loading = listStore.loading ? (
+          <Segment>
+            <Loader active />
+            <Image src="/assets/images/wireframe/short-paragraph.png" />
+          </Segment>
+        ) : null
+
         return (
           <Container>
             <Header as="h2">Remote Content</Header>
             <Segment>
               <Header as="h3">Segment Content</Header>
               <p>The cards/data below are fetched from a remote location.</p>
-              {this.renderCards()}
+              <div className="remote-cards">
+                {loading}
+                {this.renderCards()}
+              </div>
             </Segment>
             <Modal
               closeTimeoutMS={150}
