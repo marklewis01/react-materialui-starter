@@ -102,7 +102,7 @@ const List = inject('listStore')(
 
         const loading = listStore.loading ? (
           <Segment>
-            <Loader active />
+            <Loader active content="Fetching remote data" />
             <Image src="/assets/images/wireframe/short-paragraph.png" />
           </Segment>
         ) : null
