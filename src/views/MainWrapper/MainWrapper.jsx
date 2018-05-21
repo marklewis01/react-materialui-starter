@@ -3,9 +3,9 @@ import { Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { Container } from 'semantic-ui-react'
 
-import Dashboard from '../containers/Dashboard'
-import Settings from '../containers/Settings'
-import List from '../components/RemoteList'
+import Dashboard from '../Dashboard'
+import Settings from '../Settings'
+import List from '../../components/List'
 
 import 'react-toastify/dist/ReactToastify.css'
 

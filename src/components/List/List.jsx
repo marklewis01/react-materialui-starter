@@ -1,6 +1,6 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import { Button, Card, Container, Header, Segment } from 'semantic-ui-react'
+import { Card, Container, Header, Segment } from 'semantic-ui-react'
 import Modal from 'react-modal'
 
 Modal.setAppElement('#root')
@@ -41,7 +41,7 @@ const List = inject('listStore')(
         })
       }
 
-      handleCloseModal  = () => {
+      handleCloseModal = () => {
         this.setState({
           ...this.state,
           modal: {
@@ -101,7 +101,7 @@ const List = inject('listStore')(
             <Modal
               closeTimeoutMS={150}
               isOpen={this.state.modal.isModalOpen}
-              onRequestClose={this.handleCloseModal }
+              onRequestClose={this.handleCloseModal}
               style={{
                 // the below styles are just quick hacks for testing purposes only
                 overlay: {

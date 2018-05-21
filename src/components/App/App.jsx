@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'mobx-react'
+import DevTools from 'mobx-react-devtools'
 
 import Loading from '../Loading'
-import MainWrapper from '../MainWrapper'
+import MainWrapper from '../../views/MainWrapper'
 import SideNav from '../SideNav'
 
 import * as stores from '../../stores'
@@ -14,6 +15,7 @@ const App = () => (
   <Provider {...stores}>
     <Router>
       <Fragment>
+        <DevTools />
         <Loading />
         <SideNav />
         <MainWrapper />
