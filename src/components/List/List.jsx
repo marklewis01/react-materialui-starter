@@ -67,7 +67,7 @@ const List = inject('listStore')(
         const { listStore } = this.props
         return listStore.result.map(list => (
           <Card fluid key={list.id} onClick={() => this.handleModalClick(list)}>
-            <Label as="a" corner="right" color="white">
+            <Label corner="right">
               <Icon name="plus" />
             </Label>
             <Card.Content>
