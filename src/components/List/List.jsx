@@ -3,7 +3,6 @@ import { inject, observer } from 'mobx-react'
 import {
   Card,
   Container,
-  Dimmer,
   Header,
   Image,
   Loader,
