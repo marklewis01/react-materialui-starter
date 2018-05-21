@@ -1,7 +1,12 @@
-/* .app {
-  height: 100vh;
-} */
-
 .main-wrapper {
-  padding-left: 150px;
+  margin-top: 1rem;
+  padding-left: 35px;
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .main-wrapper {
+    margin-top: 2rem;
+    padding-left: 150px;
+  }
 }

@@ -1,0 +1,24 @@
+.list-modal {
+  margin-top: 1rem;
+  padding-left: 35px;
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .list-modal.overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .list-modal.content {
+    top: unset;
+    left: unset;
+    right: unset;
+    bottom: unset;
+    width: 50vw;
+    height: 50vh;
+  }
+}

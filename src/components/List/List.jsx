@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { inject, observer } from 'mobx-react'
 import {
   Card,
@@ -9,6 +9,8 @@ import {
   Segment
 } from 'semantic-ui-react'
 import Modal from 'react-modal'
+
+// import './List.css'
 
 Modal.setAppElement('#root')
 
@@ -107,7 +109,7 @@ const List = inject('listStore')(
         ) : null
 
         return (
-          <Container>
+          <Fragment>
             <Header as="h2">Remote Content</Header>
             <Segment>
               <Header as="h3">Segment Content</Header>
@@ -142,7 +144,7 @@ const List = inject('listStore')(
             >
               {this.renderModal()}
             </Modal>
-          </Container>
+          </Fragment>
         )
       }
     }

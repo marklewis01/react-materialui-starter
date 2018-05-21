@@ -39,7 +39,6 @@ class MainWrapper extends Component {
   render() {
     return (
       <Container className="main-wrapper">
-        <p>MainWrapper Component</p>
         <ToastContainer />
 
         {routes.map(({ path, exact, component: C }) => (
