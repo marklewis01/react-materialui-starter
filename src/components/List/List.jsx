@@ -7,6 +7,7 @@ import {
   Header,
   Icon,
   Image,
+  Label,
   Loader,
   Segment
 } from 'semantic-ui-react'
@@ -66,6 +67,9 @@ const List = inject('listStore')(
         const { listStore } = this.props
         return listStore.result.map(list => (
           <Card fluid key={list.id} onClick={() => this.handleModalClick(list)}>
+            <Label as="a" corner="right" color="white">
+              <Icon name="plus" />
+            </Label>
             <Card.Content>
               <Card.Header>{list.name}</Card.Header>
               <Card.Meta>{list.company.name}</Card.Meta>
@@ -121,11 +125,20 @@ const List = inject('listStore')(
           </Button>
         )
 
+        const header = listStore.cached ? (
+          <Header as="h2">
+            <span className="strikeout">Remote </span>
+            <span className="correction">Now localStorage</span> Content
+          </Header>
+        ) : (
+          <Header as="h2">Remote Content</Header>
+        )
+
         return (
           <Fragment>
             <Grid>
-              <Grid.Column floated="left" width={5}>
-                <Header as="h2">Remote Content</Header>
+              <Grid.Column floated="left" width={13}>
+                {header}
               </Grid.Column>
               <Grid.Column floated="right" width={3}>
                 {cachedButton}
@@ -135,9 +148,9 @@ const List = inject('listStore')(
               <div className="list-content-intro">
                 <Grid>
                   <Grid.Column width={8}>
-                    <span>
-                      The cards/data below are fetched from a remote location.
-                    </span>
+                    The cards/data below are fetched from a remote location.
+                    <br />
+                    Click the cards for even more contact information.
                   </Grid.Column>
                   <Grid.Column textAlign="right" width={8}>
                     <span>Data fetched at: {listStore.cached}</span>
