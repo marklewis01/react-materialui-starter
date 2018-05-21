@@ -1,16 +1,18 @@
 import React, { Fragment } from 'react'
 import { inject, observer } from 'mobx-react'
 import {
+  Button,
   Card,
-  Container,
+  Grid,
   Header,
+  Icon,
   Image,
   Loader,
   Segment
 } from 'semantic-ui-react'
 import Modal from 'react-modal'
 
-// import './List.css'
+import './List.css'
 
 Modal.setAppElement('#root')
 
@@ -27,7 +29,7 @@ const List = inject('listStore')(
       }
 
       componentDidMount() {
-        this.props.listStore.fetchInfo()
+        this.props.listStore.onPageLoad()
       }
 
       handleModalClick = card => {
@@ -62,7 +64,7 @@ const List = inject('listStore')(
 
       renderCards() {
         const { listStore } = this.props
-        return listStore.list.map(list => (
+        return listStore.result.map(list => (
           <Card fluid key={list.id} onClick={() => this.handleModalClick(list)}>
             <Card.Content>
               <Card.Header>{list.name}</Card.Header>
@@ -108,12 +110,40 @@ const List = inject('listStore')(
           </Segment>
         ) : null
 
+        const cachedButton = listStore.cached ? (
+          <Button fluid onClick={listStore.clearCache}>
+            Clear Local Cache
+          </Button>
+        ) : (
+          <Button fluid onClick={listStore.fetchInfo}>
+            <Icon name="refresh" />
+            Reload List
+          </Button>
+        )
+
         return (
           <Fragment>
-            <Header as="h2">Remote Content</Header>
+            <Grid>
+              <Grid.Column floated="left" width={5}>
+                <Header as="h2">Remote Content</Header>
+              </Grid.Column>
+              <Grid.Column floated="right" width={3}>
+                {cachedButton}
+              </Grid.Column>
+            </Grid>
             <Segment>
-              <Header as="h3">Segment Content</Header>
-              <p>The cards/data below are fetched from a remote location.</p>
+              <div className="list-content-intro">
+                <Grid>
+                  <Grid.Column width={8}>
+                    <span>
+                      The cards/data below are fetched from a remote location.
+                    </span>
+                  </Grid.Column>
+                  <Grid.Column textAlign="right" width={8}>
+                    <span>Data fetched at: {listStore.cached}</span>
+                  </Grid.Column>
+                </Grid>
+              </div>
               <div className="remote-cards">
                 {loading}
                 {this.renderCards()}
