@@ -16,15 +16,16 @@ This project is based off an ongoing app which I am developing, minus any propri
 I'd be thrilled for any feedback/advice/improvements on the code.
 
 ## Packages / Libraries Used
+
 * React Router
 * MobX
-    - So far this dashboard could be built without any 3rd-party state management system, however for practice, I have begun integration of [Mobx](https://mobx.js.org/).
+  * So far this dashboard could be built without any 3rd-party state management system, however for practice, I have begun integration of [Mobx](https://mobx.js.org/).
 * React-Semantic-UI
-    - The [React-Semantic-UI](http://react.semantic-ui.com) package has been used in an effort to get started faster. For this dashboard I have just linked to the Semantic UI stylesheet via a CDN link in the index.html file, however you can create your own theme and include it in your project by using the [Semantic UI CSS package](https://react.semantic-ui.com/usage#semantic-ui-css-package). Just a note, the CSS package is *HUGE*. Before a production-ready app is released, you should take steps to strip-back and remove unused components.
+  * The [React-Semantic-UI](http://react.semantic-ui.com) package has been used in an effort to get started faster. For this dashboard I have just linked to the Semantic UI stylesheet via a CDN link in the index.html file, however you can create your own theme and include it in your project by using the [Semantic UI CSS package](https://react.semantic-ui.com/usage#semantic-ui-css-package). Just a note, the CSS package is _HUGE_. Before a production-ready app is released, you should take steps to strip-back and remove unused components.
 * React-toastify
-    - A super simple and quick way to get a toast message system into the dashboard. [React-toastify](https://fkhadra.github.io/react-toastify/).
-
-
+  * A super simple and quick way to get a toast message system into the dashboard. [React-toastify](https://fkhadra.github.io/react-toastify/).
+* Mobx React DevTools
+  * For dev purposes. _Note:_ mobx-react-devtools is currently installed as a dependency and not a dev-dependency. This is for CodeSandbox only, and this package should be moved to a dev dependency for any other purpose.
 
 ## Folder Structure
 
