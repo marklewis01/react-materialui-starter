@@ -9,7 +9,7 @@
 
 .strikeout {
   padding-right: 25px;
-  text-decoration: line-through;
+  text-decoration: red line-through;
 }
 
 .correction {

@@ -106,6 +106,11 @@ const List = inject('listStore')(
 
       render() {
         const { listStore } = this.props
+        // const cachedTime = null
+
+        // if (listStore.cached) {
+        //   this.cachedTime = new Date(listStore.cached).toTimeString()
+        // }
 
         const loading = listStore.loading ? (
           <Segment>
@@ -115,11 +120,11 @@ const List = inject('listStore')(
         ) : null
 
         const cachedButton = listStore.cached ? (
-          <Button fluid onClick={listStore.clearCache}>
+          <Button fluid onClick={listStore.clearCache} color="red">
             Clear Session Cache
           </Button>
         ) : (
-          <Button fluid onClick={listStore.fetchInfo}>
+          <Button fluid onClick={listStore.fetchInfo} color="green">
             <Icon name="refresh" />
             Reload List
           </Button>
@@ -137,23 +142,38 @@ const List = inject('listStore')(
         return (
           <Fragment>
             <Grid>
-              <Grid.Column floated="left" width={12}>
+              <Grid.Column
+                stackable
+                floated="left"
+                mobile={16}
+                tablet={8}
+                computer={8}
+              >
                 {header}
               </Grid.Column>
-              <Grid.Column floated="right" width={4}>
+              <Grid.Column
+                stackable
+                floated="right"
+                mobile={16}
+                tablet={8}
+                computer={4}
+              >
                 {cachedButton}
               </Grid.Column>
             </Grid>
             <Segment>
               <div className="list-content-intro">
-                <Grid>
-                  <Grid.Column width={8}>
+                <Grid stackable columns={2}>
+                  <Grid.Column>
                     The cards/data below are fetched from a remote location.
                     <br />
                     Click the cards for even more contact information.
                   </Grid.Column>
-                  <Grid.Column textAlign="right" width={8}>
-                    <span>Data fetched at: {listStore.cached}</span>
+                  <Grid.Column textAlign="right">
+                    {listStore.cached && (
+                      <span>Data fetched at: {listStore.cachedTime}</span>
+                    )}
+                    {!listStore.cached && <span>No data cached</span>}
                   </Grid.Column>
                 </Grid>
               </div>

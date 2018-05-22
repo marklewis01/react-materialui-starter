@@ -1,5 +1,4 @@
-import { action, decorate, observable } from 'mobx'
-// import uiStore from '../uiStore'
+import { action, computed, decorate, observable } from 'mobx'
 
 import { fetchSomeInfo } from '../../utils/api'
 
@@ -9,7 +8,11 @@ class ListStore {
   constructor() {
     this.result = [] // observable
     this.loading = false // observable
-    this.cached = '' // observable
+    this.cached = null // observable
+  }
+
+  get cachedTime() {
+    return new Date(this.cached).toTimeString()
   }
 
   resultNotCached = () => {
@@ -46,41 +49,42 @@ class ListStore {
           return resultArray.push(item)
         })
       })
-      .then(() => this.setResult(resultArray, storageKey))
+      .then(() => this.setResult(resultArray))
   }
 
-  setResult = (resultArray, storageKey) => {
+  setResult = resultArray => {
     const time = new Date()
-    const timestamp = new Intl.DateTimeFormat('en-GB', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
-    }).format(time)
+    // const timestamp = new Intl.DateTimeFormat('en-GB', {
+    //   year: 'numeric',
+    //   month: '2-digit',
+    //   day: '2-digit',
+    //   hour: '2-digit',
+    //   minute: '2-digit',
+    //   second: '2-digit'
+    // }).format(time)
 
     sessionStorage.setItem(
       storageKey,
       JSON.stringify({
-        timestamp: timestamp,
+        timestamp: time,
         data: resultArray
       })
     )
     this.result = resultArray
     this.loading = false
-    this.cached = timestamp
+    this.cached = time
   }
 
   clearCache = () => {
     sessionStorage.clear('theRemoteList')
     // also clear data from store
     this.result = []
-    this.cached = ''
+    this.cached = null
   }
 }
 decorate(ListStore, {
   cached: observable,
+  cachedTime: computed,
   fetchInfo: action,
   loading: observable,
   result: observable
