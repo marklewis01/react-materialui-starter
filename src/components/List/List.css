@@ -8,12 +8,28 @@
 }
 
 .strikeout {
+  padding-right: 25px;
   text-decoration: line-through;
 }
 
 .correction {
-  font-style: italic;
   color: red;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+  left: 30px;
+  position: absolute;
+  top: -10px;
+  letter-spacing: -2px;
+  transform: rotate(-3deg);
+}
+
+.correction::after {
+  bottom: -40px;
+  content: '^';
+  font-size: 2rem;
+  left: 72px;
+  position: absolute;
 }
 
 @media only screen and (min-width: 768px) {

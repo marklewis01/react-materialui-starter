@@ -116,7 +116,7 @@ const List = inject('listStore')(
 
         const cachedButton = listStore.cached ? (
           <Button fluid onClick={listStore.clearCache}>
-            Clear Local Cache
+            Clear Session Cache
           </Button>
         ) : (
           <Button fluid onClick={listStore.fetchInfo}>
@@ -128,7 +128,7 @@ const List = inject('listStore')(
         const header = listStore.cached ? (
           <Header as="h2">
             <span className="strikeout">Remote </span>
-            <span className="correction">Now localStorage</span> Content
+            <span className="correction">Now sessionStorage</span> Content
           </Header>
         ) : (
           <Header as="h2">Remote Content</Header>
@@ -137,10 +137,10 @@ const List = inject('listStore')(
         return (
           <Fragment>
             <Grid>
-              <Grid.Column floated="left" width={13}>
+              <Grid.Column floated="left" width={12}>
                 {header}
               </Grid.Column>
-              <Grid.Column floated="right" width={3}>
+              <Grid.Column floated="right" width={4}>
                 {cachedButton}
               </Grid.Column>
             </Grid>

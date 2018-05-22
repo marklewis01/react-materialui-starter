@@ -19,7 +19,7 @@ class ListStore {
   onPageLoad = () => {
     // const timestamp = Date.now()
     // const expiredCache = timestamp - 60 // 1 min cache for demo purposes
-    const cachedList = localStorage.getItem(storageKey)
+    const cachedList = sessionStorage.getItem(storageKey)
 
     if (cachedList) {
       this.result = JSON.parse(cachedList).data
@@ -60,7 +60,7 @@ class ListStore {
       second: '2-digit'
     }).format(time)
 
-    localStorage.setItem(
+    sessionStorage.setItem(
       storageKey,
       JSON.stringify({
         timestamp: timestamp,
@@ -73,7 +73,7 @@ class ListStore {
   }
 
   clearCache = () => {
-    localStorage.clear('theRemoteList')
+    sessionStorage.clear('theRemoteList')
     // also clear data from store
     this.result = []
     this.cached = ''
