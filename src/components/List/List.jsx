@@ -142,34 +142,27 @@ const List = inject('listStore')(
         return (
           <Fragment>
             <Grid>
-              <Grid.Column
-                stackable
-                floated="left"
-                mobile={16}
-                tablet={8}
-                computer={8}
-              >
+              <Grid.Column floated="left" mobile={16} tablet={8} computer={8}>
                 {header}
               </Grid.Column>
-              <Grid.Column
-                stackable
-                floated="right"
-                mobile={16}
-                tablet={8}
-                computer={4}
-              >
+              <Grid.Column floated="right" mobile={16} tablet={8} computer={4}>
                 {cachedButton}
               </Grid.Column>
             </Grid>
             <Segment>
               <div className="list-content-intro">
-                <Grid stackable columns={2}>
-                  <Grid.Column>
+                <Grid>
+                  <Grid.Column mobile={16} tablet={8} computer={8}>
                     The cards/data below are fetched from a remote location.
                     <br />
                     Click the cards for even more contact information.
                   </Grid.Column>
-                  <Grid.Column textAlign="right">
+                  <Grid.Column
+                    mobile={16}
+                    tablet={8}
+                    computer={8}
+                    textAlign="right"
+                  >
                     {listStore.cached && (
                       <span>Data fetched at: {listStore.cachedTime}</span>
                     )}

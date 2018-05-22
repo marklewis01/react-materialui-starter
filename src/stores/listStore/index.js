@@ -20,8 +20,6 @@ class ListStore {
   }
 
   onPageLoad = () => {
-    // const timestamp = Date.now()
-    // const expiredCache = timestamp - 60 // 1 min cache for demo purposes
     const cachedList = sessionStorage.getItem(storageKey)
 
     if (cachedList) {
@@ -54,14 +52,6 @@ class ListStore {
 
   setResult = resultArray => {
     const time = new Date()
-    // const timestamp = new Intl.DateTimeFormat('en-GB', {
-    //   year: 'numeric',
-    //   month: '2-digit',
-    //   day: '2-digit',
-    //   hour: '2-digit',
-    //   minute: '2-digit',
-    //   second: '2-digit'
-    // }).format(time)
 
     sessionStorage.setItem(
       storageKey,
