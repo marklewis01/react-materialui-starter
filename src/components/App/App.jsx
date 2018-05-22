@@ -4,7 +4,7 @@ import { Provider } from 'mobx-react'
 import DevTools from 'mobx-react-devtools'
 
 import Loading from '../Loading'
-import MainWrapper from '../../views/MainWrapper'
+import MainWrapper from '../MainWrapper'
 import SideNav from '../SideNav'
 
 import * as stores from '../../stores'
