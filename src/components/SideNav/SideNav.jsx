@@ -37,12 +37,6 @@ const SideNav = inject('uiStore')(
             <Icon name="briefcase" />
           </Menu.Item>
         </NavLink>
-        <NavLink to="/drag">
-          <Menu.Item name="drag">
-            Draggable List
-            <Icon name="move" />
-          </Menu.Item>
-        </NavLink>
       </div>
       <div className="sidenav--account-menu">
         <Divider />

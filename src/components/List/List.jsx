@@ -2,17 +2,17 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import {
   Button,
-  Card,
   Grid,
   Header,
   Icon,
   Image,
-  Label,
   Loader,
   Segment
 } from 'semantic-ui-react'
 import Modal from 'react-modal'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+
+import ProductCard from '../ProductCard'
 
 import './List.css'
 
@@ -200,18 +200,10 @@ const List = inject('listStore')(
                               provided.draggableProps.style
                             )}
                           >
-                            <Card
-                              fluid
-                              key={item.id}
-                              onClick={() => this.handleModalClick(item)}
-                            >
-                              <Label attached="bottom left" icon="move" />
-                              <Label corner="right" icon="plus" />
-                              <Card.Content>
-                                <Card.Header content={item.name} />
-                                <Card.Meta content={item.company.name} />
-                              </Card.Content>
-                            </Card>
+                            <ProductCard
+                              item={item}
+                              handleClick={() => this.handleModalClick(item)}
+                            />
                           </div>
                         )}
                       </Draggable>
