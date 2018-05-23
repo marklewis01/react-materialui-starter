@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { inject, observer } from 'mobx-react'
 import {
   Button,
@@ -12,10 +12,28 @@ import {
   Segment
 } from 'semantic-ui-react'
 import Modal from 'react-modal'
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import './List.css'
 
 Modal.setAppElement('#root')
+
+// a little function to help us with reordering the result
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list)
+  const [removed] = result.splice(startIndex, 1)
+  result.splice(endIndex, 0, removed)
+
+  return result
+}
+
+const getItemStyle = (isDragging, draggableStyle) => ({
+  userSelect: 'none',
+  margin: `0 0 16px 0`,
+
+  // styles we need to apply on draggables
+  ...draggableStyle
+})
 
 const List = inject('listStore')(
   observer(
@@ -63,24 +81,6 @@ const List = inject('listStore')(
         })
       }
 
-      renderCards() {
-        const { listStore } = this.props
-        return listStore.result.map(list => (
-          <Card fluid key={list.id} onClick={() => this.handleModalClick(list)}>
-            <Label corner="right">
-              <Icon name="plus" />
-            </Label>
-            <Card.Content>
-              <Card.Header>{list.name}</Card.Header>
-              <Card.Meta>{list.company.name}</Card.Meta>
-              <Card.Description>
-                <p>{list.address.street}</p>
-              </Card.Description>
-            </Card.Content>
-          </Card>
-        ))
-      }
-
       renderModal() {
         if (!this.state.modal.isModalOpen) {
           return null
@@ -104,13 +104,23 @@ const List = inject('listStore')(
         )
       }
 
+      onDragEnd = result => {
+        // dropped outside the list
+        if (!result.destination) {
+          return
+        }
+
+        const items = reorder(
+          this.props.listStore.items,
+          result.source.index,
+          result.destination.index
+        )
+
+        this.props.listStore.setItems(items)
+      }
+
       render() {
         const { listStore } = this.props
-        // const cachedTime = null
-
-        // if (listStore.cached) {
-        //   this.cachedTime = new Date(listStore.cached).toTimeString()
-        // }
 
         const loading = listStore.loading ? (
           <Segment>
@@ -140,7 +150,7 @@ const List = inject('listStore')(
         )
 
         return (
-          <Fragment>
+          <DragDropContext onDragEnd={this.onDragEnd}>
             <Grid>
               <Grid.Column floated="left" mobile={16} tablet={8} computer={8}>
                 {header}
@@ -170,10 +180,46 @@ const List = inject('listStore')(
                   </Grid.Column>
                 </Grid>
               </div>
-              <div className="remote-cards">
-                {loading}
-                {this.renderCards()}
-              </div>
+              {loading}
+              <Droppable droppableId="droppable">
+                {(provided, snapshot) => (
+                  <div ref={provided.innerRef}>
+                    {this.props.listStore.items.map((item, index) => (
+                      <Draggable
+                        key={item.id}
+                        draggableId={item.id}
+                        index={index}
+                      >
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            style={getItemStyle(
+                              snapshot.isDragging,
+                              provided.draggableProps.style
+                            )}
+                          >
+                            <Card
+                              fluid
+                              key={item.id}
+                              onClick={() => this.handleModalClick(item)}
+                            >
+                              <Label attached="bottom left" icon="move" />
+                              <Label corner="right" icon="plus" />
+                              <Card.Content>
+                                <Card.Header content={item.name} />
+                                <Card.Meta content={item.company.name} />
+                              </Card.Content>
+                            </Card>
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
             </Segment>
             <Modal
               closeTimeoutMS={150}
@@ -200,7 +246,7 @@ const List = inject('listStore')(
             >
               {this.renderModal()}
             </Modal>
-          </Fragment>
+          </DragDropContext>
         )
       }
     }
