@@ -76,16 +76,16 @@
 
 /* Launcher Styles */
 .modalButton {
-  padding: 0.7rem, 1.8rem;
-  background-color: #568db2;
+  padding: 0;
+  background-color: none;
   border: 0;
-  border-radius: 0.3rem;
   font-size: 1rem;
   color: #fff;
   cursor: pointer;
-  margin-bottom: 0.8rem;
+  height: 100%;
+  width: 100%;
 }
 
-.modalButton:hover {
+/* .modalButton:hover {
   background-color: '#466d87';
-}
+} */

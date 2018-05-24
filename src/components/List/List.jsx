@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { inject, observer } from 'mobx-react'
 import {
   Button,
@@ -144,19 +144,21 @@ const List = inject('listStore')(
                         index={index}
                       >
                         {(provided, snapshot) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            style={getItemStyle(
-                              snapshot.isDragging,
-                              provided.draggableProps.style
-                            )}
-                          >
-                            <Launcher contents={<ProductCard item={item} />}>
-                              {this.modalContents(item)}
-                            </Launcher>
-                          </div>
+                          <Fragment>
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              style={getItemStyle(
+                                snapshot.isDragging,
+                                provided.draggableProps.style
+                              )}
+                            >
+                              <Launcher contents={<ProductCard item={item} />}>
+                                {this.modalContents(item)}
+                              </Launcher>
+                            </div>
+                          </Fragment>
                         )}
                       </Draggable>
                     ))}
