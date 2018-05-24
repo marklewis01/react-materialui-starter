@@ -1,27 +1,48 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'mobx-react'
-import DevTools from 'mobx-react-devtools'
+// import DevTools from 'mobx-react-devtools'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
 
-import Loading from '../Loading'
+import AppBar from '../AppBar'
+import Main from '../Main'
 import MainWrapper from '../MainWrapper'
 import SideNav from '../SideNav'
+// import SideNav from '../SideNav'
 
 import * as stores from '../../stores'
 
 import './App.css'
 
-const App = () => (
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    zIndex: 1,
+    position: 'relative',
+    display: 'flex'
+  }
+})
+
+const App = ({ classes, theme }) => (
   <Provider {...stores}>
     <Router>
-      <Fragment>
-        <DevTools />
-        <Loading />
+      <div className={classes.root}>
+        {/* <DevTools /> */}
+        <CssBaseline />
+        <AppBar />
         <SideNav />
+        <Main />
         <MainWrapper />
-      </Fragment>
+      </div>
     </Router>
   </Provider>
 )
 
-export default App
+App.propTypes = {
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
+}
+
+export default withStyles(styles, { withTheme: true })(App)
