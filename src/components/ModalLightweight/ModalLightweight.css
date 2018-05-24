@@ -19,24 +19,8 @@
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 9999;
   opacity: 1;
-  animation: show 0.1s ease;
   overflow-x: hidden;
   overflow-y: auto;
-}
-
-/* Fade in open animation */
-@keyframes show {
-  0% {
-    display: none;
-    opacity: 0;
-  }
-  1% {
-    display: flex;
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 
 /* Modal itself */

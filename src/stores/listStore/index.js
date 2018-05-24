@@ -6,7 +6,7 @@ const storageKey = 'theRemoteList'
 
 class ListStore {
   constructor() {
-    this.result = [] // observable
+    this.items = [] // observable
     this.loading = false // observable
     this.cached = null // observable
   }
@@ -15,15 +15,15 @@ class ListStore {
     return new Date(this.cached).toTimeString()
   }
 
-  resultNotCached = () => {
-    return this.result.length === 0 // needs to return true for fetch to trigger
+  itemsNotCached = () => {
+    return this.items.length === 0 // needs to return true for fetch to trigger
   }
 
   onPageLoad = () => {
     const cachedList = sessionStorage.getItem(storageKey)
 
     if (cachedList) {
-      this.result = JSON.parse(cachedList).data
+      this.items = JSON.parse(cachedList).data
       this.loading = false
       this.cached = JSON.parse(cachedList).timestamp
     } else {
@@ -32,11 +32,12 @@ class ListStore {
   }
 
   fetchInfo = async () => {
-    const resultArray = []
+    const itemsArray = []
+    const time = new Date()
 
     // only show loading spinner if fetch takes longer then 300ms
     setTimeout(() => {
-      if (this.result.length === 0) {
+      if (this.items.length === 0) {
         this.loading = true
       }
     }, 300)
@@ -44,23 +45,27 @@ class ListStore {
     await fetchSomeInfo()
       .then(result => {
         return result.map(item => {
-          return resultArray.push(item)
+          return itemsArray.push(item)
         })
       })
-      .then(() => this.setResult(resultArray))
+      .then(() => this.setItems(itemsArray, time))
   }
 
-  setResult = resultArray => {
-    const time = new Date()
+  setItems = (itemsArray, time) => {
+    // check if time being passed from fetchInfo, if not, grab from cache
+    // allows for setItems to be called by onDragEnd
+    if (!time) {
+      time = this.cached
+    }
 
     sessionStorage.setItem(
       storageKey,
       JSON.stringify({
         timestamp: time,
-        data: resultArray
+        data: itemsArray
       })
     )
-    this.result = resultArray
+    this.items = itemsArray
     this.loading = false
     this.cached = time
   }
@@ -68,7 +73,7 @@ class ListStore {
   clearCache = () => {
     sessionStorage.clear('theRemoteList')
     // also clear data from store
-    this.result = []
+    this.items = []
     this.cached = null
   }
 }
@@ -77,7 +82,7 @@ decorate(ListStore, {
   cachedTime: computed,
   fetchInfo: action,
   loading: observable,
-  result: observable
+  items: observable
 })
 
 const listStore = new ListStore()
