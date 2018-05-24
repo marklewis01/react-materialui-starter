@@ -1,5 +1,3 @@
-import { Launcher, ModalLightweight } from './ModalLightweight'
+import Launcher from './ModalLightweight'
 
-export { Launcher, ModalLightweight }
-
-export default ModalLightweight
+export default Launcher

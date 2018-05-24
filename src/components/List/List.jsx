@@ -9,14 +9,12 @@ import {
   Loader,
   Segment
 } from 'semantic-ui-react'
-import Modal from 'react-modal'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import Launcher from '../../components/ModalLightweight'
 
 import ProductCard from '../ProductCard'
 
 import './List.css'
-
-Modal.setAppElement('#root')
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -38,71 +36,26 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 const List = inject('listStore')(
   observer(
     class ObserverSpecifications extends React.Component {
-      constructor(props) {
-        super(props)
-
-        this.state = {
-          modal: {},
-          card: {}
-        }
-      }
-
       componentDidMount() {
         this.props.listStore.onPageLoad()
       }
 
-      handleModalClick = card => {
-        this.setState({
-          ...this.state,
-          modal: {
-            isModalOpen: true
-          },
-          card: { ...card }
-        })
-      }
-
-      handleCloseModalClick = () => {
-        this.setState({
-          ...this.state,
-          modal: {
-            isModalOpen: false
-          },
-          card: {}
-        })
-      }
-
-      handleCloseModal = () => {
-        this.setState({
-          ...this.state,
-          modal: {
-            isModalOpen: false
-          },
-          card: {}
-        })
-      }
-
-      renderModal() {
-        if (!this.state.modal.isModalOpen) {
-          return null
-        }
-        const { card } = this.state
-        return (
-          <div>
-            <h3>{card.name}</h3>
-            <hr />
-            Email: {card.email} <br />
-            Username: {card.username} <br />
-            Website: {card.website} <br />
-            <hr />
-            <h4>Address</h4>
-            {card.company.name} <br />
-            {card.address.street} <br />
-            {card.address.suite} <br />
-            {card.address.city} <br />
-            {card.address.zipcode} <br />
-          </div>
-        )
-      }
+      modalContents = item => (
+        <div>
+          <h3>{item.name}</h3>
+          <hr />
+          Email: {item.email} <br />
+          Username: {item.username} <br />
+          Website: {item.website} <br />
+          <hr />
+          <h4>Address</h4>
+          {item.company.name} <br />
+          {item.address.street} <br />
+          {item.address.suite} <br />
+          {item.address.city} <br />
+          {item.address.zipcode} <br />
+        </div>
+      )
 
       onDragEnd = result => {
         // dropped outside the list
@@ -200,10 +153,9 @@ const List = inject('listStore')(
                               provided.draggableProps.style
                             )}
                           >
-                            <ProductCard
-                              item={item}
-                              handleClick={() => this.handleModalClick(item)}
-                            />
+                            <Launcher contents={<ProductCard item={item} />}>
+                              {this.modalContents(item)}
+                            </Launcher>
                           </div>
                         )}
                       </Draggable>
@@ -213,31 +165,6 @@ const List = inject('listStore')(
                 )}
               </Droppable>
             </Segment>
-            <Modal
-              closeTimeoutMS={150}
-              isOpen={this.state.modal.isModalOpen}
-              onRequestClose={this.handleCloseModal}
-              style={{
-                // the below styles are just quick hacks for testing purposes only
-                overlay: {
-                  backgroundColor: 'rgba(0, 0, 0, 0.75)',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  zIndex: '1000'
-                },
-                content: {
-                  top: 'unset',
-                  left: 'unset',
-                  right: 'unset',
-                  bottom: 'unset',
-                  width: '50vw',
-                  height: '50vh'
-                }
-              }}
-            >
-              {this.renderModal()}
-            </Modal>
           </DragDropContext>
         )
       }

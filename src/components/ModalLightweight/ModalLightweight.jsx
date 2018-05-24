@@ -3,7 +3,7 @@ import isNil from 'lodash/isNil'
 
 import './ModalLightweight.css'
 
-export class Launcher extends Component {
+class Launcher extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -16,7 +16,7 @@ export class Launcher extends Component {
   }
 
   render() {
-    const { buttonLabel, children } = this.props
+    const { buttonLabel, contents, children } = this.props
     const { showModal } = this.state
 
     return (
@@ -26,6 +26,7 @@ export class Launcher extends Component {
           className="modalButton"
           onClick={() => this.handleToggleModal()}
         >
+          {contents}
           {buttonLabel}
         </button>
 
@@ -39,7 +40,7 @@ export class Launcher extends Component {
   }
 }
 
-export class ModalLightweight extends Component {
+class ModalLightweight extends Component {
   constructor(props) {
     super(props)
 
@@ -102,4 +103,4 @@ export class ModalLightweight extends Component {
   }
 }
 
-export default ModalLightweight
+export default Launcher
