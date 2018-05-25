@@ -32,14 +32,9 @@ const TopNav = inject('uiStore')(
         anchorEl: null
       }
 
-      handleDrawerToggle = () => {
-        this.props.uiStore.sidebarVisible = !this.props.uiStore.sidebarVisible
-      }
-
       render() {
-        const { classes, theme } = this.props
+        const { classes, theme, uiStore } = this.props
         const { auth, anchorEl } = this.state
-        const { sidebarVisible } = this.props.uiStore
         const open = Boolean(anchorEl)
 
         return (
@@ -50,7 +45,7 @@ const TopNav = inject('uiStore')(
                   className={classes.menuButton}
                   color="inherit"
                   aria-label="Menu"
-                  onClick={this.handleDrawerToggle}
+                  onClick={uiStore.handleDrawerToggle}
                 >
                   <MenuIcon />
                 </IconButton>

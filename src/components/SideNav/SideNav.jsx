@@ -1,17 +1,14 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { inject, observer } from 'mobx-react'
 import { NavLink } from 'react-router-dom'
 
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
-import Divider from '@material-ui/core/Divider'
 import DonutLargeIcon from '@material-ui/icons/DonutLarge'
-import DraftsIcon from '@material-ui/icons/Drafts'
 import Drawer from '@material-ui/core/Drawer'
 import Hidden from '@material-ui/core/Hidden'
-import IconButton from '@material-ui/core/IconButton'
-import InboxIcon from '@material-ui/icons/Inbox'
+import Icon from '@material-ui/core/Icon'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -57,7 +54,7 @@ const styles = theme => ({
   sidenavPrimary: {
     flexGrow: 1
   },
-  sidenavLower: {
+  sidenavFooter: {
     marginBottom: '1rem'
   }
 })
@@ -65,29 +62,39 @@ const styles = theme => ({
 const SideNav = inject('uiStore')(
   observer(
     class ObserverSideNav extends React.Component {
-      state = {
-        mobileOpen: false
-      }
-
-      // TODO: Move methods into store and out of component
-      // handleDrawerOpen = () => {
-      //   this.props.uiStore.sidebarVisible = true
-      // }
-
-      // handleDrawerClose = () => {
-      //   this.props.uiStore.sidebarVisible = false
-      // }
-
-      handleDrawerToggle = () => {
-        this.props.uiStore.sidebarVisible = !this.props.uiStore.sidebarVisible
-      }
-
       render() {
-        const { classes, theme } = this.props
-        const { sidebarVisible } = this.props.uiStore
+        const { classes, theme, uiStore } = this.props
+
+        const menu = [
+          {
+            sectionName: classes.sidenavPrimary,
+            sectionItems: [
+              {
+                icon: 'view_list',
+                to: '/list',
+                label: 'List'
+              },
+              {
+                icon: 'pan_tool',
+                to: '/drag',
+                label: 'Drag'
+              }
+            ]
+          },
+          {
+            sectionName: classes.sidenavFooter,
+            sectionItems: [
+              {
+                icon: 'settings',
+                to: '/settings',
+                label: 'Settings'
+              }
+            ]
+          }
+        ]
 
         const drawer = (
-          <div>
+          <Fragment>
             <div className={classes.sidenavBrand}>
               <NavLink to="/" className={classes.sidenavBrandContent}>
                 <Typography variant="title" color="inherit">
@@ -98,38 +105,23 @@ const SideNav = inject('uiStore')(
                 <DonutLargeIcon className={classes.sidenavBrandContent} />
               </NavLink>
             </div>
-            <div className={classes.sidenavPrimary}>
-              <List component="nav">
-                <NavLink to="/list">
-                  <ListItem button>
-                    <ListItemIcon>
-                      <InboxIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="List" />
-                  </ListItem>
-                </NavLink>
-                <NavLink to="/drag">
-                  <ListItem button>
-                    <ListItemIcon>
-                      <DraftsIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Drag" />
-                  </ListItem>
-                </NavLink>
-              </List>
-            </div>
-            <div className={classes.sidenavLower}>
-              <Divider />
-              <List component="nav">
-                <ListItem button>
-                  <ListItemText primary="Trash" />
-                </ListItem>
-                <ListItem button component="a" href="#simple-list">
-                  <ListItemText primary="Spam" />
-                </ListItem>
-              </List>
-            </div>
-          </div>
+            {menu.map((section, index) => (
+              <div key={index} className={section.sectionName}>
+                {section.sectionItems.map((item, i) => (
+                  <List key={index + '-' + i} component="nav">
+                    <NavLink to={item.to} onClick={uiStore.handleDrawerClose}>
+                      <ListItem button>
+                        <ListItemText primary={item.label} />
+                        <ListItemIcon>
+                          <Icon>{item.icon}</Icon>
+                        </ListItemIcon>
+                      </ListItem>
+                    </NavLink>
+                  </List>
+                ))}
+              </div>
+            ))}
+          </Fragment>
         )
 
         return (
@@ -138,8 +130,8 @@ const SideNav = inject('uiStore')(
               <Drawer
                 variant="temporary"
                 anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-                open={sidebarVisible}
-                onClose={this.handleDrawerToggle}
+                open={uiStore.sidebarVisible}
+                onClose={uiStore.handleDrawerToggle}
                 classes={{
                   paper: classes.drawerPaper
                 }}
@@ -153,16 +145,15 @@ const SideNav = inject('uiStore')(
             <Hidden smDown implementation="css">
               <Drawer
                 variant="permanent"
-                open
                 classes={{
                   paper: classNames(
                     classes.drawerPaper,
-                    !sidebarVisible && classes.drawerPaperClose
+                    !uiStore.sidebarVisible && classes.drawerPaperClose
                   )
                 }}
-                open={sidebarVisible}
-                onMouseEnter={this.handleDrawerToggle}
-                onMouseLeave={this.handleDrawerToggle}
+                open={uiStore.sidebarVisible}
+                onMouseEnter={uiStore.handleDrawerOpen}
+                onMouseLeave={uiStore.handleDrawerClose}
               >
                 {drawer}
               </Drawer>

@@ -20,6 +20,18 @@ class UiStore {
     this.alerts = []
   }
 
+  handleDrawerToggle = () => {
+    this.sidebarVisible = !this.sidebarVisible
+  }
+
+  handleDrawerOpen = () => {
+    this.sidebarVisible = true
+  }
+
+  handleDrawerClose = () => {
+    this.sidebarVisible = false
+  }
+
   sidebarToggleVisibility = () => {
     this.sidebarVisible = !this.sidebarVisible
   }
