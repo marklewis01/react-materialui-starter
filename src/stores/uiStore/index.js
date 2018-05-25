@@ -16,7 +16,7 @@ decorate(Alert, {
 class UiStore {
   constructor() {
     this.loading = false
-    this.sidebarVisible = false
+    this.sidebarVisible = false // set to true for testing and dev only
     this.alerts = []
   }
 

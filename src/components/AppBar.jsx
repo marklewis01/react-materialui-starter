@@ -4,24 +4,20 @@ import { inject, observer } from 'mobx-react'
 
 import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
+import Avatar from '@material-ui/core/Avatar'
+import Hidden from '@material-ui/core/Hidden'
 import IconButton from '@material-ui/core/IconButton'
+import Menu from '@material-ui/core/Menu'
 import MenuIcon from '@material-ui/icons/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 
-const drawerWidth = 72
-
 const styles = theme => ({
-  appFrame: {
-    height: 430,
-    zIndex: 1,
-    overflow: 'hidden',
-    position: 'relative',
-    display: 'flex',
-    width: '100%'
-  },
   appBar: {
-    width: `calc(100% - ${drawerWidth}px)`
+    backgroundColor: '#fff',
+    width: '100%',
+    paddingLeft: '50px'
   },
   hide: {
     display: 'none'
@@ -31,21 +27,74 @@ const styles = theme => ({
 const TopNav = inject('uiStore')(
   observer(
     class TopNav extends Component {
+      state = {
+        auth: true,
+        anchorEl: null
+      }
+
+      handleDrawerToggle = () => {
+        this.props.uiStore.sidebarVisible = !this.props.uiStore.sidebarVisible
+      }
+
       render() {
         const { classes, theme } = this.props
+        const { auth, anchorEl } = this.state
+        const { sidebarVisible } = this.props.uiStore
+        const open = Boolean(anchorEl)
 
         return (
-          <AppBar
-            position="absolute"
-            className={classNames(
-              classes.appBar
-              // this.props.uiStore.sidebarVisible && classes.appBarShift
-            )}
-          >
+          <AppBar position="absolute" className={classNames(classes.appBar)}>
             <Toolbar>
-              <Typography variant="title" color="inherit" noWrap>
-                Mini variant drawer
+              <Hidden mdUp>
+                <IconButton
+                  className={classes.menuButton}
+                  color="inherit"
+                  aria-label="Menu"
+                  onClick={this.handleDrawerToggle}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Hidden>
+              <Typography
+                variant="title"
+                color="inherit"
+                className={classes.flex}
+              >
+                Title
               </Typography>
+              {auth && (
+                <div>
+                  <IconButton
+                    aria-owns={open ? 'menu-appbar' : null}
+                    aria-haspopup="true"
+                    onClick={this.handleMenu}
+                    color="inherit"
+                  >
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="/assets/images/wireframe/uxceo-128.jpg"
+                      className={classes.avatar}
+                    />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right'
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right'
+                    }}
+                    open={open}
+                    onClose={this.handleClose}
+                  >
+                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                    <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                  </Menu>
+                </div>
+              )}
             </Toolbar>
           </AppBar>
         )
