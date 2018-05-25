@@ -12,7 +12,9 @@ const styles = theme => ({
 const MajorPanel = ({ children, classes, theme }) => {
   return (
     <Grid item xs={12} sm={7}>
-      <Paper className={classes.paper}>{children}</Paper>
+      <Paper elevation={1} className={classes.paper}>
+        {children}
+      </Paper>
     </Grid>
   )
 }

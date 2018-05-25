@@ -1,7 +1,7 @@
 {
   "name": "starter-app",
   "license": "MIT",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -23,7 +23,6 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
     "react-toastify": "^4.0.1",
-    "semantic-ui-react": "^0.80.0",
     "typeface-roboto": "^0.0.54"
   },
   "devDependencies": {
@@ -34,7 +33,7 @@
     "react-toastify",
     "mobx",
     "react",
-    "react-semantic-ui"
+    "material-ui"
   ],
   "description": "test and play starter app. Not production worthy, not polished/refactored code ... just me and my sandbox"
 }

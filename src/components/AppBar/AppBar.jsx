@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import classNames from 'classnames'
 import { inject, observer } from 'mobx-react'
 
@@ -14,13 +14,22 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 
 const styles = theme => ({
-  appBar: {
+  root: {
     backgroundColor: '#fff',
     width: '100%',
-    paddingLeft: '50px'
+    paddingLeft: '48px',
+    [theme.breakpoints.down('md')]: {
+      paddingLeft: 'unset'
+    }
   },
   hide: {
     display: 'none'
+  },
+  menuButton: {},
+  toolbar: {
+    justifyContent: 'space-between',
+    paddingLeft: '16px',
+    paddingRight: '16px'
   }
 })
 
@@ -38,55 +47,57 @@ const TopNav = inject('uiStore')(
         const open = Boolean(anchorEl)
 
         return (
-          <AppBar position="absolute" className={classNames(classes.appBar)}>
-            <Toolbar>
+          <AppBar position="absolute" className={classes.root} elevation={1}>
+            <Toolbar className={classes.toolbar}>
               <Hidden mdUp>
                 <IconButton
                   className={classes.menuButton}
-                  color="inherit"
+                  color="primary"
                   aria-label="Menu"
                   onClick={uiStore.handleDrawerToggle}
                 >
                   <MenuIcon />
                 </IconButton>
               </Hidden>
-              <Typography
-                variant="title"
-                color="inherit"
-                className={classes.flex}
-              />
-              {auth && (
-                <div>
-                  <IconButton
-                    aria-owns={open ? 'menu-appbar' : null}
-                    aria-haspopup="true"
-                    onClick={this.handleMenu}
-                    color="inherit"
-                  >
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="/assets/images/wireframe/uxceo-128.jpg"
-                      className={classes.avatar}
-                    />
-                  </IconButton>
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right'
-                    }}
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right'
-                    }}
-                    open={open}
-                    onClose={this.handleClose}
-                  >
-                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                  </Menu>
-                </div>
+              {auth ? (
+                <Fragment>
+                  <Typography variant="subheading" color="primary">
+                    Some Text
+                  </Typography>
+                  <div>
+                    <IconButton
+                      aria-owns={open ? 'menu-appbar' : null}
+                      aria-haspopup="true"
+                      onClick={this.handleMenu}
+                      color="inherit"
+                    >
+                      <Avatar
+                        alt="Remy Sharp"
+                        src="/assets/images/wireframe/uxceo-128.jpg"
+                        className={classes.avatar}
+                      />
+                    </IconButton>
+                    <Menu
+                      id="menu-appbar"
+                      anchorEl={anchorEl}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
+                      }}
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
+                      }}
+                      open={open}
+                      onClose={this.handleClose}
+                    >
+                      <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                      <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                    </Menu>
+                  </div>
+                </Fragment>
+              ) : (
+                <div>Some App Title</div>
               )}
             </Toolbar>
           </AppBar>
