@@ -17,7 +17,7 @@ import { Typography } from '@material-ui/core'
 
 const styles = theme => ({
   drawerPaper: {
-    backgroundColor: '#ccc',
+    backgroundColor: '#1f2126',
     left: 0,
     padding: '0 10px',
     position: 'fixed',

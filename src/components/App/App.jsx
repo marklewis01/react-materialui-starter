@@ -8,13 +8,11 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 
 import AppBar from '../AppBar'
 import Main from '../Main'
-import MainWrapper from '../MainWrapper'
 import SideNav from '../SideNav'
-// import SideNav from '../SideNav'
 
 import * as stores from '../../stores'
 
-import './App.css'
+// import './App.css'
 
 const styles = theme => ({
   root: {
@@ -34,7 +32,6 @@ const App = ({ classes, theme }) => (
         <AppBar />
         <SideNav />
         <Main />
-        <MainWrapper />
       </div>
     </Router>
   </Provider>

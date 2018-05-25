@@ -54,9 +54,7 @@ const TopNav = inject('uiStore')(
                 variant="title"
                 color="inherit"
                 className={classes.flex}
-              >
-                Title
-              </Typography>
+              />
               {auth && (
                 <div>
                   <IconButton
