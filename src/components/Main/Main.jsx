@@ -32,13 +32,13 @@ class Main extends Component {
   render() {
     const { classes, theme } = this.props
     return (
-      <Grid container className={classes.root} spacing={32}>
-        <MajorPanel>
-          <Page />
-        </MajorPanel>
+      <Grid container className={classes.root} spacing={40}>
         <MinorPanel>
           <DetailsPanel />
         </MinorPanel>
+        <MajorPanel>
+          <Page />
+        </MajorPanel>
       </Grid>
     )
   }

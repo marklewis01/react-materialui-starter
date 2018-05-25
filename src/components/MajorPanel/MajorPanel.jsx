@@ -5,13 +5,13 @@ import Paper from '@material-ui/core/Paper'
 
 const styles = theme => ({
   paper: {
-    minHeight: '200px' // can delete this prop after dev. just placeholding
+    minHeight: '500px' // can delete this prop after dev. just placeholding
   }
 })
 
 const MajorPanel = ({ children, classes, theme }) => {
   return (
-    <Grid item xs={12} sm={7}>
+    <Grid item xs={12} md={7}>
       <Paper elevation={1} className={classes.paper}>
         {children}
       </Paper>

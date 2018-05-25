@@ -11,7 +11,7 @@ const styles = theme => ({
 
 const LeftPane = ({ children, classes, theme }) => {
   return (
-    <Grid item xs={12} sm={5}>
+    <Grid item xs={12} md={5}>
       <Paper elevation={1} className={classes.paper}>
         {children}
       </Paper>
