@@ -131,7 +131,6 @@ class NavigationAuth extends React.Component {
             open={open}
             onClose={this.handleMenuClose}
           >
-            <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
             <Link to={routes.ACCOUNT}>
               <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
             </Link>

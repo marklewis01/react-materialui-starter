@@ -4,16 +4,16 @@ import { inject, observer } from 'mobx-react'
 
 import { withStyles } from '@material-ui/core/styles'
 
-import AppBar from './AppBar'
-import SideNav from './SideNav'
+import AppBar from '../AppBar'
+import SideNav from '../SideNav'
 
-import Dashboard from './Dashboard'
-import AccountPage from './Account'
-import LandingPage from './Landing'
-import RegisterPage from './Register'
-import LoginPage from './Login'
-import PasswordForgetPage from './PasswordForget'
-import * as routes from '../routes'
+import Dashboard from '../Dashboard'
+import AccountPage from '../Account'
+import LandingPage from '../Landing'
+import RegisterPage from '../Register'
+import LoginPage from '../Login'
+import PasswordForgetPage from '../PasswordForget'
+import * as routes from '../../routes'
 
 const styles = theme => ({
   authenticated: {
