@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react'
 import { compose } from 'recompose'
 
 import { firebase } from '../../firebase'
-import * as routes from '../../constants/routes'
+import * as routes from '../../routes'
 
 const withAuthorization = condition => Component => {
   class WithAuthorization extends React.Component {

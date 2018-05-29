@@ -15,8 +15,10 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Toolbar from '@material-ui/core/Toolbar'
 import { Typography } from '@material-ui/core'
 
+import userAvatar from '../../assets/img/uxceo-128.jpg'
+
 import { auth } from '../../firebase'
-import * as routes from '../../constants/routes'
+import * as routes from '../../routes'
 
 const styles = theme => ({
   root: {
@@ -44,10 +46,8 @@ class TopNav extends Component {
     anchorEl: null
   }
 
-  handleDrawerToggle = () => {
-    this.setState(prevState => ({
-      sidebar: !prevState.sidebar
-    }))
+  handleMenuToggle = () => {
+    this.setState({ sidebar: !this.state.sidebar })
   }
 
   render() {
@@ -66,7 +66,7 @@ class TopNav extends Component {
               className={classes.menuButton}
               color="primary"
               aria-label="Menu"
-              onClick={this.handleDrawerToggle}
+              onClick={this.handleMenuToggle}
             >
               <MenuIcon />
             </IconButton>
@@ -87,7 +87,7 @@ class NavigationAuth extends React.Component {
     anchorEl: null
   }
 
-  handleClose = () => {
+  handleMenuClose = () => {
     this.setState({ anchorEl: null })
   }
 
@@ -102,7 +102,7 @@ class NavigationAuth extends React.Component {
 
     return (
       <div>
-        <Link to={routes.HOME}>Home</Link>
+        <Link to={routes.DASHBOARD}>Dashboard</Link>
         <Hidden mdDown>
           <IconButton
             aria-owns={open ? 'menu-appbar' : null}
@@ -113,7 +113,7 @@ class NavigationAuth extends React.Component {
           >
             <Avatar
               alt="Jane Doe"
-              src="/assets/images/wireframe/uxceo-128.jpg"
+              src={userAvatar}
               className={classes.avatar}
             />
           </IconButton>
@@ -129,11 +129,11 @@ class NavigationAuth extends React.Component {
               horizontal: 'right'
             }}
             open={open}
-            onClose={this.handleClose}
+            onClose={this.handleMenuClose}
           >
-            <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+            <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
             <Link to={routes.ACCOUNT}>
-              <MenuItem onClick={this.handleClose}>My account</MenuItem>
+              <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
             </Link>
             <MenuItem onClick={auth.doSignOut}>Logout</MenuItem>
           </Menu>

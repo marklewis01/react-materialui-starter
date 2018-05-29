@@ -16,7 +16,6 @@ decorate(SessionStore, {
   setAuthUser: action
 })
 
-// const sessionStore = new SessionStore()
+const sessionStore = new SessionStore()
 
-export default SessionStore
-// export { SessionStore }
+export default sessionStore

@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
+import Paper from '@material-ui/core/Paper'
 
 import { RegisterLink } from '../Register'
 import { PasswordForgetLink } from '../PasswordForget'
 import { auth } from '../../firebase'
-import * as routes from '../../constants/routes'
+import * as routes from '../../routes'
 
-const RegisterPage = ({ history }) => (
-  <div>
+const LoginPage = ({ history }) => (
+  <Paper>
     <h1>Login</h1>
-    <RegisterForm history={history} />
+    <LoginForm history={history} />
     <PasswordForgetLink />
     <RegisterLink />
-  </div>
+  </Paper>
 )
 
 const updateByPropertyName = (propertyName, value) => () => ({
@@ -25,7 +26,7 @@ const INITIAL_STATE = {
   error: null
 }
 
-class RegisterForm extends Component {
+class LoginForm extends Component {
   constructor(props) {
     super(props)
 
@@ -41,7 +42,7 @@ class RegisterForm extends Component {
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState(() => ({ ...INITIAL_STATE }))
-        history.push(routes.HOME)
+        history.push(routes.DASHBOARD)
       })
       .catch(error => {
         this.setState(updateByPropertyName('error', error))
@@ -85,6 +86,6 @@ class RegisterForm extends Component {
   }
 }
 
-export default withRouter(RegisterPage)
+export default withRouter(LoginPage)
 
-export { RegisterForm }
+export { LoginForm }

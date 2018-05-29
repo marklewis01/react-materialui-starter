@@ -1,9 +1,6 @@
 import React, { Fragment } from 'react'
 import { inject, observer } from 'mobx-react'
 import { NavLink } from 'react-router-dom'
-import { compose } from 'recompose'
-
-import withAuthorization from '../Session/withAuthorization'
 
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
@@ -62,7 +59,7 @@ const styles = theme => ({
   }
 })
 
-const SideNav = inject('uiStore')(
+const SideNav = inject('sessionStore')(
   observer(
     class ObserverSideNav extends React.Component {
       constructor(props) {
@@ -93,7 +90,7 @@ const SideNav = inject('uiStore')(
       }
 
       render() {
-        const { classes, theme } = this.props
+        const { classes, theme, sessionStore } = this.props
         const { sidebar } = this.state
 
         const menu = [
@@ -157,38 +154,44 @@ const SideNav = inject('uiStore')(
 
         return (
           <div>
-            <Hidden mdUp>
-              <Drawer
-                variant="temporary"
-                anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-                open={sidebar}
-                onClose={this.handleDrawerToggle}
-                classes={{
-                  paper: classes.drawerPaper
-                }}
-                ModalProps={{
-                  keepMounted: true // Better open performance on mobile.
-                }}
-              >
-                {drawer}
-              </Drawer>
-            </Hidden>
-            <Hidden smDown implementation="css">
-              <Drawer
-                variant="permanent"
-                classes={{
-                  paper: classNames(
-                    classes.drawerPaper,
-                    !sidebar && classes.drawerPaperClose
-                  )
-                }}
-                open={sidebar}
-                onMouseEnter={this.handleDrawerOpen}
-                onMouseLeave={this.handleDrawerClose}
-              >
-                {drawer}
-              </Drawer>
-            </Hidden>
+            {sessionStore.authUser ? (
+              <Fragment>
+                <Hidden mdUp>
+                  <Drawer
+                    variant="temporary"
+                    anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+                    open={sidebar}
+                    onClose={this.handleDrawerToggle}
+                    classes={{
+                      paper: classes.drawerPaper
+                    }}
+                    ModalProps={{
+                      keepMounted: true // Better open performance on mobile.
+                    }}
+                  >
+                    {drawer}
+                  </Drawer>
+                </Hidden>
+                <Hidden smDown implementation="css">
+                  <Drawer
+                    variant="permanent"
+                    classes={{
+                      paper: classNames(
+                        classes.drawerPaper,
+                        !sidebar && classes.drawerPaperClose
+                      )
+                    }}
+                    open={sidebar}
+                    onMouseEnter={this.handleDrawerOpen}
+                    onMouseLeave={this.handleDrawerClose}
+                  >
+                    {drawer}
+                  </Drawer>
+                </Hidden>
+              </Fragment>
+            ) : (
+              <Fragment />
+            )}
           </div>
         )
       }
@@ -201,12 +204,4 @@ SideNav.propTypes = {
   theme: PropTypes.object.isRequired
 }
 
-const StyledSideNav = withStyles(styles, { withTheme: true })(SideNav)
-
-const authCondition = authUser => !!authUser
-
-// const AuthSideNav = withAuthentication(authCondition)(StyledSideNav)
-
-export default compose(withAuthorization(authCondition), inject('userStore'))(
-  StyledSideNav
-)
+export default withStyles(styles, { withTheme: true })(SideNav)

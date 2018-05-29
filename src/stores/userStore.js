@@ -16,4 +16,6 @@ decorate(UserStore, {
   setUsers: action
 })
 
-export default UserStore
+const userStore = new UserStore()
+
+export default userStore

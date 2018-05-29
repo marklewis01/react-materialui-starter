@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 
 import { auth, db } from '../../firebase'
-import * as routes from '../../constants/routes'
+import * as routes from '../../routes'
 
 const RegisterPage = ({ history }) => (
   <div>
@@ -43,7 +43,7 @@ class RegisterForm extends Component {
           .doCreateUser(authUser.uid, username, email)
           .then(() => {
             this.setState(() => ({ ...INITIAL_STATE }))
-            history.push(routes.HOME)
+            history.push(routes.DASHBOARD)
           })
           .catch(error => {
             this.setState(updateByPropertyName('error', error))

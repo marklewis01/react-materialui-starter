@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'mobx-react'
 
 import App from './components/App'
-import store from './stores'
+import * as stores from './stores'
 
 ReactDOM.render(
-  <Provider {...store}>
+  <Provider {...stores}>
     <App />
   </Provider>,
   document.getElementById('root')
