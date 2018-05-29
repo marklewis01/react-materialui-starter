@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-import withAuthentication from '../Session/withAuthentication'
+import { withAuthentication } from '../Session'
 import Main from '../Main'
 
 const App = observer(() => (

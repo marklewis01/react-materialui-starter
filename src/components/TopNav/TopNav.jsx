@@ -51,7 +51,7 @@ class TopNav extends Component {
   }
 
   render() {
-    const { classes, sessionStore } = this.props
+    const { classes, sessionStore, toggleModal } = this.props
     const { anchorEl } = this.state
     const open = Boolean(anchorEl)
 
@@ -74,7 +74,7 @@ class TopNav extends Component {
           {sessionStore.authUser ? (
             <NavigationAuth classes={classes} menuOpen={open} />
           ) : (
-            <NavigationNonAuth />
+            <NavigationNonAuth toggleModal={toggleModal} />
           )}
         </Toolbar>
       </AppBar>
@@ -142,14 +142,12 @@ class NavigationAuth extends React.Component {
   }
 }
 
-const NavigationNonAuth = () => (
+const NavigationNonAuth = ({ toggleModal }) => (
   <div>
     <Link to={routes.REGISTER}>
       <Button>Register</Button>
     </Link>
-    <Link to={routes.LOGIN}>
-      <Button>Login</Button>
-    </Link>
+    <Button onClick={toggleModal}>Login</Button>
   </div>
 )
 

@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-import { RegisterLink } from '../Register'
-import { PasswordForgetLink } from '../PasswordForget'
 import { auth } from '../../firebase'
 import * as routes from '../../routes'
 
-const LoginPage = ({ history }) => (
+const PasswordForgetPage = () => (
   <div>
-    <h1>Login</h1>
-    <LoginForm history={history} />
-    <PasswordForgetLink />
-    <RegisterLink />
+    <h1>PasswordForget</h1>
+    <PasswordForgetForm />
   </div>
 )
 
@@ -21,11 +17,10 @@ const updateByPropertyName = (propertyName, value) => () => ({
 
 const INITIAL_STATE = {
   email: '',
-  password: '',
   error: null
 }
 
-class LoginForm extends Component {
+class PasswordForgetForm extends Component {
   constructor(props) {
     super(props)
 
@@ -33,15 +28,12 @@ class LoginForm extends Component {
   }
 
   onSubmit = event => {
-    const { email, password } = this.state
-
-    const { history } = this.props
+    const { email } = this.state
 
     auth
-      .doSignInWithEmailAndPassword(email, password)
+      .doPasswordReset(email)
       .then(() => {
         this.setState(() => ({ ...INITIAL_STATE }))
-        history.push(routes.DASHBOARD)
       })
       .catch(error => {
         this.setState(updateByPropertyName('error', error))
@@ -51,14 +43,14 @@ class LoginForm extends Component {
   }
 
   render() {
-    const { email, password, error } = this.state
+    const { email, error } = this.state
 
-    const isInvalid = password === '' || email === ''
+    const isInvalid = email === ''
 
     return (
       <form onSubmit={this.onSubmit}>
         <input
-          value={email}
+          value={this.state.email}
           onChange={event =>
             this.setState(updateByPropertyName('email', event.target.value))
           }
@@ -66,17 +58,8 @@ class LoginForm extends Component {
           placeholder="Email Address"
           autoComplete="email"
         />
-        <input
-          value={password}
-          onChange={event =>
-            this.setState(updateByPropertyName('password', event.target.value))
-          }
-          type="password"
-          placeholder="Password"
-          autoComplete="current-password"
-        />
         <button disabled={isInvalid} type="submit">
-          Login
+          Reset My Password
         </button>
 
         {error && <p>{error.message}</p>}
@@ -85,6 +68,12 @@ class LoginForm extends Component {
   }
 }
 
-export default withRouter(LoginPage)
+const PasswordForgetLink = () => (
+  <p>
+    <Link to={routes.PASSWORD_FORGET}>Forgot Password?</Link>
+  </p>
+)
 
-export { LoginForm }
+export default PasswordForgetPage
+
+export { PasswordForgetForm, PasswordForgetLink }
