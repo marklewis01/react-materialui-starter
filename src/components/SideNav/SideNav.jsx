@@ -1,6 +1,9 @@
 import React, { Fragment } from 'react'
 import { inject, observer } from 'mobx-react'
 import { NavLink } from 'react-router-dom'
+import { compose } from 'recompose'
+
+import withAuthorization from '../Session/withAuthorization'
 
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
@@ -62,8 +65,36 @@ const styles = theme => ({
 const SideNav = inject('uiStore')(
   observer(
     class ObserverSideNav extends React.Component {
+      constructor(props) {
+        super(props)
+
+        this.state = {
+          sidebar: false
+        }
+      }
+
+      handleDrawerOpen = () => {
+        this.setState({
+          sidebar: true
+        })
+      }
+
+      handleDrawerClose = () => {
+        this.setState({
+          sidebar: false
+        })
+      }
+
+      handleDrawerToggle = () => {
+        const sidebar = this.state.sidebar
+        this.setState({
+          sidebar: !sidebar
+        })
+      }
+
       render() {
-        const { classes, theme, uiStore } = this.props
+        const { classes, theme } = this.props
+        const { sidebar } = this.state
 
         const menu = [
           {
@@ -109,7 +140,7 @@ const SideNav = inject('uiStore')(
               <div key={index} className={section.sectionName}>
                 {section.sectionItems.map((item, i) => (
                   <List key={index + '-' + i} component="nav">
-                    <NavLink to={item.to} onClick={uiStore.handleDrawerClose}>
+                    <NavLink to={item.to} onClick={this.handleDrawerClose}>
                       <ListItem button>
                         <ListItemText primary={item.label} />
                         <ListItemIcon>
@@ -130,8 +161,8 @@ const SideNav = inject('uiStore')(
               <Drawer
                 variant="temporary"
                 anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-                open={uiStore.sidebarVisible}
-                onClose={uiStore.handleDrawerToggle}
+                open={sidebar}
+                onClose={this.handleDrawerToggle}
                 classes={{
                   paper: classes.drawerPaper
                 }}
@@ -148,12 +179,12 @@ const SideNav = inject('uiStore')(
                 classes={{
                   paper: classNames(
                     classes.drawerPaper,
-                    !uiStore.sidebarVisible && classes.drawerPaperClose
+                    !sidebar && classes.drawerPaperClose
                   )
                 }}
-                open={uiStore.sidebarVisible}
-                onMouseEnter={uiStore.handleDrawerOpen}
-                onMouseLeave={uiStore.handleDrawerClose}
+                open={sidebar}
+                onMouseEnter={this.handleDrawerOpen}
+                onMouseLeave={this.handleDrawerClose}
               >
                 {drawer}
               </Drawer>
@@ -170,4 +201,12 @@ SideNav.propTypes = {
   theme: PropTypes.object.isRequired
 }
 
-export default withStyles(styles, { withTheme: true })(SideNav)
+const StyledSideNav = withStyles(styles, { withTheme: true })(SideNav)
+
+const authCondition = authUser => !!authUser
+
+// const AuthSideNav = withAuthentication(authCondition)(StyledSideNav)
+
+export default compose(withAuthorization(authCondition), inject('userStore'))(
+  StyledSideNav
+)

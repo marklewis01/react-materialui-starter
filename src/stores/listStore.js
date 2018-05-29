@@ -1,6 +1,6 @@
 import { action, computed, decorate, observable } from 'mobx'
 
-import { fetchSomeInfo } from '../../utils/api'
+import { fetchSomeInfo } from '../utils/api'
 
 const storageKey = 'theRemoteList'
 
