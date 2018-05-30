@@ -40,7 +40,7 @@ const Main = inject('sessionStore')(
         super(props)
 
         this.state = {
-          loginModal: false
+          loginModal: true
         }
       }
 

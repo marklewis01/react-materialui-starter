@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import green from '@material-ui/core/colors/green'
 import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import green from '@material-ui/core/colors/green'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
 import withMobileDialog from '@material-ui/core/withMobileDialog'
 
 import { auth } from '../firebase'
@@ -40,6 +41,12 @@ const styles = theme => ({
     left: '50%',
     marginTop: -12,
     marginLeft: -12
+  },
+  link: {
+    textAlign: 'right',
+    marginTop: '1rem',
+    marginBottom: '1rem',
+    textDecoration: 'none'
   }
 })
 
@@ -112,8 +119,12 @@ class Login extends Component {
     const isInvalid = password === '' || email === ''
 
     return (
-      <Dialog open={loginModal} onBackdropClick={this.onCloseModal}>
-        <DialogTitle>Log in to your account</DialogTitle>
+      <Dialog
+        open={loginModal}
+        onBackdropClick={this.onCloseModal}
+        aria-labelledby="log-in-form"
+      >
+        <DialogTitle id="log-in-form">Log in to your account</DialogTitle>
         <DialogContent>
           <form onSubmit={this.onSubmit}>
             <TextField
@@ -149,24 +160,27 @@ class Login extends Component {
                 }
               }}
             />
-          </form>
-        </DialogContent>
-        <DialogActions className={classes.root}>
-          <Button onClick={this.onCloseModal} disabled={loading}>
-            Register
-          </Button>
-          <div className={classes.btnWrapper}>
-            <div className={classes.wrapper}>
-              <Button onClick={this.onCloseModal} disabled={loading}>
-                Cancel
-              </Button>
-            </div>
-            <div className={classes.wrapper}>
+
+            <Typography
+              variant="caption"
+              className={classes.link}
+              color="primary"
+            >
+              <Link
+                to={routes.PASSWORD_FORGET}
+                className={classes.link}
+                disabled={loading}
+              >
+                Forgot your password?
+              </Link>
+            </Typography>
+            <div>
               <Button
+                fullWidth={true}
                 variant="raised"
                 color="primary"
                 className={classes.buttonSuccess}
-                disabled={loading}
+                disabled={loading || isInvalid}
                 type="submit"
                 onClick={this.onSubmit}
               >
@@ -179,8 +193,18 @@ class Login extends Component {
                 />
               )}
             </div>
+          </form>
+        </DialogContent>
+        <DialogContent>
+          <div>
+            <Typography align="center" paragraph={true} variant="body1">
+              Don't have an account?
+            </Typography>
+            <Button fullWidth={true} variant="raised" color="secondary">
+              Create an Account
+            </Button>
           </div>
-        </DialogActions>
+        </DialogContent>
       </Dialog>
     )
   }
