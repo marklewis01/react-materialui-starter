@@ -11,7 +11,7 @@ import Dashboard from '../Dashboard'
 import AccountPage from '../Account'
 import LandingPage from '../Landing'
 import RegisterPage from '../Register'
-import LoginForm from '../LoginForm'
+import LoginModal from '../Login'
 import PasswordForgetPage from '../PasswordForget'
 import * as routes from '../../routes'
 
@@ -92,7 +92,7 @@ const Main = inject('sessionStore')(
                 path={routes.PASSWORD_FORGET}
                 component={() => <PasswordForgetPage />}
               />
-              <LoginForm
+              <LoginModal
                 loginModal={this.state.loginModal}
                 toggleLogin={this.toggleLoginModal}
                 closeLogin={this.closeLoginModal}
