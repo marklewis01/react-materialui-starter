@@ -1,6 +1,8 @@
-Demo: https://codesandbox.io/s/github/marklewis01/react-mobx-materialui-starter
+Demo: ~~https://codesandbox.io/s/github/marklewis01/react-mobx-materialui-starter~~
 
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+_[Due to Firebase integration (and not including API key in this code), CodeSandbox will error. I aim to use Firebase Hosting to host the demo in the future.]_
+
+> This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 ## Table of Contents
 
