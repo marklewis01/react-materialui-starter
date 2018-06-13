@@ -11,7 +11,7 @@ import AccountPage from '../Account'
 import LandingPage from '../Landing'
 // import RegisterPage from '../Register'
 import LoginModal from '../Login'
-import PasswordForgetPage from '../PasswordForget'
+// import PasswordForgetPage from '../PasswordForget'
 import * as routes from '../../routes'
 
 const styles = theme => ({
