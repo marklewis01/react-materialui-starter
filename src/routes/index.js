@@ -1,6 +1,6 @@
 export const LANDING = '/'
-export const REGISTER = '/signup'
-export const LOGIN = '/login'
+// export const REGISTER = '/signup'
+// export const LOGIN = '/login'
 export const PASSWORD_FORGET = '/pw-forget'
 export const DASHBOARD = '/dashboard'
 export const ACCOUNT = '/account'

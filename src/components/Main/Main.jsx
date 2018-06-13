@@ -6,11 +6,10 @@ import { withStyles } from '@material-ui/core/styles'
 
 import TopNav from '../TopNav'
 import SideNav from '../SideNav'
-
 import Dashboard from '../Dashboard'
 import AccountPage from '../Account'
 import LandingPage from '../Landing'
-import RegisterPage from '../Register'
+// import RegisterPage from '../Register'
 import LoginModal from '../Login'
 import PasswordForgetPage from '../PasswordForget'
 import * as routes from '../../routes'
@@ -40,7 +39,7 @@ const Main = inject('sessionStore')(
         super(props)
 
         this.state = {
-          loginModal: true
+          loginModal: false
         }
       }
 
@@ -74,23 +73,6 @@ const Main = inject('sessionStore')(
                 exact
                 path={routes.LANDING}
                 component={() => <LandingPage />}
-              />
-              <Route
-                path={routes.REGISTER}
-                component={() => <RegisterPage />}
-              />
-              {/* <Route
-                path={'/'}
-                component={() => (
-                  <LoginForm
-                    loginModal={this.state.loginModal}
-                    toggleLogin={this.toggleLoginModal}
-                  />
-                )}
-              /> */}
-              <Route
-                path={routes.PASSWORD_FORGET}
-                component={() => <PasswordForgetPage />}
               />
               <LoginModal
                 loginModal={this.state.loginModal}

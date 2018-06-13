@@ -144,9 +144,9 @@ class NavigationAuth extends React.Component {
 
 const NavigationNonAuth = ({ toggleModal }) => (
   <div>
-    <Link to={routes.REGISTER}>
-      <Button>Register</Button>
-    </Link>
+    <Button onClick={toggleModal} target={'register'}>
+      Register
+    </Button>
     <Button onClick={toggleModal}>Login</Button>
   </div>
 )

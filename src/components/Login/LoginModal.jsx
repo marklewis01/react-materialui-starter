@@ -249,6 +249,7 @@ class LoginModal extends Component {
         fields: [
           {
             id: 'email',
+            autoFocus: true,
             label: 'Email Address',
             type: 'email',
             autoComplete: 'email',
@@ -343,7 +344,7 @@ class LoginModal extends Component {
                 disableFocusRipple={true}
                 disableRipple={true}
                 size="small"
-                color="prim"
+                color="primary"
                 onClick={() =>
                   this.changeComponent({
                     value: screen[option].altLinkTarget
@@ -401,7 +402,7 @@ class LoginModal extends Component {
                   disableFocusRipple={true}
                   disableRipple={true}
                   size="small"
-                  color="prim"
+                  color="primary"
                   onClick={() =>
                     this.changeComponent({
                       value: 'login'

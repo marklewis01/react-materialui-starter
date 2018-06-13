@@ -18,8 +18,9 @@
 .env.development.local
 .env.test.local
 .env.production.local
-/src/components/_old
-/src/components/_temp
+*.code-workspace
+/_old
+/_temp
 
 npm-debug.log*
 yarn-debug.log*
