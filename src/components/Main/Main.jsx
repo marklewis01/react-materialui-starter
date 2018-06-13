@@ -9,9 +9,7 @@ import SideNav from '../SideNav'
 import Dashboard from '../Dashboard'
 import AccountPage from '../Account'
 import LandingPage from '../Landing'
-// import RegisterPage from '../Register'
 import LoginModal from '../Login'
-// import PasswordForgetPage from '../PasswordForget'
 import * as routes from '../../routes'
 
 const styles = theme => ({
