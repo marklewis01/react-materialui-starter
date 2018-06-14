@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, BrowserRouter as Router } from 'react-router-dom'
-import { inject, observer } from 'mobx-react'
+import { Subscribe } from 'unstated'
 
 import { withStyles } from '@material-ui/core/styles'
 
@@ -10,6 +10,8 @@ import Dashboard from '../Dashboard'
 import AccountPage from '../Account'
 import LandingPage from '../Landing'
 import LoginModal from '../Login'
+
+import SessionContainer from '../../containers/session'
 import * as routes from '../../routes'
 
 const styles = theme => ({
@@ -30,37 +32,37 @@ const styles = theme => ({
   }
 })
 
-const Main = inject('sessionStore')(
-  observer(
-    class ObserverMain extends React.Component {
-      constructor(props) {
-        super(props)
+class Main extends React.Component {
+  constructor(props) {
+    super(props)
 
-        this.state = {
-          loginModal: false
-        }
-      }
+    this.state = {
+      loginModal: false
+    }
+  }
 
-      toggleLoginModal = () => {
-        const loginModal = !this.state.loginModal
-        this.setState({
-          loginModal: loginModal
-        })
-      }
+  toggleLoginModal = () => {
+    const loginModal = !this.state.loginModal
+    this.setState({
+      loginModal: loginModal
+    })
+  }
 
-      closeLoginModal = () => {
-        this.setState({
-          loginModal: false
-        })
-      }
+  closeLoginModal = () => {
+    this.setState({
+      loginModal: false
+    })
+  }
 
-      render() {
-        const { classes, sessionStore } = this.props
-        return (
-          <Router>
+  render() {
+    const { classes } = this.props
+    return (
+      <Router>
+        <Subscribe to={[SessionContainer]}>
+          {session => (
             <div
               className={
-                sessionStore.authUser ? classes.authenticated : classes.public
+                session.state.authUser ? classes.authenticated : classes.public
               }
             >
               <TopNav toggleModal={this.toggleLoginModal} />
@@ -78,11 +80,11 @@ const Main = inject('sessionStore')(
                 closeLogin={this.closeLoginModal}
               />
             </div>
-          </Router>
-        )
-      }
-    }
-  )
-)
+          )}
+        </Subscribe>
+      </Router>
+    )
+  }
+}
 
 export default withStyles(styles, { withTheme: true })(Main)

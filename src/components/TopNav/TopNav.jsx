@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { inject, observer } from 'mobx-react'
-import { compose } from 'recompose'
+import { Subscribe } from 'unstated'
 import { Link } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles'
@@ -18,6 +17,7 @@ import { Typography } from '@material-ui/core'
 import userAvatar from '../../assets/img/uxceo-128.jpg'
 
 import { auth } from '../../firebase'
+import SessionContainer from '../../containers/session'
 import * as routes from '../../routes'
 
 const styles = theme => ({
@@ -51,33 +51,37 @@ class TopNav extends Component {
   }
 
   render() {
-    const { classes, sessionStore, toggleModal } = this.props
+    const { classes, toggleModal } = this.props
     const { anchorEl } = this.state
     const open = Boolean(anchorEl)
 
     return (
-      <AppBar position="absolute" className={classes.root} elevation={1}>
-        <Toolbar className={classes.toolbar}>
-          <Link to={routes.LANDING}>
-            <Typography>Brand / Logo</Typography>
-          </Link>
-          <Hidden mdUp>
-            <IconButton
-              className={classes.menuButton}
-              color="primary"
-              aria-label="Menu"
-              onClick={this.handleMenuToggle}
-            >
-              <MenuIcon />
-            </IconButton>
-          </Hidden>
-          {sessionStore.authUser ? (
-            <NavigationAuth classes={classes} menuOpen={open} />
-          ) : (
-            <NavigationNonAuth toggleModal={toggleModal} />
-          )}
-        </Toolbar>
-      </AppBar>
+      <Subscribe to={[SessionContainer]}>
+        {session => (
+          <AppBar position="absolute" className={classes.root} elevation={1}>
+            <Toolbar className={classes.toolbar}>
+              <Link to={routes.LANDING}>
+                <Typography>Brand / Logo</Typography>
+              </Link>
+              <Hidden mdUp>
+                <IconButton
+                  className={classes.menuButton}
+                  color="primary"
+                  aria-label="Menu"
+                  onClick={this.handleMenuToggle}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Hidden>
+              {session.state.authUser ? (
+                <NavigationAuth classes={classes} menuOpen={open} />
+              ) : (
+                <NavigationNonAuth toggleModal={toggleModal} />
+              )}
+            </Toolbar>
+          </AppBar>
+        )}
+      </Subscribe>
     )
   }
 }
@@ -151,8 +155,4 @@ const NavigationNonAuth = ({ toggleModal }) => (
   </div>
 )
 
-export default compose(
-  withStyles(styles, { withTheme: true }),
-  inject('sessionStore'),
-  observer
-)(TopNav)
+export default withStyles(styles, { withTheme: true })(TopNav)

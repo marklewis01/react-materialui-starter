@@ -1,7 +1,9 @@
 import React from 'react'
-import { inject, observer } from 'mobx-react'
 
+import { Subscribe } from 'unstated'
 import { withStyles } from '@material-ui/core/styles'
+
+import SessionContainer from '../../containers/session'
 
 const styles = theme => ({
   authenticated: {
@@ -21,14 +23,18 @@ const styles = theme => ({
   }
 })
 
-const Wrapper = inject('sessionStore')(
-  observer(({ children, classes, sessionStore, theme }) => (
-    <div
-      className={sessionStore.authUser ? classes.authenticated : classes.public}
-    >
-      {children}
-    </div>
-  ))
+const Wrapper = ({ children, classes, theme }) => (
+  <Subscribe to={[SessionContainer]}>
+    {session => (
+      <div
+        className={
+          session.state.authUser ? classes.authenticated : classes.public
+        }
+      >
+        {children}
+      </div>
+    )}
+  </Subscribe>
 )
 
 export default withStyles(styles, { withTheme: true })(Wrapper)

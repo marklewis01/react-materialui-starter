@@ -1,24 +1,25 @@
 import React, { Component } from 'react'
-import { inject, observer } from 'mobx-react'
-import { compose } from 'recompose'
+import { Subscribe } from 'unstated'
 
-import withAuthorization from '../Session/withAuthorization'
+import { withAuthorization } from '../Session'
+import SessionContainer from '../../containers/session'
 
 class Dashboard extends Component {
   render() {
     return (
-      <div>
-        <h1>Dashboard</h1>
-        <p>The Dashbord is accessible by every signed in user.</p>
-      </div>
+      <Subscribe to={[SessionContainer]}>
+        {session => (
+          <div>
+            <h1>Dashboard</h1>
+            <p>The Dashbord is accessible by every signed in user.</p>
+            <p>{session.state.authUser.email}</p>
+          </div>
+        )}
+      </Subscribe>
     )
   }
 }
 
-const authCondition = authUser => Boolean(authUser)
+const authCondition = authUser => Boolean(authUser) // don't know if this is working with unstated
 
-export default compose(
-  withAuthorization(authCondition),
-  inject('userStore'),
-  observer
-)(Dashboard)
+export default withAuthorization(authCondition)(Dashboard)

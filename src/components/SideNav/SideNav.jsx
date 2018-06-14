@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react'
-import { inject, observer } from 'mobx-react'
+import { Subscribe } from 'unstated'
+import SessionContainer from '../../containers/session'
+
 import { NavLink } from 'react-router-dom'
 
 import PropTypes from 'prop-types'
@@ -59,102 +61,102 @@ const styles = theme => ({
   }
 })
 
-const SideNav = inject('sessionStore')(
-  observer(
-    class ObserverSideNav extends React.Component {
-      constructor(props) {
-        super(props)
+class SideNav extends React.Component {
+  constructor(props) {
+    super(props)
 
-        this.state = {
-          sidebar: false
-        }
-      }
+    this.state = {
+      sidebar: false
+    }
+  }
 
-      handleDrawerOpen = () => {
-        this.setState({
-          sidebar: true
-        })
-      }
+  handleDrawerOpen = () => {
+    this.setState({
+      sidebar: true
+    })
+  }
 
-      handleDrawerClose = () => {
-        this.setState({
-          sidebar: false
-        })
-      }
+  handleDrawerClose = () => {
+    this.setState({
+      sidebar: false
+    })
+  }
 
-      handleDrawerToggle = () => {
-        const sidebar = this.state.sidebar
-        this.setState({
-          sidebar: !sidebar
-        })
-      }
+  handleDrawerToggle = () => {
+    const sidebar = this.state.sidebar
+    this.setState({
+      sidebar: !sidebar
+    })
+  }
 
-      render() {
-        const { classes, theme, sessionStore } = this.props
-        const { sidebar } = this.state
+  render() {
+    const { classes, theme } = this.props
+    const { sidebar } = this.state
 
-        const menu = [
+    const menu = [
+      {
+        sectionName: classes.sidenavPrimary,
+        sectionItems: [
           {
-            sectionName: classes.sidenavPrimary,
-            sectionItems: [
-              {
-                icon: 'view_list',
-                to: '/list',
-                label: 'List'
-              },
-              {
-                icon: 'pan_tool',
-                to: '/drag',
-                label: 'Drag'
-              }
-            ]
+            icon: 'view_list',
+            to: '/list',
+            label: 'List'
           },
           {
-            sectionName: classes.sidenavFooter,
-            sectionItems: [
-              {
-                icon: 'settings',
-                to: '/settings',
-                label: 'Settings'
-              }
-            ]
+            icon: 'pan_tool',
+            to: '/drag',
+            label: 'Drag'
           }
         ]
+      },
+      {
+        sectionName: classes.sidenavFooter,
+        sectionItems: [
+          {
+            icon: 'settings',
+            to: '/settings',
+            label: 'Settings'
+          }
+        ]
+      }
+    ]
 
-        const drawer = (
-          <Fragment>
-            <div className={classes.sidenavBrand}>
-              <NavLink to="/" className={classes.sidenavBrandContent}>
-                <Typography variant="title" color="inherit">
-                  SomeApp
-                </Typography>
-              </NavLink>
-              <NavLink to="/">
-                <DonutLargeIcon className={classes.sidenavBrandContent} />
-              </NavLink>
-            </div>
-            {menu.map((section, index) => (
-              <div key={index} className={section.sectionName}>
-                {section.sectionItems.map((item, i) => (
-                  <List key={index + '-' + i} component="nav">
-                    <NavLink to={item.to} onClick={this.handleDrawerClose}>
-                      <ListItem button>
-                        <ListItemText primary={item.label} />
-                        <ListItemIcon>
-                          <Icon>{item.icon}</Icon>
-                        </ListItemIcon>
-                      </ListItem>
-                    </NavLink>
-                  </List>
-                ))}
-              </div>
+    const drawer = (
+      <Fragment>
+        <div className={classes.sidenavBrand}>
+          <NavLink to="/" className={classes.sidenavBrandContent}>
+            <Typography variant="title" color="inherit">
+              SomeApp
+            </Typography>
+          </NavLink>
+          <NavLink to="/">
+            <DonutLargeIcon className={classes.sidenavBrandContent} />
+          </NavLink>
+        </div>
+        {menu.map((section, index) => (
+          <div key={index} className={section.sectionName}>
+            {section.sectionItems.map((item, i) => (
+              <List key={index + '-' + i} component="nav">
+                <NavLink to={item.to} onClick={this.handleDrawerClose}>
+                  <ListItem button>
+                    <ListItemText primary={item.label} />
+                    <ListItemIcon>
+                      <Icon>{item.icon}</Icon>
+                    </ListItemIcon>
+                  </ListItem>
+                </NavLink>
+              </List>
             ))}
-          </Fragment>
-        )
+          </div>
+        ))}
+      </Fragment>
+    )
 
-        return (
+    return (
+      <Subscribe to={[SessionContainer]}>
+        {session => (
           <div>
-            {sessionStore.authUser ? (
+            {session.state.authUser ? (
               <Fragment>
                 <Hidden mdUp>
                   <Drawer
@@ -193,11 +195,11 @@ const SideNav = inject('sessionStore')(
               <Fragment />
             )}
           </div>
-        )
-      }
-    }
-  )
-)
+        )}
+      </Subscribe>
+    )
+  }
+}
 
 SideNav.propTypes = {
   classes: PropTypes.object.isRequired,
