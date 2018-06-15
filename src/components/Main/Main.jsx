@@ -10,6 +10,7 @@ import SpeedDial from '../SpeedDial'
 import Dashboard from '../../views/Dashboard'
 import AccountPage from '../../views/Account'
 import LandingPage from '../Landing'
+import NewPage from '../../views/NewPage'
 import LoginModal from '../Login'
 
 import SessionContainer from '../../containers/session'
@@ -73,13 +74,14 @@ class Main extends React.Component {
               <TopNav toggleModal={this.toggleLoginModal} />
               {/* <SideNav /> */}
               <SpeedDial />
-              <Route path={routes.DASHBOARD} component={() => <Dashboard />} />
               <Route path={routes.ACCOUNT} component={() => <AccountPage />} />
+              <Route path={routes.DASHBOARD} component={() => <Dashboard />} />
               <Route
                 exact
                 path={routes.LANDING}
                 component={() => <LandingPage />}
               />
+              <Route path={routes.NEWDOC} component={() => <NewPage />} />
               <LoginModal
                 loginModal={this.state.loginModal}
                 toggleLogin={this.toggleLoginModal}

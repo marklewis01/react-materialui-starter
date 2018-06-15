@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
+import { withRouter } from 'react-router-dom'
+
 import SpeedDial from '@material-ui/lab/SpeedDial'
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon'
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
 import HomeIcon from '@material-ui/icons/Home'
 import AddIcon from '@material-ui/icons/NoteAdd'
-import PrintIcon from '@material-ui/icons/Print'
-import ShareIcon from '@material-ui/icons/Share'
-import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/ModeEdit'
+
+import * as routes from '../../routes'
 
 const styles = theme => ({
   root: {
@@ -25,14 +25,17 @@ const styles = theme => ({
 })
 
 const actions = [
-  { icon: <HomeIcon />, name: 'Home' },
-  { icon: <AddIcon />, name: 'Add New Document' }
+  { icon: <HomeIcon />, name: 'Home', link: routes.DASHBOARD },
+  { icon: <AddIcon />, name: 'Add New Document', link: routes.NEWDOC }
 ]
 
 class NavSpeedDial extends React.Component {
-  state = {
-    open: false,
-    hidden: false
+  constructor(props) {
+    super(props)
+    this.state = {
+      open: false,
+      hidden: false
+    }
   }
 
   handleVisibility = () => {
@@ -42,7 +45,9 @@ class NavSpeedDial extends React.Component {
     })
   }
 
-  handleClick = () => {
+  handleClick = link => {
+    this.props.history.push(link)
+
     this.setState({
       open: !this.state.open
     })
@@ -80,14 +85,17 @@ class NavSpeedDial extends React.Component {
         onMouseLeave={this.handleClose}
         open={open}
       >
-        {actions.map(action => (
-          <SpeedDialAction
-            key={action.name}
-            icon={action.icon}
-            tooltipTitle={action.name}
-            onClick={this.handleClick}
-          />
-        ))}
+        {actions.map(action => {
+          const { link } = action
+          return (
+            <SpeedDialAction
+              key={action.name}
+              icon={action.icon}
+              tooltipTitle={action.name}
+              onClick={() => this.handleClick(link)}
+            />
+          )
+        })}
       </SpeedDial>
     )
   }
@@ -97,4 +105,6 @@ NavSpeedDial.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(NavSpeedDial)
+const NavSpeedDialWithRouter = withRouter(NavSpeedDial)
+
+export default withStyles(styles)(NavSpeedDialWithRouter)
