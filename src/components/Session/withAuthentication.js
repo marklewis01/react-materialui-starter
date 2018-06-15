@@ -1,4 +1,5 @@
 import React from 'react'
+import { Subscribe } from 'unstated'
 
 import { firebase } from '../../firebase'
 import SessionContainer from '../../containers/session'
@@ -14,7 +15,11 @@ const withAuthentication = Component => {
     }
 
     render() {
-      return <Component />
+      return (
+        <Subscribe to={[SessionContainer]}>
+          {session => <Component authUser={session.state.authUser} />}
+        </Subscribe>
+      )
     }
   }
 

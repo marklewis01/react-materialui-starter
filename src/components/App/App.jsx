@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 
@@ -6,10 +6,10 @@ import { withAuthentication } from '../Session'
 import Main from '../Main'
 
 const App = () => (
-  <div>
+  <Fragment>
     <CssBaseline />
     <Main />
-  </div>
+  </Fragment>
 )
 
 export default withAuthentication(App)

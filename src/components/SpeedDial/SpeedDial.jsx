@@ -11,6 +11,7 @@ import AddIcon from '@material-ui/icons/NoteAdd'
 import EditIcon from '@material-ui/icons/ModeEdit'
 
 import * as routes from '../../routes'
+import { withAuthentication } from '../Session'
 
 const styles = theme => ({
   root: {
@@ -70,36 +71,42 @@ class NavSpeedDial extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, authUser } = this.props
     const { hidden, open } = this.state
 
-    return (
-      <SpeedDial
-        ariaLabel="Nav SpeedDial"
-        classes={{ root: classes.root, actions: classes.actions }}
-        hidden={hidden}
-        icon={<SpeedDialIcon openIcon={<EditIcon />} />}
-        onBlur={this.handleClose}
-        onClick={() => this.handleClick()}
-        onClose={this.handleClose}
-        onFocus={this.handleOpen}
-        onMouseEnter={this.handleOpen}
-        onMouseLeave={this.handleClose}
-        open={open}
-      >
-        {actions.map(action => {
-          const { link } = action
-          return (
-            <SpeedDialAction
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-              onClick={() => this.handleClick(link)}
-            />
-          )
-        })}
-      </SpeedDial>
-    )
+    {
+      if (authUser) {
+        return (
+          <SpeedDial
+            ariaLabel="Nav SpeedDial"
+            classes={{ root: classes.root, actions: classes.actions }}
+            hidden={hidden}
+            icon={<SpeedDialIcon openIcon={<EditIcon />} />}
+            onBlur={this.handleClose}
+            onClick={() => this.handleClick()}
+            onClose={this.handleClose}
+            onFocus={this.handleOpen}
+            onMouseEnter={this.handleOpen}
+            onMouseLeave={this.handleClose}
+            open={open}
+          >
+            {actions.map(action => {
+              const { link } = action
+              return (
+                <SpeedDialAction
+                  key={action.name}
+                  icon={action.icon}
+                  tooltipTitle={action.name}
+                  onClick={() => this.handleClick(link)}
+                />
+              )
+            })}
+          </SpeedDial>
+        )
+      } else {
+        return null
+      }
+    }
   }
 }
 
@@ -108,5 +115,6 @@ NavSpeedDial.propTypes = {
 }
 
 const NavSpeedDialWithRouter = withRouter(NavSpeedDial)
+const StyledNav = withStyles(styles)(NavSpeedDialWithRouter)
 
-export default withStyles(styles)(NavSpeedDialWithRouter)
+export default withAuthentication(StyledNav)

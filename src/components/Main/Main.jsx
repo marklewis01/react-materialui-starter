@@ -72,7 +72,6 @@ class Main extends React.Component {
               }
             >
               <TopNav toggleModal={this.toggleLoginModal} />
-              {/* <SideNav /> */}
               <SpeedDial />
               <Route path={routes.ACCOUNT} component={() => <AccountPage />} />
               <Route path={routes.DASHBOARD} component={() => <Dashboard />} />
