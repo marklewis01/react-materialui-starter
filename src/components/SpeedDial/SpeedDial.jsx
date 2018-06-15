@@ -46,7 +46,9 @@ class NavSpeedDial extends React.Component {
   }
 
   handleClick = link => {
-    this.props.history.push(link)
+    if (link) {
+      this.props.history.push(link)
+    }
 
     this.setState({
       open: !this.state.open
@@ -78,7 +80,7 @@ class NavSpeedDial extends React.Component {
         hidden={hidden}
         icon={<SpeedDialIcon openIcon={<EditIcon />} />}
         onBlur={this.handleClose}
-        onClick={this.handleClick}
+        onClick={() => this.handleClick()}
         onClose={this.handleClose}
         onFocus={this.handleOpen}
         onMouseEnter={this.handleOpen}
