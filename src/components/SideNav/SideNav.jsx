@@ -101,11 +101,6 @@ class SideNav extends React.Component {
             icon: 'view_list',
             to: '/list',
             label: 'List'
-          },
-          {
-            icon: 'pan_tool',
-            to: '/drag',
-            label: 'Drag'
           }
         ]
       },
@@ -139,7 +134,7 @@ class SideNav extends React.Component {
               <List key={index + '-' + i} component="nav">
                 <NavLink to={item.to} onClick={this.handleDrawerClose}>
                   <ListItem button>
-                    <ListItemText primary={item.label} />
+                    <ListItemText>{item.label}</ListItemText>
                     <ListItemIcon>
                       <Icon>{item.icon}</Icon>
                     </ListItemIcon>

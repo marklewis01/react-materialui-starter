@@ -6,8 +6,8 @@ import { withStyles } from '@material-ui/core/styles'
 
 import TopNav from '../TopNav'
 import SideNav from '../SideNav'
-import Dashboard from '../Dashboard'
-import AccountPage from '../Account'
+import Dashboard from '../../views/Dashboard'
+import AccountPage from '../../views/Account'
 import LandingPage from '../Landing'
 import LoginModal from '../Login'
 
@@ -18,9 +18,13 @@ const styles = theme => ({
   authenticated: {
     marginTop: '56px',
     minHeight: '100%',
-    paddingLeft: '48px',
+    padding: '.5rem',
     [theme.breakpoints.up('sm')]: {
       marginTop: '64px'
+    },
+    [theme.breakpoints.up('md')]: {
+      marginLeft: '48px',
+      padding: '1rem'
     }
   },
   public: {
