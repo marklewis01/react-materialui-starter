@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 import TopNav from '../TopNav'
 import SideNav from '../SideNav'
+import SpeedDial from '../SpeedDial'
 import Dashboard from '../../views/Dashboard'
 import AccountPage from '../../views/Account'
 import LandingPage from '../Landing'
@@ -23,7 +24,7 @@ const styles = theme => ({
       marginTop: '64px'
     },
     [theme.breakpoints.up('md')]: {
-      marginLeft: '48px',
+      marginLeft: theme.spacing.unit * 8,
       padding: '1rem'
     }
   },
@@ -70,7 +71,8 @@ class Main extends React.Component {
               }
             >
               <TopNav toggleModal={this.toggleLoginModal} />
-              <SideNav />
+              {/* <SideNav /> */}
+              <SpeedDial />
               <Route path={routes.DASHBOARD} component={() => <Dashboard />} />
               <Route path={routes.ACCOUNT} component={() => <AccountPage />} />
               <Route
