@@ -1,4 +1,4 @@
-Demo: To help illustrate the project I have published it using GitHub Pages. As the app uses React Router, the routes break the app if you manually refresh your page whilst exploring the app. If you don't refresh or manually target an endpoint, React Router does work. This is just a limitation of GitHub Pages. If you know a solution to this, please let me know. The link to the project is: https://marklewis01.github.io/react-materialui-starter/
+Demo: To help illustrate the project I have published it on FireBase Hosting: https://material-ui-mobx-starter.firebaseapp.com/
 
 > This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
