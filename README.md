@@ -1,4 +1,4 @@
-Demo: To help illustrate the project I have published it on FireBase Hosting: [Demo](https://material-ui-mobx-starter.firebaseapp.com/)
+Demo: To help illustrate the project I have published it on Firebase Hosting: [Demo](https://material-ui-mobx-starter.firebaseapp.com/)
 
 > This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
@@ -44,25 +44,26 @@ my-app/
     index.html
     favicon.ico
   src/
+    assets/
     components/
       App.css
       App.js
     containers/
-    semantic/
-    stores/
+    firebase/
+    routes/
+    stores/ [no longer in use]
     utils/
+    views/
     index.js
 ```
 
-I'm in the process of moving the 'view/layout' components into their own directory for clarity. The target directory is currently `./src/containers/`, however this may be renamed to `./src/views/` in time.
-
 ## Available Scripts
 
-As this project is based on [Create React App](https://github.com/facebookincubator/create-react-app), those scripts remain available for use. In the project directory, you can run:
+As this project is based on [Create React App](https://github.com/facebookincubator/create-react-app), those scripts remain available for use. In the project directory,the main scripts I use are:
 
 - `npm start`
-- `npm test`
-- `npm run build`
+- `npm run build` - if only a local build is required
+- `npm run deploy` - will build and deploy to Firebase Hosting
 
 ## Something Missing?
 
