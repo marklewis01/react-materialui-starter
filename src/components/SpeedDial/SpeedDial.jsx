@@ -8,7 +8,8 @@ import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon'
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
 import HomeIcon from '@material-ui/icons/Home'
 import AddIcon from '@material-ui/icons/NoteAdd'
-import EditIcon from '@material-ui/icons/ModeEdit'
+import PagesIcon from '@material-ui/icons/Pages'
+import SettingsIcon from '@material-ui/icons/Settings'
 
 import * as routes from '../../routes'
 import { withAuthentication } from '../Session'
@@ -27,7 +28,9 @@ const styles = theme => ({
 
 const actions = [
   { icon: <HomeIcon />, name: 'Home', link: routes.DASHBOARD },
-  { icon: <AddIcon />, name: 'Add New Document', link: routes.NEWDOC }
+  { icon: <AddIcon />, name: 'Add New Document', link: routes.NEWDOC },
+  { icon: <PagesIcon />, name: 'Courses', link: routes.COURSES },
+  { icon: <SettingsIcon />, name: 'Account Settings', link: routes.ACCOUNT }
 ]
 
 class NavSpeedDial extends React.Component {
@@ -74,38 +77,36 @@ class NavSpeedDial extends React.Component {
     const { classes, authUser } = this.props
     const { hidden, open } = this.state
 
-    {
-      if (authUser) {
-        return (
-          <SpeedDial
-            ariaLabel="Nav SpeedDial"
-            classes={{ root: classes.root, actions: classes.actions }}
-            hidden={hidden}
-            icon={<SpeedDialIcon openIcon={<EditIcon />} />}
-            onBlur={this.handleClose}
-            onClick={() => this.handleClick()}
-            onClose={this.handleClose}
-            onFocus={this.handleOpen}
-            onMouseEnter={this.handleOpen}
-            onMouseLeave={this.handleClose}
-            open={open}
-          >
-            {actions.map(action => {
-              const { link } = action
-              return (
-                <SpeedDialAction
-                  key={action.name}
-                  icon={action.icon}
-                  tooltipTitle={action.name}
-                  onClick={() => this.handleClick(link)}
-                />
-              )
-            })}
-          </SpeedDial>
-        )
-      } else {
-        return null
-      }
+    if (authUser) {
+      return (
+        <SpeedDial
+          ariaLabel="Nav SpeedDial"
+          classes={{ root: classes.root, actions: classes.actions }}
+          hidden={hidden}
+          icon={<SpeedDialIcon />}
+          onBlur={this.handleClose}
+          onClick={() => this.handleClick()}
+          onClose={this.handleClose}
+          onFocus={this.handleOpen}
+          onMouseEnter={this.handleOpen}
+          onMouseLeave={this.handleClose}
+          open={open}
+        >
+          {actions.map(action => {
+            const { link } = action
+            return (
+              <SpeedDialAction
+                key={action.name}
+                icon={action.icon}
+                tooltipTitle={action.name}
+                onClick={() => this.handleClick(link)}
+              />
+            )
+          })}
+        </SpeedDial>
+      )
+    } else {
+      return null
     }
   }
 }

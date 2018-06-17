@@ -5,7 +5,6 @@ import { Subscribe } from 'unstated'
 import { withStyles } from '@material-ui/core/styles'
 
 import TopNav from '../TopNav'
-import SideNav from '../SideNav'
 import SpeedDial from '../SpeedDial'
 import Dashboard from '../../views/Dashboard'
 import AccountPage from '../../views/Account'
@@ -15,6 +14,7 @@ import LoginModal from '../Login'
 
 import SessionContainer from '../../containers/session'
 import * as routes from '../../routes'
+import CoursesPage from '../../views/CoursesPage'
 
 const styles = theme => ({
   authenticated: {
@@ -74,6 +74,8 @@ class Main extends React.Component {
               <TopNav toggleModal={this.toggleLoginModal} />
               <SpeedDial />
               <Route path={routes.ACCOUNT} component={() => <AccountPage />} />
+              <Route path={routes.COURSES} component={() => <CoursesPage />} />
+
               <Route path={routes.DASHBOARD} component={() => <Dashboard />} />
               <Route
                 exact

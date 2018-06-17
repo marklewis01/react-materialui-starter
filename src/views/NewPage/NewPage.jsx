@@ -2,7 +2,7 @@ import React from 'react'
 import { Subscribe } from 'unstated'
 import SessionContainer from '../../containers/session'
 
-import { Avatar, Grid, Paper, Typography } from '@material-ui/core'
+import { Grid, Paper, Typography } from '@material-ui/core'
 
 import withAuthorization from '../../components/Session/withAuthorization'
 
