@@ -15,6 +15,7 @@ import LoginModal from '../Login'
 import SessionContainer from '../../containers/session'
 import * as routes from '../../routes'
 import CoursesPage from '../../views/CoursesPage'
+import TodosPage from '../../views/TodosPage'
 
 const styles = theme => ({
   authenticated: {
@@ -83,6 +84,7 @@ class Main extends React.Component {
                 component={() => <LandingPage />}
               />
               <Route path={routes.NEWDOC} component={() => <NewPage />} />
+              <Route path={routes.TODOS} component={() => <TodosPage />} />
               <LoginModal
                 loginModal={this.state.loginModal}
                 toggleLogin={this.toggleLoginModal}

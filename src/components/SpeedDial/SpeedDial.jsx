@@ -6,8 +6,9 @@ import { withRouter } from 'react-router-dom'
 import SpeedDial from '@material-ui/lab/SpeedDial'
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon'
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
-import HomeIcon from '@material-ui/icons/Home'
 import AddIcon from '@material-ui/icons/NoteAdd'
+import TodoIcon from '@material-ui/icons/CheckBox'
+import HomeIcon from '@material-ui/icons/Home'
 import PagesIcon from '@material-ui/icons/Pages'
 import SettingsIcon from '@material-ui/icons/Settings'
 
@@ -28,6 +29,7 @@ const styles = theme => ({
 
 const actions = [
   { icon: <HomeIcon />, name: 'Home', link: routes.DASHBOARD },
+  { icon: <TodoIcon />, name: 'Task List', link: routes.TODOS },
   { icon: <AddIcon />, name: 'Add New Document', link: routes.NEWDOC },
   { icon: <PagesIcon />, name: 'Courses', link: routes.COURSES },
   { icon: <SettingsIcon />, name: 'Account Settings', link: routes.ACCOUNT }
