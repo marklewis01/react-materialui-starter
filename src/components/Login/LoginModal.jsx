@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import withMobileDialog from '@material-ui/core/withMobileDialog'
 
-import { auth, db } from '../../firebase'
+import { auth, firebase } from '../../firebase'
 import * as routes from '../../routes'
 
 const INITIAL_STATE = {
@@ -174,7 +174,8 @@ class LoginModal extends Component {
             .then(authUser => {
               console.log('about to call firestore', authUser)
               // Create a user in your own accessible Firebase Database too
-              db.doCreateUser(authUser.user.uid, familyName, givenName, email)
+              firebase.firestore
+                .doCreateUser(authUser.user.uid, familyName, givenName, email)
                 .then(() => {
                   this.setState(() => ({ ...INITIAL_STATE }))
                   history.push(routes.DASHBOARD)
