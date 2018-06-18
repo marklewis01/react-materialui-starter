@@ -1,7 +1,36 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write;
+
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+
+    match /todos/{todoId=**} {
+      // Only the authenticated user who authored the document can read or write
+      allow read, write: if isSignedIn()
+    }
+
+    function isSignedIn() {
+      return request.auth != null
+    }
+
+    function emailVerified() {
+      return request.auth.token.email_verified
+    }
+
+    function isOwner(userId) {
+      return request.auth.uid == userId
+    }
+
+    function existingData() {
+      return resource.data
+    }
+
+    function incomingData() {
+      return request.resource.data
     }
   }
 }
+
+
+//request.time

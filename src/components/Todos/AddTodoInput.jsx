@@ -34,12 +34,17 @@ class AddTodoInput extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
+    const userId = firebase.auth.currentUser.uid
+
     firebase.db
       .collection('todos')
+      .doc(userId)
+      .collection('tasks')
       .add({
         task: this.state.taskName,
         completed: false,
-        due: this.state.dueDate
+        due: this.state.dueDate,
+        owner: userId
       })
       .then(res => {
         this.setState({

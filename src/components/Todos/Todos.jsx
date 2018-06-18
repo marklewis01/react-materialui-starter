@@ -8,7 +8,11 @@ import TodoItem from './TodoItem'
 class Todos extends Component {
   constructor(props) {
     super(props)
-    this.ref = firebase.db.collection('todos')
+
+    // this.ref = firebase.db
+    //   .collection('todos')
+    //   .doc(userId)
+    //   .collection('tasks')
     this.unsubscribe = null
 
     this.state = {
@@ -20,7 +24,12 @@ class Todos extends Component {
   }
 
   componentDidMount() {
-    this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
+    const userId = firebase.auth.currentUser.uid
+    this.unsubscribe = firebase.db
+      .collection('todos')
+      .doc(userId)
+      .collection('tasks')
+      .onSnapshot(this.onCollectionUpdate)
   }
 
   onCollectionUpdate = querySnapshot => {
