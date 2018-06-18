@@ -1,7 +1,20 @@
 import React, { Component } from 'react'
-import { Button, TextField } from '@material-ui/core'
+import { Button, TextField, withStyles } from '@material-ui/core'
 
 import { firebase } from '../../firebase'
+
+const styles = theme => ({
+  dateField: {
+    margin: theme.spacing.unit,
+    width: 150
+  },
+  form: {
+    marginBottom: `1rem`
+  },
+  textField: {
+    width: 250
+  }
+})
 
 class AddTodoInput extends Component {
   constructor(props) {
@@ -37,9 +50,11 @@ class AddTodoInput extends Component {
   }
 
   render() {
+    const { classes } = this.props
     return (
-      <form onSubmit={e => this.handleSubmit(e)}>
+      <form onSubmit={e => this.handleSubmit(e)} className={classes.form}>
         <TextField
+          className={classes.textField}
           onChange={e => this.handleChange(e, 'taskName')}
           type="text"
           value={this.state.taskName}
@@ -47,6 +62,7 @@ class AddTodoInput extends Component {
         <TextField
           id="date"
           label="Due Date"
+          className={classes.dateField}
           type="date"
           value={this.state.dueDate}
           onChange={e => this.handleChange(e, 'dueDate')}
@@ -62,4 +78,4 @@ class AddTodoInput extends Component {
   }
 }
 
-export default AddTodoInput
+export default withStyles(styles, { withTheme: true })(AddTodoInput)
