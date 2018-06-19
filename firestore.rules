@@ -1,24 +1,23 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    match /users/{userId} {
-      allow read, write: if isOwner(userId);
+		   
+    match /todos/{userId} {
+      allow read, write: if isSignedIn() && isOwner(userId)
+      
+      match /tasks/{taskId} {
+      	allow read, write: if request.auth.uid == get(/databases/$(database)/documents/todos/$(userId)).data.owner
+      }
     }
-
-    match /todos/{todoId=**} {
-      // Only the authenticated user who authored the document can read or write
-      allow read, write: if isSignedIn()
-    }
-
+    
     function isSignedIn() {
-      return request.auth != null
+      return request.auth != null;
     }
 
     function emailVerified() {
       return request.auth.token.email_verified
     }
 
-    function isOwner(userId) {
+		function isOwner(userId) {
       return request.auth.uid == userId
     }
 
@@ -31,6 +30,3 @@ service cloud.firestore {
     }
   }
 }
-
-
-//request.time

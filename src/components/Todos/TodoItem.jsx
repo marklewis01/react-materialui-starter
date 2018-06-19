@@ -34,26 +34,40 @@ const styles = {
   }
 }
 
+// const userId = firebase.auth.currentUser.uid
+// const colRef = firebase.db
+//   .collection('todos')
+//   .doc(userId)
+//   .collection('tasks')
+
 class TodoItem extends Component {
+  constructor(props) {
+    super(props)
+
+    this.userId = firebase.auth.currentUser.uid
+    this.colRef = firebase.db
+      .collection('todos')
+      .doc(this.userId)
+      .collection('tasks')
+  }
+
   static propTypes = {
     todo: PropTypes.any
   }
 
   handleToggleComplete = (e, id) => {
     const completed = e.target.checked
-    firebase.db
-      .collection('todos')
-      .doc(id)
-      .update({ completed: completed })
+    this.colRef.doc(id).update({ completed: completed })
   }
 
   handleTodoUpdate = (e, id) => {
-    firebase.db
-      .collection('todos')
-      .doc(id)
-      .update({
-        task: e.target.value
-      })
+    this.colRef.doc(id).update({
+      task: e.target.value
+    })
+  }
+
+  handleDelete = async id => {
+    this.colRef.doc(id).delete()
   }
 
   render() {
@@ -91,27 +105,6 @@ class TodoItem extends Component {
         <Divider />
       </Paper>
     )
-  }
-
-  handleDelete = async id => {
-    firebase.db
-      .collection('todos')
-      .doc(id)
-      .delete()
-  }
-
-  onPressCheck = async () => {
-    const { todo } = this.props
-    await todo.update({
-      finished: !todo.data.finished
-    })
-  }
-
-  onTextChange = async (event, newValue) => {
-    const { todo } = this.props
-    await todo.update({
-      text: newValue
-    })
   }
 }
 

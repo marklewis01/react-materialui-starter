@@ -9,10 +9,11 @@ class Todos extends Component {
   constructor(props) {
     super(props)
 
-    // this.ref = firebase.db
-    //   .collection('todos')
-    //   .doc(userId)
-    //   .collection('tasks')
+    this.userId = firebase.auth.currentUser.uid
+    this.colRef = firebase.db
+      .collection('todos')
+      .doc(this.userId)
+      .collection('tasks')
     this.unsubscribe = null
 
     this.state = {
@@ -24,12 +25,27 @@ class Todos extends Component {
   }
 
   componentDidMount() {
-    const userId = firebase.auth.currentUser.uid
-    this.unsubscribe = firebase.db
+    firebase.db
       .collection('todos')
-      .doc(userId)
-      .collection('tasks')
-      .onSnapshot(this.onCollectionUpdate)
+      .doc(this.userId)
+      .get()
+      .then(documentSnapshot => {
+        if (documentSnapshot.exists) {
+          this.unsubscribe = this.colRef
+            .orderBy('due', 'asc')
+            .onSnapshot(this.onCollectionUpdate)
+        } else {
+          firebase.db
+            .collection('todos')
+            .doc(this.userId)
+            .set({ owner: this.userId })
+            .then(() => {
+              this.unsubscribe = this.colRef
+                .orderBy('due', 'asc')
+                .onSnapshot(this.onCollectionUpdate)
+            })
+        }
+      })
   }
 
   onCollectionUpdate = querySnapshot => {

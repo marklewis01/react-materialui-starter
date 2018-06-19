@@ -16,11 +16,21 @@ const styles = theme => ({
   }
 })
 
+// const userId = firebase.auth.currentUser.uid
+// const colRef = firebase.db
+//   .collection('todos')
+//   .doc(userId)
+//   .collection('tasks')
+
 class AddTodoInput extends Component {
   constructor(props) {
     super(props)
 
-    this.ref = firebase.db.collection('todos')
+    this.userId = firebase.auth.currentUser.uid
+    this.colRef = firebase.db
+      .collection('todos')
+      .doc(this.userId)
+      .collection('tasks')
 
     this.state = {
       dueDate: '',
@@ -34,17 +44,13 @@ class AddTodoInput extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const userId = firebase.auth.currentUser.uid
 
-    firebase.db
-      .collection('todos')
-      .doc(userId)
-      .collection('tasks')
+    this.colRef
       .add({
         task: this.state.taskName,
         completed: false,
         due: this.state.dueDate,
-        owner: userId
+        owner: this.userId
       })
       .then(res => {
         this.setState({
