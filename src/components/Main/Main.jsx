@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles'
 import TopNav from '../TopNav'
 import SpeedDial from '../SpeedDial'
 import Dashboard from '../../views/Dashboard'
-import AccountPage from '../../views/Account'
+import AccountPage from '../../views/AccountPage'
 import LandingPage from '../Landing'
 import NewPage from '../../views/NewPage'
 import LoginModal from '../Login'
@@ -36,6 +36,10 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       marginTop: '64px'
     }
+  },
+  wrapper: {
+    margin: `0 auto`,
+    maxWidth: `66rem`
   }
 })
 
@@ -74,17 +78,27 @@ class Main extends React.Component {
             >
               <TopNav toggleModal={this.toggleLoginModal} />
               <SpeedDial />
-              <Route path={routes.ACCOUNT} component={() => <AccountPage />} />
-              <Route path={routes.COURSES} component={() => <CoursesPage />} />
-
-              <Route path={routes.DASHBOARD} component={() => <Dashboard />} />
-              <Route
-                exact
-                path={routes.LANDING}
-                component={() => <LandingPage />}
-              />
-              <Route path={routes.NEWDOC} component={() => <NewPage />} />
-              <Route path={routes.TODOS} component={() => <TodosPage />} />
+              <div className={classes.wrapper}>
+                <Route
+                  path={routes.ACCOUNT}
+                  component={() => <AccountPage />}
+                />
+                <Route
+                  path={routes.COURSES}
+                  component={() => <CoursesPage />}
+                />
+                <Route
+                  path={routes.DASHBOARD}
+                  component={() => <Dashboard />}
+                />
+                <Route
+                  exact
+                  path={routes.LANDING}
+                  component={() => <LandingPage />}
+                />
+                <Route path={routes.NEWDOC} component={() => <NewPage />} />
+                <Route path={routes.TODOS} component={() => <TodosPage />} />
+              </div>
               <LoginModal
                 loginModal={this.state.loginModal}
                 toggleLogin={this.toggleLoginModal}

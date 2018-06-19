@@ -20,7 +20,7 @@
 .env.production.local
 *.code-workspace
 /_old
-/_temp
+/_temp-1
 
 npm-debug.log*
 yarn-debug.log*

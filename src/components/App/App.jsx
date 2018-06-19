@@ -1,15 +1,16 @@
-import React, { Fragment } from 'react'
-
+import React from 'react'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import { withAuthentication } from '../Session'
 import Main from '../Main'
+import { theme } from '../../customTheme'
 
 const App = () => (
-  <Fragment>
+  <MuiThemeProvider theme={theme}>
     <CssBaseline />
     <Main />
-  </Fragment>
+  </MuiThemeProvider>
 )
 
 export default withAuthentication(App)
