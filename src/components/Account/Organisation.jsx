@@ -44,16 +44,18 @@ class Organisation extends React.Component {
     this.unsubscribe = null
 
     this.state = {
-      name: '',
-      address: '',
-      address2: '',
-      city: '',
-      state: '',
-      zip: '',
-      logo: {},
-      website: '',
-      team: [],
-      auditLog: [],
+      org: {
+        name: '',
+        address: '',
+        address2: '',
+        city: '',
+        state: '',
+        zip: '',
+        logo: {},
+        website: '',
+        team: [],
+        auditLog: []
+      },
       loading: true
     }
   }
@@ -63,9 +65,16 @@ class Organisation extends React.Component {
       if (doc.exists) {
         this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate)
       } else {
-        this.colRef.set({ owner: this.userId }).then(() => {
-          this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate)
-        })
+        this.colRef
+          .set({ owner: this.userId })
+          .then(() => {
+            this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate)
+          })
+          .then(() =>
+            this.colRef.update({
+              org: { team: [this.userId] }
+            })
+          )
       }
     })
   }
@@ -78,13 +87,14 @@ class Organisation extends React.Component {
   }
 
   handleChange = name => event => {
+    const key = 'org.' + name
     this.colRef.update({
-      [name]: event.target.value
+      [key]: event.target.value
     })
   }
 
   componentWillUnmount() {
-    this.unsubscribe()
+    this.subscibe ? this.unsubscribe() : null
   }
 
   render() {
@@ -113,7 +123,7 @@ class Organisation extends React.Component {
                   <TextField
                     id="address"
                     label="Street Address"
-                    multiline
+                    multiline={true}
                     value={this.state.address}
                     onChange={this.handleChange('address')}
                     className={classes.textField}
@@ -175,9 +185,6 @@ class Organisation extends React.Component {
           <Paper className={classes.paper}>
             <Team />
           </Paper>
-          <Tabs value={false} className={classes.tabs}>
-            <Tab label="Other Information" />
-          </Tabs>
         </Grid>
       </Grid>
     )

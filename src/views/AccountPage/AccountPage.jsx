@@ -7,14 +7,10 @@ import withAuthorization from '../../components/Session/withAuthorization'
 import { AccountTabs, Banner } from '../../components/Account'
 
 const AccountPage = () => (
-  <Subscribe to={[SessionContainer]}>
-    {session => (
-      <Fragment>
-        <Banner />
-        <AccountTabs />
-      </Fragment>
-    )}
-  </Subscribe>
+  <div className="test">
+    <Banner />
+    <AccountTabs />
+  </div>
 )
 
 const authCondition = authUser => !!authUser // don't know if this is working with unstated

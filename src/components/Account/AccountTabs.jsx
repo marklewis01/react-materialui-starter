@@ -13,7 +13,7 @@ const styles = theme => ({
 
 class AccountTabs extends Component {
   state = {
-    tabValue: 1
+    tabValue: 0
   }
 
   handleTabChange = (e, value) => {
