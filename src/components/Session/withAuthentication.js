@@ -8,16 +8,18 @@ const withAuthentication = Component => {
   class WithAuthentication extends React.Component {
     componentDidMount() {
       firebase.auth.onAuthStateChanged(authUser => {
-        authUser
-          ? SessionContainer.setAuthUser(authUser)
-          : SessionContainer.setAuthUser(null)
+        if (authUser) {
+          SessionContainer.setAuthUser(authUser)
+        }
       })
     }
 
     render() {
       return (
         <Subscribe to={[SessionContainer]}>
-          {session => <Component authUser={session.state.authUser} />}
+          {session => (
+            <Component authUser={session.state.authUser} {...this.props} />
+          )}
         </Subscribe>
       )
     }

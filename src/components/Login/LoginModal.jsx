@@ -87,7 +87,7 @@ class LoginModal extends Component {
   }
 
   handleLogin = event => {
-    const { history, closeLogin } = this.props // do i still need this
+    const { history, closeLogin } = this.props
     const { email, password } = this.state
 
     if (!this.state.loading) {
@@ -107,7 +107,7 @@ class LoginModal extends Component {
                   ...INITIAL_STATE,
                   success: true
                 })
-              }, 2000)
+              }, 1000)
               history.push(routes.DASHBOARD)
               closeLogin()
             })
@@ -172,7 +172,6 @@ class LoginModal extends Component {
           auth
             .doCreateUserWithEmailAndPassword(email, password)
             .then(authUser => {
-              console.log('about to call firestore', authUser)
               // Create a user in your own accessible Firebase Database too
               firebase.firestore
                 .doCreateUser(authUser.user.uid, familyName, givenName, email)

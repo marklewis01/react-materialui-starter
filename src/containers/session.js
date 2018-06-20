@@ -6,8 +6,12 @@ class SessionContainer extends Container {
   }
 
   setAuthUser = authUser => {
+    const avatarLetter = authUser.email.charAt(0).toUpperCase()
     this.setState({
-      authUser
+      authUser: {
+        ...authUser,
+        avatarLetter
+      }
     })
   }
 }

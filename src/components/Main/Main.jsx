@@ -53,6 +53,7 @@ class Main extends React.Component {
   }
 
   toggleLoginModal = () => {
+    console.log('clicked')
     const loginModal = !this.state.loginModal
     this.setState({
       loginModal: loginModal
@@ -67,45 +68,47 @@ class Main extends React.Component {
 
   render() {
     const { classes } = this.props
+
     return (
       <Router>
         <Subscribe to={[SessionContainer]}>
-          {session => (
-            <div
-              className={
-                session.state.authUser ? classes.authenticated : classes.public
-              }
-            >
-              <TopNav toggleModal={this.toggleLoginModal} />
-              <SpeedDial />
-              <div className={classes.wrapper}>
-                <Route
-                  path={routes.ACCOUNT}
-                  component={() => <AccountPage />}
+          {session => {
+            const { authUser } = session.state
+            return (
+              <div
+                className={authUser ? classes.authenticated : classes.public}
+              >
+                <TopNav toggleModal={this.toggleLoginModal} />
+                <SpeedDial />
+                <div className={classes.wrapper}>
+                  <Route
+                    path={routes.ACCOUNT}
+                    component={() => <AccountPage />}
+                  />
+                  <Route
+                    path={routes.COURSES}
+                    component={() => <CoursesPage />}
+                  />
+                  <Route
+                    path={routes.DASHBOARD}
+                    component={() => <Dashboard />}
+                  />
+                  <Route
+                    exact
+                    path={routes.LANDING}
+                    component={() => <LandingPage />}
+                  />
+                  <Route path={routes.NEWDOC} component={() => <NewPage />} />
+                  <Route path={routes.TODOS} component={() => <TodosPage />} />
+                </div>
+                <LoginModal
+                  loginModal={this.state.loginModal}
+                  toggleLogin={this.toggleLoginModal}
+                  closeLogin={this.closeLoginModal}
                 />
-                <Route
-                  path={routes.COURSES}
-                  component={() => <CoursesPage />}
-                />
-                <Route
-                  path={routes.DASHBOARD}
-                  component={() => <Dashboard />}
-                />
-                <Route
-                  exact
-                  path={routes.LANDING}
-                  component={() => <LandingPage />}
-                />
-                <Route path={routes.NEWDOC} component={() => <NewPage />} />
-                <Route path={routes.TODOS} component={() => <TodosPage />} />
               </div>
-              <LoginModal
-                loginModal={this.state.loginModal}
-                toggleLogin={this.toggleLoginModal}
-                closeLogin={this.closeLoginModal}
-              />
-            </div>
-          )}
+            )
+          }}
         </Subscribe>
       </Router>
     )

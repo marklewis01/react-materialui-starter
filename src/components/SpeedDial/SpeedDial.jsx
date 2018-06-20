@@ -6,10 +6,8 @@ import { withRouter } from 'react-router-dom'
 import SpeedDial from '@material-ui/lab/SpeedDial'
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon'
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
-import AddIcon from '@material-ui/icons/NoteAdd'
 import TodoIcon from '@material-ui/icons/CheckBox'
 import HomeIcon from '@material-ui/icons/Home'
-import PagesIcon from '@material-ui/icons/Pages'
 import SettingsIcon from '@material-ui/icons/Settings'
 
 import * as routes from '../../routes'
@@ -30,8 +28,6 @@ const styles = theme => ({
 const actions = [
   { icon: <HomeIcon />, name: 'Home', link: routes.DASHBOARD },
   { icon: <TodoIcon />, name: 'Task List', link: routes.TODOS },
-  { icon: <AddIcon />, name: 'Add New Document', link: routes.NEWDOC },
-  { icon: <PagesIcon />, name: 'Courses', link: routes.COURSES },
   { icon: <SettingsIcon />, name: 'Account Settings', link: routes.ACCOUNT }
 ]
 
@@ -108,7 +104,7 @@ class NavSpeedDial extends React.Component {
         </SpeedDial>
       )
     } else {
-      return null
+      return <div />
     }
   }
 }
@@ -117,7 +113,4 @@ NavSpeedDial.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-const NavSpeedDialWithRouter = withRouter(NavSpeedDial)
-const StyledNav = withStyles(styles)(NavSpeedDialWithRouter)
-
-export default withAuthentication(StyledNav)
+export default withAuthentication(withRouter(withStyles(styles)(NavSpeedDial)))
