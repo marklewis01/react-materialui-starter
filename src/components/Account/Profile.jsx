@@ -48,24 +48,30 @@ class Profile extends React.Component {
       email: '',
       givenName: '',
       familyName: '',
-      organisationId: '',
       profilePic: '',
       auditLog: [],
       loading: true
     }
   }
 
-  // componentDidMount() {
-  //   this.colRef.get().then(doc => {
-  //     if (doc.exists) {
-  //       this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate)
-  //     } else {
-  //       this.colRef.set({ owner: this.userId }).then(() => {
-  //         this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate)
-  //       })
-  //     }
-  //   })
-  // }
+  componentDidMount() {
+    this.colRef.get().then(doc => {
+      if (doc.exists) {
+        this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate)
+      } else {
+        this.colRef
+          .set({ owner: this.userId })
+          .then(() => {
+            this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate)
+          })
+          .then(() =>
+            this.colRef.update({
+              email: firebase.auth.currentUser.email
+            })
+          )
+      }
+    })
+  }
 
   onCollectionUpdate = doc => {
     this.setState({
@@ -80,9 +86,9 @@ class Profile extends React.Component {
     })
   }
 
-  // componentWillUnmount() {
-  //   this.subscibe ? this.unsubscribe() : null
-  // }
+  componentWillUnmount() {
+    this.subscibe ? this.unsubscribe() : null
+  }
 
   render() {
     const { classes } = this.props

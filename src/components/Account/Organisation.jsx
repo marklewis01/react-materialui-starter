@@ -62,11 +62,11 @@ class Organisation extends React.Component {
 
   componentDidMount() {
     this.colRef.get().then(doc => {
-      if (doc.exists) {
+      if (doc.data().org) {
         this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate)
       } else {
         this.colRef
-          .set({ owner: this.userId })
+          .update({ owner: this.userId })
           .then(() => {
             this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate)
           })
@@ -87,9 +87,8 @@ class Organisation extends React.Component {
   }
 
   handleChange = name => event => {
-    const key = 'org.' + name
     this.colRef.update({
-      [key]: event.target.value
+      [name]: event.target.value
     })
   }
 
@@ -112,8 +111,8 @@ class Organisation extends React.Component {
                     id="name"
                     label="Organisation Name"
                     className={classes.textField}
-                    value={this.state.name}
-                    onChange={this.handleChange('name')}
+                    value={this.state.org.name}
+                    onChange={this.handleChange('org.name')}
                     margin="normal"
                     fullWidth
                     autoComplete="organization"
@@ -124,8 +123,8 @@ class Organisation extends React.Component {
                     id="address"
                     label="Street Address"
                     multiline={true}
-                    value={this.state.address}
-                    onChange={this.handleChange('address')}
+                    value={this.state.org.address}
+                    onChange={this.handleChange('org.address')}
                     className={classes.textField}
                     margin="normal"
                     fullWidth
@@ -137,8 +136,8 @@ class Organisation extends React.Component {
                     id="City / Suburb"
                     label="City"
                     className={classes.textField}
-                    value={this.state.city}
-                    onChange={this.handleChange('city')}
+                    value={this.state.org.city}
+                    onChange={this.handleChange('org.city')}
                     margin="normal"
                     autoComplete="address-level2"
                   />
@@ -146,18 +145,18 @@ class Organisation extends React.Component {
                     id="State"
                     label="State"
                     className={classes.textFieldShort}
-                    value={this.state.state}
-                    onChange={this.handleChange('state')}
+                    value={this.state.org.state}
+                    onChange={this.handleChange('org.state')}
                     margin="normal"
                     autoComplete="address-level1"
                   />
 
                   <TextField
                     id="Zip"
-                    label="ZIP / Postal Code"
+                    label="Post Code"
                     className={classes.textFieldShort}
-                    value={this.state.zip}
-                    onChange={this.handleChange('zip')}
+                    value={this.state.org.zip}
+                    onChange={this.handleChange('org.zip')}
                     margin="normal"
                     autoComplete="postal-code"
                   />
@@ -167,8 +166,8 @@ class Organisation extends React.Component {
                     id="website"
                     label="Website"
                     className={classes.textField}
-                    value={this.state.website}
-                    onChange={this.handleChange('website')}
+                    value={this.state.org.website}
+                    onChange={this.handleChange('org.website')}
                     margin="normal"
                     fullWidth
                     autoComplete="url"
