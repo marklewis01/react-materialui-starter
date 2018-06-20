@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core'
 
 import { Actions, Team } from './index'
+import { firebase } from '../../firebase'
 
 const styles = theme => ({
   gridItemFlex: {
@@ -38,6 +39,9 @@ const styles = theme => ({
 class Organisation extends React.Component {
   constructor(props) {
     super(props)
+    this.userId = firebase.auth.currentUser.uid
+    this.colRef = firebase.db.collection('users').doc(this.userId)
+    this.unsubscribe = null
 
     this.state = {
       name: '',
@@ -49,14 +53,38 @@ class Organisation extends React.Component {
       logo: {},
       website: '',
       team: [],
-      auditLog: []
+      auditLog: [],
+      loading: true
     }
   }
 
-  handleChange = name => event => {
+  componentDidMount() {
+    this.colRef.get().then(doc => {
+      if (doc.exists) {
+        this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate)
+      } else {
+        this.colRef.set({ owner: this.userId }).then(() => {
+          this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate)
+        })
+      }
+    })
+  }
+
+  onCollectionUpdate = doc => {
     this.setState({
+      ...doc.data(),
+      loading: false
+    })
+  }
+
+  handleChange = name => event => {
+    this.colRef.update({
       [name]: event.target.value
     })
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe()
   }
 
   render() {
@@ -156,4 +184,4 @@ class Organisation extends React.Component {
   }
 }
 
-export default withStyles(styles)(Organisation)
+export default withStyles(styles, { withTheme: true })(Organisation)
