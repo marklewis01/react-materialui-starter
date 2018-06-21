@@ -53,7 +53,6 @@ class Main extends React.Component {
   }
 
   toggleLoginModal = () => {
-    console.log('clicked')
     const loginModal = !this.state.loginModal
     this.setState({
       loginModal: loginModal
