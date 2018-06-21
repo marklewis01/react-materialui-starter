@@ -1,7 +1,5 @@
-import React, { Fragment } from 'react'
-import { Subscribe } from 'unstated'
+import React from 'react'
 
-import SessionContainer from '../../containers/session'
 import withAuthorization from '../../components/Session/withAuthorization'
 
 import { AccountTabs, Banner } from '../../components/Account'

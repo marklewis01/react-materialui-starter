@@ -2,8 +2,6 @@ import React from 'react'
 import {
   Grid,
   Paper,
-  Tab,
-  Tabs,
   TextField,
   Typography,
   withStyles
@@ -85,7 +83,7 @@ class Organisation extends React.Component {
   }
 
   componentWillUnmount() {
-    this.subscibe ? this.unsubscribe() : null
+    this.unsubscribe()
   }
 
   render() {
