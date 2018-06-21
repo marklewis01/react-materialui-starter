@@ -116,7 +116,6 @@ class Profile extends React.Component {
                   <TextField
                     id="familyName"
                     label="Family Name"
-                    multiline={true}
                     value={this.state.familyName}
                     onChange={this.handleChange('familyName')}
                     className={classes.textField}
@@ -129,9 +128,7 @@ class Profile extends React.Component {
                   <TextField
                     id="email"
                     label="Email Address"
-                    multiline={true}
                     value={this.state.email}
-                    onChange={this.handleChange('email')}
                     className={classes.textField}
                     margin="normal"
                     fullWidth
