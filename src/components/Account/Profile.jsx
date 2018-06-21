@@ -87,7 +87,7 @@ class Profile extends React.Component {
   }
 
   componentWillUnmount() {
-    this.subscibe ? this.unsubscribe() : null
+    this.unsubscribe()
   }
 
   render() {
@@ -98,17 +98,15 @@ class Profile extends React.Component {
           <Paper className={classes.paper}>
             <Typography variant="title">Personal Information</Typography>
             <form>
-              <Grid container justify="space-between">
+              <Grid container spacing={24} justify="space-between">
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    required
                     id="givenName"
                     label="Given Name"
-                    className={classes.textField}
+                    fullWidth
                     value={this.state.givenName}
                     onChange={this.handleChange('givenName')}
                     margin="normal"
-                    fullWidth
                     autoComplete="given-name"
                   />
                 </Grid>
@@ -118,9 +116,8 @@ class Profile extends React.Component {
                     label="Family Name"
                     value={this.state.familyName}
                     onChange={this.handleChange('familyName')}
-                    className={classes.textField}
-                    margin="normal"
                     fullWidth
+                    margin="normal"
                     autoComplete="family-name"
                   />
                 </Grid>

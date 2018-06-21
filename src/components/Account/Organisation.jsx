@@ -25,14 +25,6 @@ const styles = theme => ({
   },
   tabs: {
     borderBottom: `1px solid ${theme.palette.primary.light}`
-  },
-  textField: {
-    marginRight: theme.spacing.unit * 2,
-    flexGrow: 1
-  },
-  textFieldShort: {
-    width: `160px`,
-    marginRight: theme.spacing.unit * 2
   }
 })
 
@@ -104,13 +96,12 @@ class Organisation extends React.Component {
           <Paper className={classes.paper}>
             <Typography variant="title">Organisation Location</Typography>
             <form>
-              <Grid container justify="space-between">
+              <Grid container spacing={24} justify="space-between">
                 <Grid item xs={12}>
                   <TextField
                     required
                     id="name"
                     label="Organisation Name"
-                    className={classes.textField}
                     value={this.state.org.name}
                     onChange={this.handleChange('org.name')}
                     margin="normal"
@@ -125,42 +116,46 @@ class Organisation extends React.Component {
                     multiline={true}
                     value={this.state.org.address}
                     onChange={this.handleChange('org.address')}
-                    className={classes.textField}
                     margin="normal"
                     fullWidth
                     autoComplete="street-address"
                   />
                 </Grid>
-                <Grid item xs={12} className={classes.gridItemFlex}>
+
+                <Grid item xs={12} sm={6}>
                   <TextField
                     id="City / Suburb"
                     label="City"
-                    className={classes.textField}
+                    fullWidth
                     value={this.state.org.city}
                     onChange={this.handleChange('org.city')}
                     margin="normal"
                     autoComplete="address-level2"
                   />
+                </Grid>
+                <Grid item xs={12} sm={3}>
                   <TextField
                     id="State"
                     label="State"
-                    className={classes.textFieldShort}
+                    fullWidth
                     value={this.state.org.state}
                     onChange={this.handleChange('org.state')}
                     margin="normal"
                     autoComplete="address-level1"
                   />
-
+                </Grid>
+                <Grid item xs={12} sm={3}>
                   <TextField
                     id="Zip"
                     label="Post Code"
-                    className={classes.textFieldShort}
+                    fullWidth
                     value={this.state.org.zip}
                     onChange={this.handleChange('org.zip')}
                     margin="normal"
                     autoComplete="postal-code"
                   />
                 </Grid>
+
                 <Grid item xs={12}>
                   <TextField
                     id="website"
