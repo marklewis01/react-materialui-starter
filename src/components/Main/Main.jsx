@@ -4,8 +4,8 @@ import { Subscribe } from 'unstated'
 
 import { withStyles } from '@material-ui/core/styles'
 
-import TopNav from '../TopNav'
-import SpeedDial from '../SpeedDial'
+import NavSide from '../NavSide'
+import NavTop from '../NavTop'
 import Dashboard from '../../screens/Dashboard'
 import AccountPage from '../../screens/AccountPage'
 import LandingPage from '../Landing'
@@ -77,8 +77,8 @@ class Main extends React.Component {
               <div
                 className={authUser ? classes.authenticated : classes.public}
               >
-                <TopNav toggleModal={this.toggleLoginModal} />
-                <SpeedDial />
+                <NavTop toggleModal={this.toggleLoginModal} />
+                <NavSide />
                 <div className={classes.wrapper}>
                   <Route
                     path={routes.ACCOUNT}

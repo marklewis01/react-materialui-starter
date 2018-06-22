@@ -14,6 +14,7 @@
     "@material-ui/icons": "^1.1.0",
     "@material-ui/lab": "^1.0.0-alpha.5",
     "axios": "^0.18.0",
+    "classnames": "^2.2.6",
     "firebase": "^5.0.4",
     "prop-types": "^15.6.1",
     "react": "^16.4.1",
