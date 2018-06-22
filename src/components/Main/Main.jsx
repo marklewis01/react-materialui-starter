@@ -6,16 +6,16 @@ import { withStyles } from '@material-ui/core/styles'
 
 import TopNav from '../TopNav'
 import SpeedDial from '../SpeedDial'
-import Dashboard from '../../views/Dashboard'
-import AccountPage from '../../views/AccountPage'
+import Dashboard from '../../screens/Dashboard'
+import AccountPage from '../../screens/AccountPage'
 import LandingPage from '../Landing'
-import NewPage from '../../views/NewPage'
+import NewPage from '../../screens/NewPage'
 import LoginModal from '../Login'
 
 import SessionContainer from '../../containers/session'
 import * as routes from '../../routes'
-import CoursesPage from '../../views/CoursesPage'
-import TodosPage from '../../views/TodosPage'
+import CoursesPage from '../../screens/CoursesPage'
+import TodosPage from '../../screens/TodosPage'
 
 const styles = theme => ({
   authenticated: {

@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import { Image } from 'cloudinary-react'
 import axios from 'axios'
 
 class ImageUpload extends React.Component {
@@ -39,14 +38,6 @@ class ImageUpload extends React.Component {
   render() {
     return (
       <Fragment>
-        <div>
-          <Image
-            cloudName="interwebd"
-            publicId="5a87598d80d8d85f7c4ac742/fefw9z7f6uu5pfnlzb0k.jpg"
-            alt="Logo"
-            title="Interwebd Logo"
-          />
-        </div>
         <input type="file" onChange={this.handleFileSelected} />
         <button onClick={this.handleUpload}>Upload</button>
       </Fragment>

@@ -27,9 +27,9 @@ I'd be thrilled for any feedback/advice/improvements on the code.
 - Material-UI (v1.0.0)
   - This project started with React-Semantic-UI, however I am rebuilding it currently to use the newly released [Material-UI](https://material-ui.com). So far, it is so much more enjoyable to work with, simply for reason custom styling can easily injected to each element. _I hope to build a theme for this project, in the interim, the injected styles are a quick solution, though I'm not thrilled using them due to potential lack of consistencies._
 - Google Firebase
-  - Mainly outsourcing my authentication, as well as getting to know Firestore.
-- React-toastify
-  - A super simple and quick way to get a toast message system into the dashboard. [React-toastify](https://fkhadra.github.io/react-toastify/).
+  - Mainly outsourcing my authentication, as well as getting to know Firestore, Cloud Functions and Cloud Storage. The demo is hosted on Firebase Hosting.
+- ~~React-toastify~~
+  - ~~A super simple and quick way to get a toast message system into the dashboard. [React-toastify](https://fkhadra.github.io/react-toastify/).~~ _Removing this as not currently needed. Will look at MUI subsitute when required._
 
 ## Folder Structure
 
@@ -37,24 +37,22 @@ Folder structures can be subjective - below is the current structure implemented
 
 ```
 my-app/
-  README.md
+  functions/ (Firebase Cloud Functions)
   node_modules/
-  package.json
   public/
     index.html
     favicon.ico
   src/
-    assets/
+    assets/ (images)
     components/
-      App.css
-      App.js
-    containers/
-    firebase/
-    routes/
-    stores/ [no longer in use]
+    containers/ (Unstated)
+    firebase/ (Firebase config)
+    routes/ (React Router)
+    screens/ (Main screens/views/pages)
     utils/
-    views/
     index.js
+  fire.* (Firebase config)
+  *.rules (Firebase config)
 ```
 
 ## Available Scripts
