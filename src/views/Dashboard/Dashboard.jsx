@@ -4,6 +4,8 @@ import { Subscribe } from 'unstated'
 import { withAuthorization } from '../../components/Session'
 import SessionContainer from '../../containers/session'
 
+import ImageUpload from '../../components/ImageUpload'
+
 class Dashboard extends Component {
   render() {
     return (
@@ -13,6 +15,7 @@ class Dashboard extends Component {
             <h1>Welcome to the New Dashboard!</h1>
             <p>The Dashbord is accessible by every signed in user.</p>
             <p>{session.state.authUser.email}</p>
+            <ImageUpload />
           </div>
         )}
       </Subscribe>

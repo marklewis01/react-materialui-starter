@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/functions/node_modules
 
 # testing
 /coverage
@@ -11,6 +12,7 @@
 
 # Firebase Config
 /src/firebase/firebase.js
+/functions/private-key.json
 
 # misc
 .DS_Store
