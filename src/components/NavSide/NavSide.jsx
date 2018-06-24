@@ -40,6 +40,9 @@ const styles = theme => ({
   list: {
     width: 250
   },
+  link: {
+    cursor: 'pointer'
+  },
   fullList: {
     width: 'auto'
   },
@@ -111,13 +114,17 @@ class NavSide extends Component {
                             <ListItem
                               key={item.name}
                               onClick={() => this.handleClick(link)}
+                              className={classes.link}
                             >
                               <ListItemIcon>{item.icon}</ListItemIcon>
                               <ListItemText primary={item.name} />
                             </ListItem>
                           )
                         })}
-                        <ListItem onClick={session.handleSignOut}>
+                        <ListItem
+                          onClick={session.handleSignOut}
+                          className={classes.link}
+                        >
                           <ListItemIcon>
                             <LogoutIcon />
                           </ListItemIcon>
@@ -154,13 +161,17 @@ class NavSide extends Component {
                         <ListItem
                           key={item.name}
                           onClick={() => this.handleClick(link)}
+                          className={classes.link}
                         >
                           <ListItemIcon>{item.icon}</ListItemIcon>
                           <ListItemText primary={item.name} />
                         </ListItem>
                       )
                     })}
-                    <ListItem onClick={session.handleSignOut}>
+                    <ListItem
+                      onClick={session.handleSignOut}
+                      className={classes.link}
+                    >
                       <ListItemIcon>
                         <LogoutIcon />
                       </ListItemIcon>
