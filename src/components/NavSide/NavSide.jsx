@@ -77,9 +77,10 @@ const styles = theme => ({
 })
 
 class NavSide extends Component {
-  handleClick = link => {
+  handleClick = (link, handleClick) => {
     if (link) {
       this.props.history.push(link)
+      handleClick()
     }
   }
 
@@ -113,7 +114,9 @@ class NavSide extends Component {
                           return (
                             <ListItem
                               key={item.name}
-                              onClick={() => this.handleClick(link)}
+                              onClick={() =>
+                                this.handleClick(link, ui.handleDrawerClose)
+                              }
                               className={classes.link}
                             >
                               <ListItemIcon>{item.icon}</ListItemIcon>
@@ -160,7 +163,9 @@ class NavSide extends Component {
                       return (
                         <ListItem
                           key={item.name}
-                          onClick={() => this.handleClick(link)}
+                          onClick={() =>
+                            this.handleClick(link, ui.handleDrawerClose)
+                          }
                           className={classes.link}
                         >
                           <ListItemIcon>{item.icon}</ListItemIcon>

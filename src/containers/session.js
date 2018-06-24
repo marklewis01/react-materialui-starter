@@ -17,9 +17,12 @@ class SessionContainer extends Container {
   }
 
   handleSignOut = () => {
-    auth.doSignOut().catch(error => {
-      console.log('error:', error)
-    })
+    auth
+      .doSignOut()
+      .then(window.location.reload())
+      .catch(error => {
+        console.log('error:', error)
+      })
   }
 }
 
