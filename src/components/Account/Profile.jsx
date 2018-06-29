@@ -50,6 +50,7 @@ class Profile extends React.Component {
       email: '',
       givenName: '',
       familyName: '',
+      lastLogin: '',
       profilePic: '',
       auditLog: [],
       loading: true
@@ -73,12 +74,23 @@ class Profile extends React.Component {
           )
       }
     })
+
+    const lastLogin = new Date(
+      firebaseAuth().currentUser.metadata.lastSignInTime
+    )
+    this.setLastLogin(lastLogin)
   }
 
   onCollectionUpdate = doc => {
     this.setState({
       ...doc.data(),
       loading: false
+    })
+  }
+
+  setLastLogin(lastLogin) {
+    this.setState({
+      lastLogin: lastLogin
     })
   }
 
@@ -94,6 +106,8 @@ class Profile extends React.Component {
 
   render() {
     const { classes } = this.props
+    const { lastLogin } = this.state
+
     return (
       <Grid container spacing={24}>
         <Grid item xs={12} sm={8}>
@@ -145,7 +159,7 @@ class Profile extends React.Component {
           <Tabs value={false} className={classes.tabs}>
             <Tab label="Other Information" />
           </Tabs>
-          <LastLogin />
+          <LastLogin lastLogin={lastLogin} />
         </Grid>
       </Grid>
     )

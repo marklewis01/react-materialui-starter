@@ -1,21 +1,13 @@
 import React from 'react'
 import { Typography } from '@material-ui/core'
 
-import { firebaseAuth } from '../../firebase'
-
-const LastLogin = () => {
-  this.lastLogin = new Date(firebaseAuth().currentUser.metadata.lastSignInTime)
-
-  return (
-    <Typography variant="caption">
-      Last Login:
-      {firebaseAuth().currentUser
-        ? `${this.lastLogin.toDateString()} at ${this.lastLogin.toLocaleTimeString(
-            'en-US'
-          )}`
-        : null}
-    </Typography>
-  )
-}
-
-export default LastLogin
+export const LastLogin = ({ lastLogin }) => (
+  <Typography variant="caption">
+    Last Login:
+    {lastLogin
+      ? ` ${lastLogin.toDateString()} at ${lastLogin.toLocaleTimeString(
+          'en-US'
+        )}`
+      : null}
+  </Typography>
+)
