@@ -2,15 +2,15 @@ import React, { Component } from 'react'
 import FlipMove from 'react-flip-move'
 import { CircularProgress } from '@material-ui/core'
 
-import { firebase } from '../../firebase'
+import { firebaseAuth, firebaseDb } from '../../firebase'
 import TodoItem from './TodoItem'
 
 class Todos extends Component {
   constructor(props) {
     super(props)
 
-    this.userId = firebase.auth.currentUser.uid
-    this.colRef = firebase.db
+    this.userId = firebaseAuth().currentUser.uid
+    this.colRef = firebaseDb()
       .collection('todos')
       .doc(this.userId)
       .collection('tasks')
@@ -25,7 +25,7 @@ class Todos extends Component {
   }
 
   componentDidMount() {
-    firebase.db
+    firebaseDb()
       .collection('todos')
       .doc(this.userId)
       .get()
@@ -35,7 +35,7 @@ class Todos extends Component {
             .orderBy('due', 'asc')
             .onSnapshot(this.onCollectionUpdate)
         } else {
-          firebase.db
+          firebaseDb()
             .collection('todos')
             .doc(this.userId)
             .set({ owner: this.userId })

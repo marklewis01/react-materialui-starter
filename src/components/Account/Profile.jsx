@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core'
 
 import { LastLogin } from './index'
-import { firebase } from '../../firebase'
+import { firebaseAuth, firebaseDb } from '../../firebase'
 
 const styles = theme => ({
   gridItemFlex: {
@@ -40,8 +40,10 @@ const styles = theme => ({
 class Profile extends React.Component {
   constructor(props) {
     super(props)
-    this.userId = firebase.auth.currentUser.uid
-    this.colRef = firebase.db.collection('users').doc(this.userId)
+    this.userId = firebaseAuth().currentUser.uid
+    this.colRef = firebaseDb()
+      .collection('users')
+      .doc(this.userId)
     this.unsubscribe = null
 
     this.state = {
@@ -66,7 +68,7 @@ class Profile extends React.Component {
           })
           .then(() =>
             this.colRef.update({
-              email: firebase.auth.currentUser.email
+              email: firebaseAuth().currentUser.email
             })
           )
       }

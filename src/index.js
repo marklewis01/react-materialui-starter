@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'unstated'
 
-import App from './components/App'
+import App from './App'
 
 ReactDOM.render(
   <Provider>

@@ -1,13 +1,13 @@
 import React from 'react'
 import { Subscribe } from 'unstated'
 
-import { firebase } from '../../firebase'
+import { firebaseAuth } from '../../firebase'
 import SessionContainer from '../../containers/session'
 
 const withAuthentication = Component => {
   class WithAuthentication extends React.Component {
     componentDidMount() {
-      firebase.auth.onAuthStateChanged(authUser => {
+      firebaseAuth().onAuthStateChanged(authUser => {
         if (authUser) {
           SessionContainer.setAuthUser(authUser)
         }

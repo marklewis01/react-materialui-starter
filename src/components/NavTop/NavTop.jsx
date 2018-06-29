@@ -18,7 +18,7 @@ import {
 import { Menu as MenuIcon } from '@material-ui/icons'
 
 import UiContainer from '../../containers/ui'
-import { auth } from '../../firebase'
+import { firebaseAuth } from '../../firebase'
 import * as routes from '../../routes'
 import { withAuthentication } from '../Session'
 
@@ -64,9 +64,11 @@ class NavTop extends Component {
   }
 
   handleSignOut = () => {
-    auth.doSignOut().catch(error => {
-      console.log('error:', error)
-    })
+    firebaseAuth()
+      .doSignOut()
+      .catch(error => {
+        console.log('error:', error)
+      })
   }
 
   render() {

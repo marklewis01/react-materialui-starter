@@ -3,7 +3,7 @@ import { Subscribe } from 'unstated'
 
 import { Grid, Paper, Typography } from '@material-ui/core'
 
-import { firebase } from '../firebase'
+import { firebaseDb } from '../firebase'
 import SessionContainer from '../containers/session'
 import withAuthorization from '../components/Session/withAuthorization'
 
@@ -15,22 +15,24 @@ class CoursesPage extends React.Component {
   }
 
   componentDidMount() {
-    firebase.db
+    firebaseDb()
       .doc('courses/online')
       .get()
       .then(doc => this.setState({ name: doc.data().name }))
-    firebase.db.collection('suggestions').onSnapshot(collection => {
-      const suggestions = collection.docs.map(doc => ({
-        id: doc.id,
-        name: doc.data().name
-      }))
-      this.setState({ suggestions })
-    })
+    firebaseDb()
+      .collection('suggestions')
+      .onSnapshot(collection => {
+        const suggestions = collection.docs.map(doc => ({
+          id: doc.id,
+          name: doc.data().name
+        }))
+        this.setState({ suggestions })
+      })
   }
 
   handleSubmit = e => {
     e.preventDefault()
-    firebase.db
+    firebaseDb()
       .collection('suggestions')
       .add({ name: this.state.textField })
       .then()
@@ -43,7 +45,7 @@ class CoursesPage extends React.Component {
   }
 
   handleDelete = id => {
-    firebase.db
+    firebaseDb()
       .collection('suggestions')
       .doc(id)
       .delete()

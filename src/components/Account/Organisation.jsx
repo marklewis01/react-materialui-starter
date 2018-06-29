@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core'
 
 import { Actions, Team } from './index'
-import { firebase } from '../../firebase'
+import { firebaseAuth, firebaseDb } from '../../firebase'
 
 const styles = theme => ({
   gridItemFlex: {
@@ -29,8 +29,10 @@ const styles = theme => ({
 class Organisation extends React.Component {
   constructor(props) {
     super(props)
-    this.userId = firebase.auth.currentUser.uid
-    this.colRef = firebase.db.collection('users').doc(this.userId)
+    this.userId = firebaseAuth().currentUser.uid
+    this.colRef = firebaseDb()
+      .collection('users')
+      .doc(this.userId)
     this.unsubscribe = null
 
     this.state = {

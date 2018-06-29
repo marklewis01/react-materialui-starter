@@ -1,5 +1,5 @@
 import { Container } from 'unstated'
-import { auth } from '../firebase'
+import { firebaseAuth } from '../firebase'
 
 class SessionContainer extends Container {
   state = {
@@ -17,7 +17,7 @@ class SessionContainer extends Container {
   }
 
   handleSignOut = () => {
-    auth
+    firebaseAuth()
       .doSignOut()
       .then(window.location.reload())
       .catch(error => {

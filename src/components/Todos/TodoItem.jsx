@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 
-import { firebase } from '../../firebase'
+import { firebaseAuth, firebaseDb } from '../../firebase'
 
 const styles = {
   container: {
@@ -44,8 +44,8 @@ class TodoItem extends Component {
   constructor(props) {
     super(props)
 
-    this.userId = firebase.auth.currentUser.uid
-    this.colRef = firebase.db
+    this.userId = firebaseAuth().currentUser.uid
+    this.colRef = firebaseDb()
       .collection('todos')
       .doc(this.userId)
       .collection('tasks')

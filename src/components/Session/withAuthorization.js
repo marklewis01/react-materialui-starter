@@ -2,14 +2,14 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Subscribe } from 'unstated'
 
-import { firebase } from '../../firebase'
+import { firebaseAuth } from '../../firebase'
 import SessionContainer from '../../containers/session'
 import * as routes from '../../routes'
 
 const withAuthorization = authCondition => Component => {
   class WithAuthorization extends React.Component {
     componentDidMount() {
-      firebase.auth.onAuthStateChanged(authUser => {
+      firebaseAuth().onAuthStateChanged(authUser => {
         if (!authCondition(authUser)) {
           this.props.history.push(routes.LANDING)
         }

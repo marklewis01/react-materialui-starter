@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, TextField, withStyles } from '@material-ui/core'
 
-import { firebase } from '../../firebase'
+import { firebaseAuth, firebaseDb } from '../../firebase'
 
 const styles = theme => ({
   dateField: {
@@ -26,8 +26,8 @@ class AddTodoInput extends Component {
   constructor(props) {
     super(props)
 
-    this.userId = firebase.auth.currentUser.uid
-    this.colRef = firebase.db
+    this.userId = firebaseAuth().currentUser.uid
+    this.colRef = firebaseDb()
       .collection('todos')
       .doc(this.userId)
       .collection('tasks')

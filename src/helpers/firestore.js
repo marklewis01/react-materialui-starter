@@ -1,9 +1,8 @@
-import { db } from './firebase'
+import { firebaseDb } from '../firebase'
 
 // User API
-
 export const doCreateUser = (id, familyName, givenName, email) => {
-  const collection = db.collection('users')
+  const collection = firebaseDb().collection('users')
   return collection.add({
     email: email,
     familyName: familyName,
@@ -13,13 +12,14 @@ export const doCreateUser = (id, familyName, givenName, email) => {
 
 // Create Users
 export const createUser = name => {
-  const collection = db.collection('users')
+  const collection = firebaseDb().collection('users')
   return collection.add(name).then(res => console.log(res))
 }
 
 // Fetch All Users as array
 export const fetchCollection = col => {
-  db.collection(col)
+  firebaseDb()
+    .collection(col)
     .get()
     .then(snapshot => {
       const userArray = []
@@ -27,5 +27,3 @@ export const fetchCollection = col => {
       return userArray
     })
 }
-
-export default db
