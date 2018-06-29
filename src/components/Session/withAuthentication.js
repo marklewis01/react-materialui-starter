@@ -9,7 +9,7 @@ const withAuthentication = Component => {
     componentDidMount() {
       firebaseAuth().onAuthStateChanged(authUser => {
         if (authUser) {
-          SessionContainer.setAuthUser(authUser)
+          SessionContainer.signInUser(authUser)
         }
       })
     }

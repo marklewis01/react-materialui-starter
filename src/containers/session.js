@@ -1,28 +1,35 @@
 import { Container } from 'unstated'
-import { firebaseAuth } from '../firebase'
+import { auth } from '../helpers'
 
 class SessionContainer extends Container {
   state = {
     authUser: null
   }
 
-  setAuthUser = authUser => {
-    const avatarLetter = authUser.email.charAt(0).toUpperCase()
-    this.setState({
-      authUser: {
-        ...authUser,
-        avatarLetter
-      }
+  signInUser = authUser => {
+    return new Promise((resolve, reject) => {
+      const avatarLetter = authUser.email.charAt(0).toUpperCase()
+      resolve(
+        this.setState({
+          authUser: {
+            ...authUser,
+            avatarLetter
+          }
+        })
+      )
     })
   }
 
-  handleSignOut = () => {
-    firebaseAuth()
-      .doSignOut()
-      .then(window.location.reload())
-      .catch(error => {
-        console.log('error:', error)
-      })
+  signOutUser = () => {
+    return new Promise((resolve, reject) => {
+      resolve(
+        auth.doSignOut().then(() => {
+          this.setState({
+            authUser: null
+          })
+        })
+      )
+    })
   }
 }
 

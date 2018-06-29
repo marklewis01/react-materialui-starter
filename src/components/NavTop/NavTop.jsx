@@ -9,18 +9,17 @@ import {
   Button,
   Hidden,
   IconButton,
-  Menu,
-  MenuItem,
   Toolbar,
   Typography
 } from '@material-ui/core'
 
 import { Menu as MenuIcon } from '@material-ui/icons'
 
+import SessionContainer from '../../containers/session'
 import UiContainer from '../../containers/ui'
+
 import { firebaseAuth } from '../../firebase'
 import * as routes from '../../routes'
-import { withAuthentication } from '../Session'
 
 const styles = theme => ({
   root: {
@@ -47,8 +46,7 @@ const styles = theme => ({
 
 class NavTop extends Component {
   state = {
-    sidebar: false,
-    anchorEl: null
+    sidebar: false
   }
 
   handleMenuToggle = () => {
@@ -72,13 +70,12 @@ class NavTop extends Component {
   }
 
   render() {
-    const { authUser, classes, toggleModal } = this.props
-    const { anchorEl } = this.state
-    const open = Boolean(anchorEl)
+    const { classes, toggleModal } = this.props
 
     return (
-      <Subscribe to={[UiContainer]}>
-        {ui => {
+      <Subscribe to={[SessionContainer, UiContainer]}>
+        {(session, ui) => {
+          const { authUser } = session.state
           return (
             <AppBar position="absolute" className={classes.root} elevation={1}>
               <Toolbar className={classes.toolbar}>
@@ -98,38 +95,9 @@ class NavTop extends Component {
                 {authUser ? (
                   <div>
                     <Hidden mdDown>
-                      <IconButton
-                        aria-owns={open ? 'menu-appbar' : null}
-                        aria-haspopup="true"
-                        aria-label="account menu"
-                        onClick={this.handleMenu}
-                        color="inherit"
-                      >
-                        <Avatar className={classes.avatar}>
-                          {authUser.avatarLetter}
-                        </Avatar>
-                      </IconButton>
-                      <Menu
-                        id="menu-appbar"
-                        anchorEl={anchorEl}
-                        anchorOrigin={{
-                          vertical: 'top',
-                          horizontal: 'right'
-                        }}
-                        transformOrigin={{
-                          vertical: 'top',
-                          horizontal: 'right'
-                        }}
-                        open={open}
-                        onClose={this.handleMenuClose}
-                      >
-                        <Link to={routes.ACCOUNT}>
-                          <MenuItem onClick={this.handleMenuClose}>
-                            My account
-                          </MenuItem>
-                        </Link>
-                        <MenuItem onClick={this.handleSignOut}>Logout</MenuItem>
-                      </Menu>
+                      <Avatar className={classes.avatar}>
+                        {authUser.avatarLetter}
+                      </Avatar>
                     </Hidden>
                   </div>
                 ) : (
@@ -149,6 +117,4 @@ class NavTop extends Component {
   }
 }
 
-export default withAuthentication(
-  withStyles(styles, { withTheme: true })(NavTop)
-)
+export default withStyles(styles, { withTheme: true })(NavTop)

@@ -14,7 +14,6 @@ import LoginModal from '../Login'
 
 import SessionContainer from '../../containers/session'
 import * as routes from '../../routes'
-import CoursesPage from '../../screens/CoursesPage'
 import TodosPage from '../../screens/TodosPage'
 
 const styles = theme => ({
@@ -84,10 +83,7 @@ class Main extends React.Component {
                     path={routes.ACCOUNT}
                     component={() => <AccountPage />}
                   />
-                  <Route
-                    path={routes.COURSES}
-                    component={() => <CoursesPage />}
-                  />
+
                   <Route
                     path={routes.DASHBOARD}
                     component={() => <Dashboard />}

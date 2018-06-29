@@ -1,20 +1,17 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 
-import { auth } from '../../firebase'
-import * as routes from '../../routes'
+import { auth } from '../helpers'
+import * as routes from '../routes'
 
 // material-ui components
-import Email from '@material-ui/icons/Email'
-import LockOutline from '@material-ui/icons/LockOutline'
-import People from '@material-ui/icons/People'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions'
-import loginPageStyle from '../../assets/jss/loginPage.jsx'
+import loginPageStyle from '../assets/jss/loginPage.jsx'
 
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value
@@ -52,7 +49,7 @@ class LoginPage extends React.Component {
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState(() => ({ ...INITIAL_STATE }))
-        history.push(routes.HOME)
+        history.push(routes.DASHBOARD)
       })
       .catch(error => {
         this.setState(updateByPropertyName('error', error))
@@ -62,9 +59,8 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    const { classes, ...rest } = this.props
-    const { email, password, error } = this.state
-    const isInvalid = password === '' || email === ''
+    const { classes } = this.props
+    const { email, password } = this.state
 
     return (
       <div
@@ -141,11 +137,6 @@ class LoginPage extends React.Component {
                       autoComplete="current-password"
                     />
                   </CardContent>
-                  <CardActions className={classes.cardFooter}>
-                    <Button simple color="primary" size="lg">
-                      Get started
-                    </Button>
-                  </CardActions>
                 </form>
               </Card>
             </Grid>

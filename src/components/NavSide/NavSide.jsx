@@ -84,6 +84,10 @@ class NavSide extends Component {
     }
   }
 
+  handleSignOut = () => {
+    SessionContainer.signOutUser().then(() => UiContainer.handleDrawerClose())
+  }
+
   render() {
     const { classes } = this.props
     const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent)
@@ -91,102 +95,106 @@ class NavSide extends Component {
     return (
       <Subscribe to={[SessionContainer, UiContainer]}>
         {(session, ui) => {
-          return (
-            <div>
-              <Hidden mdUp>
-                <SwipeableDrawer
-                  open={ui.state.navSide}
-                  onClose={ui.toggleDrawer}
-                  onOpen={ui.toggleDrawer}
-                  disableBackdropTransition={!iOS}
-                  disableDiscovery={iOS}
-                >
-                  <div
-                    tabIndex={0}
-                    role="button"
-                    onClick={ui.toggleDrawer}
-                    onKeyDown={ui.toggleDrawer}
+          if (session.state.authUser) {
+            return (
+              <div>
+                <Hidden mdUp>
+                  <SwipeableDrawer
+                    open={ui.state.navSide}
+                    onClose={ui.toggleDrawer}
+                    onOpen={ui.toggleDrawer}
+                    disableBackdropTransition={!iOS}
+                    disableDiscovery={iOS}
                   >
-                    <div className={classes.list}>
-                      <List>
-                        {navigationItems.map(item => {
-                          const { link } = item
-                          return (
-                            <ListItem
-                              key={item.name}
-                              onClick={() =>
-                                this.handleClick(link, ui.handleDrawerClose)
-                              }
-                              className={classes.link}
-                            >
-                              <ListItemIcon>{item.icon}</ListItemIcon>
-                              <ListItemText primary={item.name} />
-                            </ListItem>
-                          )
-                        })}
-                        <ListItem
-                          onClick={session.handleSignOut}
-                          className={classes.link}
-                        >
-                          <ListItemIcon>
-                            <LogoutIcon />
-                          </ListItemIcon>
-                          <ListItemText primary="Sign Out" />
-                        </ListItem>
-                      </List>
-                    </div>
-                  </div>
-                </SwipeableDrawer>
-              </Hidden>
-              <Hidden smDown implementation="css">
-                <Drawer
-                  variant="permanent"
-                  classes={{
-                    paper: classNames(
-                      classes.drawerPaper,
-                      !ui.state.navSide && classes.drawerPaperClose
-                    )
-                  }}
-                  open={ui.state.navSide}
-                  onMouseEnter={ui.handleDrawerOpen}
-                  onMouseLeave={ui.handleDrawerClose}
-                >
-                  <div className={classes.toolbar}>
-                    <IconButton onClick={ui.toggleDrawer}>
-                      <ChevronLeft />
-                    </IconButton>
-                  </div>
-                  <Divider />
-                  <List>
-                    {navigationItems.map(item => {
-                      const { link } = item
-                      return (
-                        <ListItem
-                          key={item.name}
-                          onClick={() =>
-                            this.handleClick(link, ui.handleDrawerClose)
-                          }
-                          className={classes.link}
-                        >
-                          <ListItemIcon>{item.icon}</ListItemIcon>
-                          <ListItemText primary={item.name} />
-                        </ListItem>
-                      )
-                    })}
-                    <ListItem
-                      onClick={session.handleSignOut}
-                      className={classes.link}
+                    <div
+                      tabIndex={0}
+                      role="button"
+                      onClick={ui.toggleDrawer}
+                      onKeyDown={ui.toggleDrawer}
                     >
-                      <ListItemIcon>
-                        <LogoutIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Sign Out" />
-                    </ListItem>
-                  </List>
-                </Drawer>
-              </Hidden>
-            </div>
-          )
+                      <div className={classes.list}>
+                        <List>
+                          {navigationItems.map(item => {
+                            const { link } = item
+                            return (
+                              <ListItem
+                                key={item.name}
+                                onClick={() =>
+                                  this.handleClick(link, ui.handleDrawerClose)
+                                }
+                                className={classes.link}
+                              >
+                                <ListItemIcon>{item.icon}</ListItemIcon>
+                                <ListItemText primary={item.name} />
+                              </ListItem>
+                            )
+                          })}
+                          <ListItem
+                            onClick={session.handleSignOut}
+                            className={classes.link}
+                          >
+                            <ListItemIcon>
+                              <LogoutIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Sign Out" />
+                          </ListItem>
+                        </List>
+                      </div>
+                    </div>
+                  </SwipeableDrawer>
+                </Hidden>
+                <Hidden smDown implementation="css">
+                  <Drawer
+                    variant="permanent"
+                    classes={{
+                      paper: classNames(
+                        classes.drawerPaper,
+                        !ui.state.navSide && classes.drawerPaperClose
+                      )
+                    }}
+                    open={ui.state.navSide}
+                    onMouseEnter={ui.handleDrawerOpen}
+                    onMouseLeave={ui.handleDrawerClose}
+                  >
+                    <div className={classes.toolbar}>
+                      <IconButton onClick={ui.toggleDrawer}>
+                        <ChevronLeft />
+                      </IconButton>
+                    </div>
+                    <Divider />
+                    <List>
+                      {navigationItems.map(item => {
+                        const { link } = item
+                        return (
+                          <ListItem
+                            key={item.name}
+                            onClick={() =>
+                              this.handleClick(link, ui.handleDrawerClose)
+                            }
+                            className={classes.link}
+                          >
+                            <ListItemIcon>{item.icon}</ListItemIcon>
+                            <ListItemText primary={item.name} />
+                          </ListItem>
+                        )
+                      })}
+                      <ListItem
+                        onClick={this.handleSignOut}
+                        className={classes.link}
+                      >
+                        <ListItemIcon>
+                          <LogoutIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Sign Out" />
+                      </ListItem>
+                    </List>
+                  </Drawer>
+                </Hidden>
+              </div>
+            )
+          } else {
+            return null
+          }
         }}
       </Subscribe>
     )

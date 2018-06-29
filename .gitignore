@@ -11,7 +11,7 @@
 /build
 
 # Firebase Config
-/src/firebase/config.js
+/src/firebase/index.js
 /functions/private-key.json
 
 # misc
