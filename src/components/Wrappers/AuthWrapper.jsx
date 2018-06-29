@@ -9,7 +9,7 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100vh',
+    height: 'calc(100vh - 72px)',
     paddingBottom: '8rem'
   },
   signedIn: {

@@ -111,13 +111,7 @@ class App extends React.Component {
             <NavSide />
 
             <Switch>
-              <Route
-                authed={this.state.authed}
-                path="/login"
-                component={LoginPage}
-              />
               <Route path="/" exact component={LandingPage} />
-
               <PrivateRoute path="/account" component={AccountPage} />
               <PrivateRoute path="/dashboard" component={Dashboard} />
               <PrivateRoute path="/todos" component={TodosPage} />
