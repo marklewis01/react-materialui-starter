@@ -8,10 +8,12 @@ const LastLogin = () => {
 
   return (
     <Typography variant="caption">
-      Last Login:{' '}
-      {`${this.lastLogin.toDateString()} at ${this.lastLogin.toLocaleTimeString(
-        'en-US'
-      )}`}
+      Last Login:
+      {firebaseAuth().currentUser
+        ? `${this.lastLogin.toDateString()} at ${this.lastLogin.toLocaleTimeString(
+            'en-US'
+          )}`
+        : null}
     </Typography>
   )
 }
