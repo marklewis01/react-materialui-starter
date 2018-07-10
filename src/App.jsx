@@ -22,8 +22,8 @@ import SessionContainer from './containers/session'
 
 // Screens
 import LandingPage from './screens/LandingPage'
-import LoginPage from './screens/LoginPage'
 import AccountPage from './screens/AccountPage'
+import ComponentsPage from './screens/ComponentsPage'
 import Dashboard from './screens/Dashboard'
 import TodosPage from './screens/TodosPage'
 
@@ -114,6 +114,7 @@ class App extends React.Component {
               <Route path="/" exact component={LandingPage} />
               <PrivateRoute path="/account" component={AccountPage} />
               <PrivateRoute path="/dashboard" component={Dashboard} />
+              <PrivateRoute path="/components" component={ComponentsPage} />
               <PrivateRoute path="/todos" component={TodosPage} />
               <Route
                 render={() => (

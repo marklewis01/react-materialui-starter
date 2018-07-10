@@ -21,7 +21,8 @@ import {
   CheckBox as TodoIcon,
   ExitToApp as LogoutIcon,
   Home as HomeIcon,
-  Settings as SettingsIcon
+  Settings as SettingsIcon,
+  ViewCompact as ComponentsIcon
 } from '@material-ui/icons'
 
 import SessionContainer from '../../containers/session'
@@ -32,6 +33,7 @@ const drawerWidth = 240
 
 const navigationItems = [
   { icon: <HomeIcon />, name: 'Home', link: routes.DASHBOARD },
+  { icon: <ComponentsIcon />, name: 'Components', link: routes.COMPONENTS },
   { icon: <TodoIcon />, name: 'Task List', link: routes.TODOS },
   { icon: <SettingsIcon />, name: 'Account Settings', link: routes.ACCOUNT }
 ]

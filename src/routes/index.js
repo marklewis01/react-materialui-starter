@@ -1,7 +1,6 @@
 export const ACCOUNT = '/account'
-export const COURSES = '/courses'
+export const COMPONENTS = '/components'
 export const DASHBOARD = '/dashboard'
 export const LANDING = '/'
-export const NEWDOC = '/new'
 export const PASSWORD_FORGET = '/pw-forget'
 export const TODOS = '/todos'
