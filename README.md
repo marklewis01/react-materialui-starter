@@ -1,5 +1,3 @@
-Demo: To help illustrate the project I have published it on Firebase Hosting: [Demo](https://material-ui-mobx-starter.firebaseapp.com/)
-
 > This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 ## Table of Contents
