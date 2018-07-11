@@ -22,23 +22,25 @@ const styles = theme => ({
 const FieldTable = ({ classes, fields }) => {
   console.log(fields.filter(obj => obj.selected).length)
   return (
-    <Paper className={classes.root}>
+    <div>
       {fields.filter(obj => obj.selected).length > 0 ? (
-        <Table>
-          <TableHead>
-            <TableRow>
-              {fields.filter(obj => obj.selected).map(column => {
-                return <TableCell key={column.id}>{column.name}</TableCell>
-              })}
-            </TableRow>
-          </TableHead>
-        </Table>
+        <Paper className={classes.root}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                {fields.filter(obj => obj.selected).map(column => {
+                  return <TableCell key={column.id}>{column.name}</TableCell>
+                })}
+              </TableRow>
+            </TableHead>
+          </Table>
+        </Paper>
       ) : (
-        <Typography variant="title">
+        <Typography variant="title" className={classes.root}>
           Select some fields from the left
         </Typography>
       )}
-    </Paper>
+    </div>
   )
 }
 
