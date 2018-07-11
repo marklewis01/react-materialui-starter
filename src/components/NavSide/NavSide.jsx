@@ -18,7 +18,6 @@ import {
 
 import {
   ChevronLeft,
-  CheckBox as TodoIcon,
   ExitToApp as LogoutIcon,
   Home as HomeIcon,
   Settings as SettingsIcon,
