@@ -20,7 +20,6 @@ const styles = theme => ({
 })
 
 const FieldTable = ({ classes, fields }) => {
-  console.log(fields.filter(obj => obj.selected).length)
   return (
     <div>
       {fields.filter(obj => obj.selected).length > 0 ? (

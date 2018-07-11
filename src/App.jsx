@@ -25,7 +25,6 @@ import LandingPage from './screens/LandingPage'
 import AccountPage from './screens/AccountPage'
 import ComponentsPage from './screens/ComponentsPage'
 import Dashboard from './screens/Dashboard'
-import TodosPage from './screens/TodosPage'
 
 injectGlobal`
   html {
@@ -115,7 +114,6 @@ class App extends React.Component {
               <PrivateRoute path="/account" component={AccountPage} />
               <PrivateRoute path="/dashboard" component={Dashboard} />
               <PrivateRoute path="/components" component={ComponentsPage} />
-              <PrivateRoute path="/todos" component={TodosPage} />
               <Route
                 render={() => (
                   <AuthWrapper>

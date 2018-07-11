@@ -34,7 +34,6 @@ const drawerWidth = 240
 const navigationItems = [
   { icon: <HomeIcon />, name: 'Home', link: routes.DASHBOARD },
   { icon: <ComponentsIcon />, name: 'Components', link: routes.COMPONENTS },
-  { icon: <TodoIcon />, name: 'Task List', link: routes.TODOS },
   { icon: <SettingsIcon />, name: 'Account Settings', link: routes.ACCOUNT }
 ]
 
