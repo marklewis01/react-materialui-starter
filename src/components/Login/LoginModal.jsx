@@ -17,12 +17,12 @@ import * as auth from '../../helpers/auth'
 import * as firestore from '../../helpers/firestore.js'
 
 const INITIAL_STATE = {
-  email: '',
+  email: 'demo@demo.com',
   error: null,
   familyName: '',
   givenName: '',
   loading: false,
-  password: '',
+  password: 'letmeinplease',
   option: 'login'
 }
 
@@ -91,7 +91,37 @@ class LoginModal extends Component {
     const { history, closeLogin } = this.props
     const { email, password } = this.state
 
-    if (!this.state.loading) {
+    if (!this.state.loading && this.state.email === 'demo@demo.com') {
+      this.setState(
+        {
+          loading: true
+        },
+        () => {
+          auth
+            .doAnonymousSignIn()
+            .then(() => {
+              this.timer = setTimeout(() => {
+                this.setState({
+                  ...INITIAL_STATE,
+                  success: true
+                })
+              }, 1000)
+              history.push(routes.DASHBOARD)
+              closeLogin()
+            })
+            .catch(error => {
+              this.setState(prevState => {
+                return {
+                  ...prevState,
+                  error
+                }
+              })
+            })
+        }
+      )
+    }
+    // user has changed email address. login email address
+    else {
       this.setState(
         prevState => {
           return {

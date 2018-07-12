@@ -4,6 +4,9 @@ import { firebaseAuth } from '../firebase'
 export const doCreateUserWithEmailAndPassword = (email, password) =>
   firebaseAuth().createUserWithEmailAndPassword(email, password)
 
+// Firebase Anonymous Sign In
+export const doAnonymousSignIn = () => firebaseAuth().signInAnonymously()
+
 // Sign In
 export const doSignInWithEmailAndPassword = (email, password) =>
   firebaseAuth().signInWithEmailAndPassword(email, password)
