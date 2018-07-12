@@ -3,6 +3,7 @@ import { Subscribe } from 'unstated'
 
 import SessionContainer from '../containers/session'
 import { AuthWrapper, SingleCol } from '../components/Wrappers'
+import AnonymousMsg from '../components/AnonymousMsg'
 
 const Home = () => (
   <AuthWrapper>
@@ -10,8 +11,9 @@ const Home = () => (
       <Subscribe to={[SessionContainer]}>
         {session => (
           <div>
-            <h1>Welcome to the New Dashboard!</h1>
-            <p>The Dashbord is accessible by every signed in user.</p>
+            <h1>Welcome to the Dashboard!</h1>
+            <p>The Dashboard is accessible by every signed in user.</p>
+            {session.state.authUser.isAnonymous ? <AnonymousMsg /> : null}
           </div>
         )}
       </Subscribe>

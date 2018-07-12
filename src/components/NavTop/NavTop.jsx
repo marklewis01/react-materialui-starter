@@ -96,7 +96,9 @@ class NavTop extends Component {
                   <div>
                     <Hidden mdDown>
                       <Avatar className={classes.avatar}>
-                        {authUser.avatarLetter}
+                        {authUser.email
+                          ? authUser.email.charAt(0).toUpperCase()
+                          : 'A'}
                       </Avatar>
                     </Hidden>
                   </div>

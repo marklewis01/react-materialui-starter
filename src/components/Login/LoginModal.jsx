@@ -84,13 +84,12 @@ class LoginModal extends Component {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timer)
+    // clearTimeout(this.timer)
   }
 
   handleLogin = event => {
     const { history, closeLogin } = this.props
     const { email, password } = this.state
-
     if (!this.state.loading && this.state.email === 'demo@demo.com') {
       this.setState(
         {
@@ -100,12 +99,10 @@ class LoginModal extends Component {
           auth
             .doAnonymousSignIn()
             .then(() => {
-              this.timer = setTimeout(() => {
-                this.setState({
-                  ...INITIAL_STATE,
-                  success: true
-                })
-              }, 1000)
+              this.setState({
+                ...INITIAL_STATE,
+                success: true
+              })
               history.push(routes.DASHBOARD)
               closeLogin()
             })
@@ -232,8 +229,6 @@ class LoginModal extends Component {
     }
     event.preventDefault()
   }
-
-  timer = undefined
 
   render() {
     const { loginModal, classes } = this.props

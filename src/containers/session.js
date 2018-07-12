@@ -7,13 +7,11 @@ class SessionContainer extends Container {
   }
 
   signInUser = authUser => {
-    return new Promise((resolve, reject) => {
-      const avatarLetter = authUser.email.charAt(0).toUpperCase()
+    return new Promise(resolve => {
       resolve(
         this.setState({
           authUser: {
-            ...authUser,
-            avatarLetter
+            ...authUser
           }
         })
       )
@@ -21,7 +19,7 @@ class SessionContainer extends Container {
   }
 
   signOutUser = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       resolve(
         auth.doSignOut().then(() => {
           this.setState({
