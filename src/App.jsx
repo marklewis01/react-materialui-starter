@@ -41,6 +41,7 @@ injectGlobal`
     font-size: 16px;
     margin-top: 64px;
     padding: 0;
+    background-color: #f5f5f5;
   }
    a {
     text-decoration: none;
