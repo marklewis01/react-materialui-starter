@@ -122,11 +122,10 @@ export default function NavSide() {
                   onMouseLeave={ui.handleDrawerClose}
                 >
                   <div className={classes.toolbar}>
-                    <IconButton onClick={ui.toggleDrawer}>
+                    <IconButton onClick={ui.toggleDrawer} edge="start">
                       <ChevronLeft />
                     </IconButton>
                   </div>
-                  <Divider />
                   <List>
                     {navigationItems.map(item => {
                       const { link } = item;

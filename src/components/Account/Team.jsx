@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Avatar,
   Button,
@@ -6,14 +6,14 @@ import {
   ListItem,
   ListItemText,
   Typography
-} from '@material-ui/core'
+} from "@material-ui/core";
 
-import avatarImg from '../../assets/img/uxceo-128.jpg'
+import avatarImg from "../../assets/img/uxceo-128.jpg";
 
 const Team = ({ classes }) => {
   return (
     <div>
-      <Typography variant="title">Team Members</Typography>
+      <Typography variant="h2">Team Members</Typography>
       <List>
         {[0, 1, 2, 3].map(value => (
           <ListItem key={value} dense disableGutters>
@@ -29,7 +29,7 @@ const Team = ({ classes }) => {
         Add Team Member
       </Button>
     </div>
-  )
-}
+  );
+};
 
-export default Team
+export default Team;

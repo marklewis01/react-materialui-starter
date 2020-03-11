@@ -38,6 +38,7 @@ export const styles = (theme: Theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "flex-end",
+      height: 64,
       padding: "0 8px"
     }
   });

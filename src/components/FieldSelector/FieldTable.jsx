@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Paper,
   Table,
@@ -7,17 +7,17 @@ import {
   TableCell,
   Typography,
   withStyles
-} from '@material-ui/core/'
+} from "@material-ui/core/";
 
 const styles = theme => ({
   root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3
+    width: "100%",
+    marginTop: theme.spacing(3)
   },
   tableWrapper: {
-    overflowX: 'auto'
+    overflowX: "auto"
   }
-})
+});
 
 const FieldTable = ({ classes, fields }) => {
   return (
@@ -27,20 +27,22 @@ const FieldTable = ({ classes, fields }) => {
           <Table>
             <TableHead>
               <TableRow>
-                {fields.filter(obj => obj.selected).map(column => {
-                  return <TableCell key={column.id}>{column.name}</TableCell>
-                })}
+                {fields
+                  .filter(obj => obj.selected)
+                  .map(column => {
+                    return <TableCell key={column.id}>{column.name}</TableCell>;
+                  })}
               </TableRow>
             </TableHead>
           </Table>
         </Paper>
       ) : (
-        <Typography variant="title" className={classes.root}>
+        <Typography variant="h2" className={classes.root}>
           Select some fields from the left
         </Typography>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default withStyles(styles)(FieldTable)
+export default withStyles(styles)(FieldTable);

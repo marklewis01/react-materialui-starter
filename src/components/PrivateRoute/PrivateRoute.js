@@ -1,8 +1,8 @@
-import React from 'react'
-import { Redirect, Route } from 'react-router-dom'
-import { Subscribe } from 'unstated'
+import React from "react";
+import { Redirect, Route } from "react-router-dom";
+import { Subscribe } from "unstated";
 
-import SessionContainer from '../../containers/session'
+import SessionContainer from "../../containers/session";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Subscribe to={[SessionContainer]}>
@@ -16,16 +16,16 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
             ) : (
               <Redirect
                 to={{
-                  pathname: '/',
+                  pathname: "/",
                   state: { from: props.location }
                 }}
               />
             )
           }
         />
-      )
+      );
     }}
   </Subscribe>
-)
+);
 
-export default PrivateRoute
+export default PrivateRoute;

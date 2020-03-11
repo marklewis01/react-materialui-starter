@@ -50,9 +50,9 @@ class Layout extends Component {
             </Typography>
           </Grid>
         </Grid>
-        <Grid container spacing={16}>
+        <Grid container spacing={2}>
           <Grid item sm={4}>
-            <Typography variant="subheading">Fields to choose from:</Typography>
+            <Typography variant="h3">Fields to choose from:</Typography>
             <FieldSelector
               fields={fields}
               selected={this.isSelected}
@@ -62,9 +62,7 @@ class Layout extends Component {
             />
           </Grid>
           <Grid item sm={8}>
-            <Typography variant="subheading">
-              Table updates with columns:
-            </Typography>
+            <Typography variant="h3">Table updates with columns:</Typography>
             <FieldTable fields={fields} />
           </Grid>
         </Grid>

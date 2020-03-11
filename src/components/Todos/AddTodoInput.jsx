@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import { Button, TextField, withStyles } from '@material-ui/core'
+import React, { Component } from "react";
+import { Button, TextField, withStyles } from "@material-ui/core";
 
-import { firebaseAuth, firebaseDb } from '../../firebase'
+import { firebaseAuth, firebaseDb } from "../../firebase";
 
 const styles = theme => ({
   dateField: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     width: 150
   },
   form: {
@@ -14,7 +14,7 @@ const styles = theme => ({
   textField: {
     width: 250
   }
-})
+});
 
 // const userId = firebase.auth.currentUser.uid
 // const colRef = firebase.db
@@ -24,26 +24,26 @@ const styles = theme => ({
 
 class AddTodoInput extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.userId = firebaseAuth().currentUser.uid
+    this.userId = firebaseAuth().currentUser.uid;
     this.colRef = firebaseDb()
-      .collection('todos')
+      .collection("todos")
       .doc(this.userId)
-      .collection('tasks')
+      .collection("tasks");
 
     this.state = {
-      dueDate: '',
-      taskName: ''
-    }
+      dueDate: "",
+      taskName: ""
+    };
   }
 
   handleChange = (e, field) => {
-    this.setState({ [field]: e.target.value })
-  }
+    this.setState({ [field]: e.target.value });
+  };
 
   handleSubmit = e => {
-    e.preventDefault()
+    e.preventDefault();
 
     this.colRef
       .add({
@@ -54,19 +54,19 @@ class AddTodoInput extends Component {
       })
       .then(res => {
         this.setState({
-          taskName: '',
-          dueDate: ''
-        })
-      })
-  }
+          taskName: "",
+          dueDate: ""
+        });
+      });
+  };
 
   render() {
-    const { classes } = this.props
+    const { classes } = this.props;
     return (
       <form onSubmit={e => this.handleSubmit(e)} className={classes.form}>
         <TextField
           className={classes.textField}
-          onChange={e => this.handleChange(e, 'taskName')}
+          onChange={e => this.handleChange(e, "taskName")}
           type="text"
           value={this.state.taskName}
         />
@@ -76,17 +76,17 @@ class AddTodoInput extends Component {
           className={classes.dateField}
           type="date"
           value={this.state.dueDate}
-          onChange={e => this.handleChange(e, 'dueDate')}
+          onChange={e => this.handleChange(e, "dueDate")}
           InputLabelProps={{
             shrink: true
           }}
         />
-        <Button type="submit" disabled={this.state.taskName === ''}>
+        <Button type="submit" disabled={this.state.taskName === ""}>
           Add Task
         </Button>
       </form>
-    )
+    );
   }
 }
 
-export default withStyles(styles, { withTheme: true })(AddTodoInput)
+export default withStyles(styles, { withTheme: true })(AddTodoInput);

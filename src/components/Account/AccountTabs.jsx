@@ -1,28 +1,28 @@
-import React, { Component } from 'react'
-import { Tab, Tabs, withStyles } from '@material-ui/core'
+import React, { Component } from "react";
+import { Tab, Tabs, withStyles } from "@material-ui/core";
 
-import { Organisation, Profile } from './index'
+import { Organisation, Profile } from "./index";
 
 const styles = theme => ({
   tabs: {
     borderBottom: `1px solid ${theme.palette.primary.light}`,
-    marginBottom: theme.spacing.unit * 2,
-    marginTop: theme.spacing.unit * 2
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(2)
   }
-})
+});
 
 class AccountTabs extends Component {
   state = {
     tabValue: 0
-  }
+  };
 
   handleTabChange = (e, value) => {
-    this.setState({ tabValue: value })
-  }
+    this.setState({ tabValue: value });
+  };
 
   render() {
-    const { classes } = this.props
-    const { tabValue } = this.state
+    const { classes } = this.props;
+    const { tabValue } = this.state;
 
     return (
       <div>
@@ -38,8 +38,8 @@ class AccountTabs extends Component {
         {tabValue === 0 && <Profile />}
         {tabValue === 1 && <Organisation />}
       </div>
-    )
+    );
   }
 }
 
-export default withStyles(styles)(AccountTabs)
+export default withStyles(styles)(AccountTabs);

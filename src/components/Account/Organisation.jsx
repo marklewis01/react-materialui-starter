@@ -1,109 +1,109 @@
-import React from 'react'
+import React from "react";
 import {
   Grid,
   Paper,
   TextField,
   Typography,
   withStyles
-} from '@material-ui/core'
+} from "@material-ui/core";
 
-import { Actions, Team } from './index'
-import { firebaseAuth, firebaseDb } from '../../firebase'
+import { Actions, Team } from "./index";
+import { firebaseAuth, firebaseDb } from "../../firebase";
 
 const styles = theme => ({
   gridItemFlex: {
-    display: 'flex'
+    display: "flex"
   },
   gridItem: {
     paddingTop: 0
   },
   paper: {
-    marginBottom: theme.spacing.unit * 3,
-    padding: theme.spacing.unit * 2
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(2)
   },
   tabs: {
     borderBottom: `1px solid ${theme.palette.primary.light}`
   }
-})
+});
 
 class Organisation extends React.Component {
   constructor(props) {
-    super(props)
-    this.userId = firebaseAuth().currentUser.uid
+    super(props);
+    this.userId = firebaseAuth().currentUser.uid;
     this.colRef = firebaseDb()
-      .collection('users')
-      .doc(this.userId)
-    this.unsubscribe = null
+      .collection("users")
+      .doc(this.userId);
+    this.unsubscribe = null;
 
     this.state = {
       org: {
-        name: '',
-        address: '',
-        address2: '',
-        city: '',
-        state: '',
-        zip: '',
+        name: "",
+        address: "",
+        address2: "",
+        city: "",
+        state: "",
+        zip: "",
         logo: {},
-        website: '',
+        website: "",
         team: [],
         auditLog: []
       },
       loading: true
-    }
+    };
   }
 
   componentDidMount() {
     this.colRef.get().then(doc => {
       if (doc.data().org) {
-        this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate)
+        this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate);
       } else {
         this.colRef
           .update({ owner: this.userId })
           .then(() => {
-            this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate)
+            this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate);
           })
           .then(() =>
             this.colRef.update({
               org: { team: [this.userId] }
             })
-          )
+          );
       }
-    })
+    });
   }
 
   onCollectionUpdate = doc => {
     this.setState({
       ...doc.data(),
       loading: false
-    })
-  }
+    });
+  };
 
   handleChange = name => event => {
     this.colRef.update({
       [name]: event.target.value
-    })
-  }
+    });
+  };
 
   componentWillUnmount() {
-    this.unsubscribe()
+    this.unsubscribe();
   }
 
   render() {
-    const { classes } = this.props
+    const { classes } = this.props;
     return (
-      <Grid container spacing={24}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={8}>
           <Paper className={classes.paper}>
-            <Typography variant="title">Organisation Location</Typography>
+            <Typography variant="h2">Organisation Location</Typography>
             <form>
-              <Grid container spacing={24} justify="space-between">
+              <Grid container spacing={2} justify="space-between">
                 <Grid item xs={12}>
                   <TextField
                     required
                     id="name"
                     label="Organisation Name"
                     value={this.state.org.name}
-                    onChange={this.handleChange('org.name')}
+                    onChange={this.handleChange("org.name")}
                     margin="normal"
                     fullWidth
                     autoComplete="organization"
@@ -115,7 +115,7 @@ class Organisation extends React.Component {
                     label="Street Address"
                     multiline={true}
                     value={this.state.org.address}
-                    onChange={this.handleChange('org.address')}
+                    onChange={this.handleChange("org.address")}
                     margin="normal"
                     fullWidth
                     autoComplete="street-address"
@@ -128,7 +128,7 @@ class Organisation extends React.Component {
                     label="City"
                     fullWidth
                     value={this.state.org.city}
-                    onChange={this.handleChange('org.city')}
+                    onChange={this.handleChange("org.city")}
                     margin="normal"
                     autoComplete="address-level2"
                   />
@@ -139,7 +139,7 @@ class Organisation extends React.Component {
                     label="State"
                     fullWidth
                     value={this.state.org.state}
-                    onChange={this.handleChange('org.state')}
+                    onChange={this.handleChange("org.state")}
                     margin="normal"
                     autoComplete="address-level1"
                   />
@@ -150,7 +150,7 @@ class Organisation extends React.Component {
                     label="Post Code"
                     fullWidth
                     value={this.state.org.zip}
-                    onChange={this.handleChange('org.zip')}
+                    onChange={this.handleChange("org.zip")}
                     margin="normal"
                     autoComplete="postal-code"
                   />
@@ -162,7 +162,7 @@ class Organisation extends React.Component {
                     label="Website"
                     className={classes.textField}
                     value={this.state.org.website}
-                    onChange={this.handleChange('org.website')}
+                    onChange={this.handleChange("org.website")}
                     margin="normal"
                     fullWidth
                     autoComplete="url"
@@ -181,8 +181,8 @@ class Organisation extends React.Component {
           </Paper>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Organisation)
+export default withStyles(styles, { withTheme: true })(Organisation);

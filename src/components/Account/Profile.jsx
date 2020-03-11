@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Grid,
   Paper,
@@ -7,121 +7,121 @@ import {
   TextField,
   Typography,
   withStyles
-} from '@material-ui/core'
+} from "@material-ui/core";
 
-import { LastLogin } from './index'
-import { firebaseAuth, firebaseDb } from '../../firebase'
+import { LastLogin } from "./index";
+import { firebaseAuth, firebaseDb } from "../../firebase";
 
 const styles = theme => ({
   gridItemFlex: {
-    display: 'flex'
+    display: "flex"
   },
   gridItem: {
     paddingTop: 0
   },
   paper: {
-    marginBottom: theme.spacing.unit * 3,
-    padding: theme.spacing.unit * 2
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(2)
   },
   tabs: {
     borderBottom: `1px solid ${theme.palette.primary.light}`,
-    marginBottom: theme.spacing.unit * 3
+    marginBottom: theme.spacing(3)
   },
   textField: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
     flexGrow: 1
   },
   textFieldShort: {
     width: `160px`,
-    marginRight: theme.spacing.unit * 2
+    marginRight: theme.spacing(2)
   }
-})
+});
 
 class Profile extends React.Component {
   constructor(props) {
-    super(props)
-    this.userId = firebaseAuth().currentUser.uid
+    super(props);
+    this.userId = firebaseAuth().currentUser.uid;
     this.colRef = firebaseDb()
-      .collection('users')
-      .doc(this.userId)
-    this.unsubscribe = null
+      .collection("users")
+      .doc(this.userId);
+    this.unsubscribe = null;
 
     this.state = {
-      email: '',
-      givenName: '',
-      familyName: '',
-      lastLogin: '',
-      profilePic: '',
+      email: "",
+      givenName: "",
+      familyName: "",
+      lastLogin: "",
+      profilePic: "",
       auditLog: [],
       loading: true
-    }
+    };
   }
 
   componentDidMount() {
     this.colRef.get().then(doc => {
       if (doc.exists) {
-        this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate)
+        this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate);
       } else {
         this.colRef
           .set({ owner: this.userId })
           .then(() => {
-            this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate)
+            this.unsubscribe = this.colRef.onSnapshot(this.onCollectionUpdate);
           })
           .then(() =>
             this.colRef.update({
               email: firebaseAuth().currentUser.email
             })
-          )
+          );
       }
-    })
+    });
 
     const lastLogin = new Date(
       firebaseAuth().currentUser.metadata.lastSignInTime
-    )
-    this.setLastLogin(lastLogin)
+    );
+    this.setLastLogin(lastLogin);
   }
 
   onCollectionUpdate = doc => {
     this.setState({
       ...doc.data(),
       loading: false
-    })
-  }
+    });
+  };
 
   setLastLogin(lastLogin) {
     this.setState({
       lastLogin: lastLogin
-    })
+    });
   }
 
   handleChange = name => event => {
     this.colRef.update({
       [name]: event.target.value
-    })
-  }
+    });
+  };
 
   componentWillUnmount() {
-    this.unsubscribe()
+    this.unsubscribe();
   }
 
   render() {
-    const { classes } = this.props
-    const { lastLogin } = this.state
+    const { classes } = this.props;
+    const { lastLogin } = this.state;
 
     return (
-      <Grid container spacing={24}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={8}>
           <Paper className={classes.paper}>
-            <Typography variant="title">Personal Information</Typography>
+            <Typography variant="h2">Personal Information</Typography>
             <form>
-              <Grid container spacing={24} justify="space-between">
+              <Grid container spacing={2} justify="space-between">
                 <Grid item xs={12} sm={6}>
                   <TextField
                     id="givenName"
                     label="Given Name"
                     fullWidth
                     value={this.state.givenName}
-                    onChange={this.handleChange('givenName')}
+                    onChange={this.handleChange("givenName")}
                     margin="normal"
                     autoComplete="given-name"
                   />
@@ -131,7 +131,7 @@ class Profile extends React.Component {
                     id="familyName"
                     label="Family Name"
                     value={this.state.familyName}
-                    onChange={this.handleChange('familyName')}
+                    onChange={this.handleChange("familyName")}
                     fullWidth
                     margin="normal"
                     autoComplete="family-name"
@@ -154,7 +154,7 @@ class Profile extends React.Component {
         </Grid>
         <Grid item xs={12} sm={4}>
           <Paper className={classes.paper}>
-            <Typography variant="title">Profile Picture</Typography>
+            <Typography variant="h2">Profile Picture</Typography>
           </Paper>
           <Tabs value={false} className={classes.tabs}>
             <Tab label="Other Information" />
@@ -162,8 +162,8 @@ class Profile extends React.Component {
           <LastLogin lastLogin={lastLogin} />
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Profile)
+export default withStyles(styles, { withTheme: true })(Profile);

@@ -1,12 +1,12 @@
-import React from 'react'
-import { Typography } from '@material-ui/core'
+import React from "react";
+import { Typography } from "@material-ui/core";
 
 const Actions = () => {
   return (
     <div>
-      <Typography variant="title">Action Required:</Typography>
+      <Typography variant="h2">Action Required:</Typography>
     </div>
-  )
-}
+  );
+};
 
-export default Actions
+export default Actions;

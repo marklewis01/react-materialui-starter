@@ -1,15 +1,15 @@
-import React from 'react'
+import React from "react";
 
-import { Grid, Paper, Typography, withStyles } from '@material-ui/core'
+import { Grid, Paper, Typography, withStyles } from "@material-ui/core";
 
-import { AuthWrapper, SingleCol } from '../components/Wrappers'
-import { AddTodoInput, Todos } from '../components/Todos'
+import { AuthWrapper, SingleCol } from "../components/Wrappers";
+import { AddTodoInput, Todos } from "../components/Todos";
 
 const styles = () => ({
   root: {
     padding: `1rem`
   }
-})
+});
 
 const TodosPage = ({ authUser, classes }) => (
   <AuthWrapper authUser>
@@ -17,7 +17,7 @@ const TodosPage = ({ authUser, classes }) => (
       <Grid container>
         <Paper>
           <Grid item className={classes.root}>
-            <Typography variant="display1">Task List:</Typography>
+            <Typography variant="h3">Task List:</Typography>
             <AddTodoInput />
           </Grid>
           <Grid>
@@ -27,6 +27,6 @@ const TodosPage = ({ authUser, classes }) => (
       </Grid>
     </SingleCol>
   </AuthWrapper>
-)
+);
 
-export default withStyles(styles)(TodosPage)
+export default withStyles(styles)(TodosPage);
