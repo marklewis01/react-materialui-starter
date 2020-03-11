@@ -1,138 +1,88 @@
-import React from 'react'
-import { hot } from 'react-hot-loader'
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
-import { Provider } from 'unstated'
-import { injectGlobal } from 'styled-components'
+import React from "react";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Provider } from "unstated";
 
 // MaterialUI
-import { MuiThemeProvider } from '@material-ui/core/styles'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import { theme } from './customTheme'
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Components
-import NavSide from './components/NavSide'
-import NavTop from './components/NavTop'
-import PrivateRoute from './components/PrivateRoute'
-import LoginModal from './components/Login'
-import { AuthWrapper, FlexCentered } from './components/Wrappers'
+import NavSide from "./components/NavSide";
+import NavTop from "./components/NavTop";
+import PrivateRoute from "./components/PrivateRoute";
+import LoginModal from "./components/Login";
+import { AuthWrapper, FlexCentered } from "./components/Wrappers";
 
 // auth + sessions
-import { firebaseAuth } from './firebase'
-import SessionContainer from './containers/session'
+import { firebaseAuth } from "./firebase";
+import SessionContainer from "./containers/session";
 
 // Screens
-import LandingPage from './screens/LandingPage'
-import AccountPage from './screens/AccountPage'
-import ComponentsPage from './screens/ComponentsPage'
-import Dashboard from './screens/Dashboard'
+import LandingPage from "./screens/LandingPage";
+import AccountPage from "./screens/AccountPage";
+import ComponentsPage from "./screens/ComponentsPage";
+import Dashboard from "./screens/Dashboard";
 
-injectGlobal`
-  html {
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  *, *::before, *::after {
-    box-sizing: inherit;
-  }
-  body {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-    margin-top: 64px;
-    padding: 0;
-    background-color: #f5f5f5;
-  }
-   a {
-    text-decoration: none;
-    color: #607d8b;
-    font-weight: bold;
-  }
-`
+// styles
+import "./styles.css";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props)
+export default function App() {
+  const [auth, setAuth] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
+  const [loginModal, setLoginModal] = React.useState(false);
 
-    this.state = {
-      authed: false,
-      loading: true,
-      loginModal: false
-    }
-  }
+  const toggleLoginModal = () => {
+    setLoginModal(!loginModal);
+  };
 
-  componentDidMount() {
-    this.removeListener = firebaseAuth().onAuthStateChanged(user => {
+  const closeLoginModal = () => {
+    setLoginModal(false);
+  };
+
+  React.useEffect(() => {
+    const firebaseListener = firebaseAuth().onAuthStateChanged(user => {
       if (user) {
         SessionContainer.signInUser(user).then(() => {
-          this.setState({
-            authed: true,
-            loading: false
-          })
-        })
+          // example only - value not used in this template
+          setAuth(true);
+        });
       } else {
-        this.setState({
-          authed: false,
-          loading: false
-        })
+        setAuth(false);
       }
-    })
-  }
+      setLoading(false);
+    });
 
-  componentWillUnmount() {
-    this.removeListener()
-  }
+    return () => firebaseListener();
+  }, []);
 
-  toggleLoginModal = () => {
-    const loginModal = !this.state.loginModal
-    this.setState({
-      loginModal: loginModal
-    })
-  }
+  return loading === true ? (
+    <FlexCentered>
+      <CircularProgress color="secondary" />
+    </FlexCentered>
+  ) : (
+    <Router>
+      <Provider>
+        <NavTop toggleModal={toggleLoginModal} />
+        <NavSide />
 
-  closeLoginModal = () => {
-    this.setState({
-      loginModal: false
-    })
-  }
-
-  render() {
-    return this.state.loading === true ? (
-      <MuiThemeProvider theme={theme}>
-        <FlexCentered>
-          <CircularProgress color="secondary" />
-        </FlexCentered>
-      </MuiThemeProvider>
-    ) : (
-      <Router>
-        <MuiThemeProvider theme={theme}>
-          <Provider>
-            <NavTop toggleModal={this.toggleLoginModal} />
-            <NavSide />
-
-            <Switch>
-              <Route path="/" exact component={LandingPage} />
-              <PrivateRoute path="/account" component={AccountPage} />
-              <PrivateRoute path="/dashboard" component={Dashboard} />
-              <PrivateRoute path="/components" component={ComponentsPage} />
-              <Route
-                render={() => (
-                  <AuthWrapper>
-                    <h3>Something went wrong</h3>
-                  </AuthWrapper>
-                )}
-              />
-            </Switch>
-            <LoginModal
-              loginModal={this.state.loginModal}
-              toggleLogin={this.toggleLoginModal}
-              closeLogin={this.closeLoginModal}
-            />
-          </Provider>
-        </MuiThemeProvider>
-      </Router>
-    )
-  }
+        <Switch>
+          <Route path="/" exact component={LandingPage} />
+          <PrivateRoute path="/account" component={AccountPage} />
+          <PrivateRoute path="/dashboard" component={Dashboard} />
+          <PrivateRoute path="/components" component={ComponentsPage} />
+          <Route
+            render={() => (
+              <AuthWrapper>
+                <h3>Something went wrong</h3>
+              </AuthWrapper>
+            )}
+          />
+        </Switch>
+        <LoginModal
+          loginModal={loginModal}
+          toggleLogin={toggleLoginModal}
+          closeLogin={closeLoginModal}
+        />
+      </Provider>
+    </Router>
+  );
 }
-
-export default hot(module)(App)

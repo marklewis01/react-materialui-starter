@@ -12,37 +12,51 @@
     "build-storybook": "build-storybook -s public"
   },
   "dependencies": {
-    "@material-ui/core": "^1.2.1",
-    "@material-ui/icons": "^1.1.0",
-    "axios": "^0.18.0",
+    "@material-ui/core": "^4.9.5",
+    "@material-ui/icons": "^4.9.1",
+    "axios": "^0.19.2",
     "classnames": "^2.2.6",
-    "firebase": "^5.0.4",
-    "prop-types": "^15.6.1",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-flip-move": "^3.0.2",
-    "react-popper": "^0.10.4",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4",
-    "styled-components": "^3.3.3",
-    "typeface-roboto": "^0.0.54",
-    "unstated": "^2.1.1"
+    "firebase": "^7.10.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-flip-move": "^3.0.4",
+    "react-popper": "^1.3.7",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.4.0",
+    "styled-components": "^5.0.1",
+    "typeface-roboto": "^0.0.75",
+    "unstated": "^2.1.1",
+    "unstated-next": "^1.1.0"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^3.4.8",
-    "@storybook/addon-links": "^3.4.8",
-    "@storybook/addon-storyshots": "^3.4.8",
-    "@storybook/addons": "^3.4.8",
-    "@storybook/react": "^3.4.8",
+    "@storybook/addon-actions": "^5.3.14",
+    "@storybook/addon-links": "^5.3.14",
+    "@storybook/addon-storyshots": "^5.3.14",
+    "@storybook/addons": "^5.3.14",
+    "@storybook/react": "^5.3.14",
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
-    "gh-pages": "^1.2.0",
-    "react-hot-loader": "^4.3.3"
+    "gh-pages": "^2.2.0",
+    "react-hot-loader": "^4.3.3",
+    "typescript": "^3.8.3"
   },
   "keywords": [
     "react-router",
     "react",
     "material-ui"
   ],
-  "description": "test and play starter app. Not production worthy, not polished/refactored code ... just me and my sandbox"
+  "description": "test and play starter app. Not production worthy, not polished/refactored code ... just me and my sandbox",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

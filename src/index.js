@@ -1,6 +1,20 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from "react";
+import ReactDOM from "react-dom";
 
-import App from './App'
+// Mui
+import "typeface-roboto";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 
-ReactDOM.render(<App />, document.getElementById('root'))
+// styles
+import theme from "./theme";
+
+import App from "./App";
+
+ReactDOM.render(
+  <MuiThemeProvider theme={theme}>
+    <CssBaseline />
+    <App />
+  </MuiThemeProvider>,
+  document.getElementById("root")
+);

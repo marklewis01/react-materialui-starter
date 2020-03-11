@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
-import { Subscribe } from 'unstated'
-import classNames from 'classnames'
-import { withRouter } from 'react-router-dom'
+import React from "react";
+import { Subscribe } from "unstated";
+import classNames from "classnames";
+import { useHistory } from "react-router-dom";
 
+// Mui
 import {
   Divider,
   Drawer,
@@ -12,193 +13,151 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  SwipeableDrawer,
-  withStyles
-} from '@material-ui/core'
-
+  SwipeableDrawer
+} from "@material-ui/core";
 import {
   ChevronLeft,
   ExitToApp as LogoutIcon,
   Home as HomeIcon,
   Settings as SettingsIcon,
   ViewCompact as ComponentsIcon
-} from '@material-ui/icons'
+} from "@material-ui/icons";
 
-import SessionContainer from '../../containers/session'
-import UiContainer from '../../containers/ui'
-import * as routes from '../../routes'
+// custom comps
+import SessionContainer from "../../containers/session";
+import UiContainer from "../../containers/ui";
+import * as routes from "../../routes";
 
-const drawerWidth = 240
+// Styles
+import { makeStyles } from "@material-ui/core/styles";
+import { styles } from "./styles";
+const useStyles = makeStyles(styles);
 
+// menu items
 const navigationItems = [
-  { icon: <HomeIcon />, name: 'Home', link: routes.DASHBOARD },
-  { icon: <ComponentsIcon />, name: 'Components', link: routes.COMPONENTS },
-  { icon: <SettingsIcon />, name: 'Account Settings', link: routes.ACCOUNT }
-]
+  { icon: <HomeIcon />, name: "Home", link: routes.DASHBOARD },
+  { icon: <ComponentsIcon />, name: "Components", link: routes.COMPONENTS },
+  { icon: <SettingsIcon />, name: "Account Settings", link: routes.ACCOUNT }
+];
 
-const styles = theme => ({
-  list: {
-    width: 250
-  },
-  link: {
-    cursor: 'pointer'
-  },
-  fullList: {
-    width: 'auto'
-  },
-  drawerPaper: {
-    position: 'fixed',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    }),
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
-    zIndex: 1000
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    width: theme.spacing.unit * 7,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9
-    }
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar
-  }
-})
+export default function NavSide() {
+  const classes = useStyles();
+  const history = useHistory();
 
-class NavSide extends Component {
-  handleClick = (link, handleClick) => {
+  const handleClick = (link, handleClick) => {
     if (link) {
-      this.props.history.push(link)
-      handleClick()
+      history.push(link);
+      handleClick();
     }
-  }
+  };
 
-  handleSignOut = () => {
-    SessionContainer.signOutUser().then(() => UiContainer.handleDrawerClose())
-  }
+  const handleSignOut = () => {
+    SessionContainer.signOutUser().then(() => UiContainer.handleDrawerClose());
+  };
 
-  render() {
-    const { classes } = this.props
-    const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent)
+  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-    return (
-      <Subscribe to={[SessionContainer, UiContainer]}>
-        {(session, ui) => {
-          if (session.state.authUser) {
-            return (
-              <div>
-                <Hidden mdUp>
-                  <SwipeableDrawer
-                    open={ui.state.navSide}
-                    onClose={ui.toggleDrawer}
-                    onOpen={ui.toggleDrawer}
-                    disableBackdropTransition={!iOS}
-                    disableDiscovery={iOS}
+  return (
+    <Subscribe to={[SessionContainer, UiContainer]}>
+      {(session, ui) => {
+        if (session.state.authUser) {
+          return (
+            <div>
+              <Hidden mdUp>
+                <SwipeableDrawer
+                  open={ui.state.navSide}
+                  onClose={ui.toggleDrawer}
+                  onOpen={ui.toggleDrawer}
+                  disableBackdropTransition={!iOS}
+                  disableDiscovery={iOS}
+                >
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    onClick={ui.toggleDrawer}
+                    onKeyDown={ui.toggleDrawer}
                   >
-                    <div
-                      tabIndex={0}
-                      role="button"
-                      onClick={ui.toggleDrawer}
-                      onKeyDown={ui.toggleDrawer}
-                    >
-                      <div className={classes.list}>
-                        <List>
-                          {navigationItems.map(item => {
-                            const { link } = item
-                            return (
-                              <ListItem
-                                key={item.name}
-                                onClick={() =>
-                                  this.handleClick(link, ui.handleDrawerClose)
-                                }
-                                className={classes.link}
-                              >
-                                <ListItemIcon>{item.icon}</ListItemIcon>
-                                <ListItemText primary={item.name} />
-                              </ListItem>
-                            )
-                          })}
-                          <ListItem
-                            onClick={session.handleSignOut}
-                            className={classes.link}
-                          >
-                            <ListItemIcon>
-                              <LogoutIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Sign Out" />
-                          </ListItem>
-                        </List>
-                      </div>
+                    <div className={classes.list}>
+                      <List>
+                        {navigationItems.map(item => {
+                          const { link } = item;
+                          return (
+                            <ListItem
+                              key={item.name}
+                              onClick={() =>
+                                handleClick(link, ui.handleDrawerClose)
+                              }
+                              className={classes.link}
+                            >
+                              <ListItemIcon>{item.icon}</ListItemIcon>
+                              <ListItemText primary={item.name} />
+                            </ListItem>
+                          );
+                        })}
+                        <ListItem
+                          onClick={session.handleSignOut}
+                          className={classes.link}
+                        >
+                          <ListItemIcon>
+                            <LogoutIcon />
+                          </ListItemIcon>
+                          <ListItemText primary="Sign Out" />
+                        </ListItem>
+                      </List>
                     </div>
-                  </SwipeableDrawer>
-                </Hidden>
-                <Hidden smDown implementation="css">
-                  <Drawer
-                    variant="permanent"
-                    classes={{
-                      paper: classNames(
-                        classes.drawerPaper,
-                        !ui.state.navSide && classes.drawerPaperClose
-                      )
-                    }}
-                    open={ui.state.navSide}
-                    onMouseEnter={ui.handleDrawerOpen}
-                    onMouseLeave={ui.handleDrawerClose}
-                  >
-                    <div className={classes.toolbar}>
-                      <IconButton onClick={ui.toggleDrawer}>
-                        <ChevronLeft />
-                      </IconButton>
-                    </div>
-                    <Divider />
-                    <List>
-                      {navigationItems.map(item => {
-                        const { link } = item
-                        return (
-                          <ListItem
-                            key={item.name}
-                            onClick={() =>
-                              this.handleClick(link, ui.handleDrawerClose)
-                            }
-                            className={classes.link}
-                          >
-                            <ListItemIcon>{item.icon}</ListItemIcon>
-                            <ListItemText primary={item.name} />
-                          </ListItem>
-                        )
-                      })}
-                      <ListItem
-                        onClick={this.handleSignOut}
-                        className={classes.link}
-                      >
-                        <ListItemIcon>
-                          <LogoutIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Sign Out" />
-                      </ListItem>
-                    </List>
-                  </Drawer>
-                </Hidden>
-              </div>
-            )
-          } else {
-            return null
-          }
-        }}
-      </Subscribe>
-    )
-  }
+                  </div>
+                </SwipeableDrawer>
+              </Hidden>
+              <Hidden smDown implementation="css">
+                <Drawer
+                  variant="permanent"
+                  classes={{
+                    paper: classNames(
+                      classes.drawerPaper,
+                      !ui.state.navSide && classes.drawerPaperClose
+                    )
+                  }}
+                  open={ui.state.navSide}
+                  onMouseEnter={ui.handleDrawerOpen}
+                  onMouseLeave={ui.handleDrawerClose}
+                >
+                  <div className={classes.toolbar}>
+                    <IconButton onClick={ui.toggleDrawer}>
+                      <ChevronLeft />
+                    </IconButton>
+                  </div>
+                  <Divider />
+                  <List>
+                    {navigationItems.map(item => {
+                      const { link } = item;
+                      return (
+                        <ListItem
+                          key={item.name}
+                          onClick={() =>
+                            handleClick(link, ui.handleDrawerClose)
+                          }
+                          className={classes.link}
+                        >
+                          <ListItemIcon>{item.icon}</ListItemIcon>
+                          <ListItemText primary={item.name} />
+                        </ListItem>
+                      );
+                    })}
+                    <ListItem onClick={handleSignOut} className={classes.link}>
+                      <ListItemIcon>
+                        <LogoutIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Sign Out" />
+                    </ListItem>
+                  </List>
+                </Drawer>
+              </Hidden>
+            </div>
+          );
+        } else {
+          return null;
+        }
+      }}
+    </Subscribe>
+  );
 }
-
-export default withRouter(withStyles(styles, { withTheme: true })(NavSide))

@@ -1,0 +1,23 @@
+html {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  margin-top: 64px;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+a {
+  text-decoration: none;
+  color: #607d8b;
+  font-weight: bold;
+}

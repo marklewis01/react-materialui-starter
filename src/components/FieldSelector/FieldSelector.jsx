@@ -1,6 +1,6 @@
-import React from 'react'
-import classNames from 'classnames'
-import PropTypes from 'prop-types'
+import React from "react";
+import classNames from "classnames";
+import PropTypes from "prop-types";
 import {
   Checkbox,
   Paper,
@@ -12,12 +12,12 @@ import {
   Toolbar,
   Typography,
   withStyles
-} from '@material-ui/core'
-import { lighten } from '@material-ui/core/styles/colorManipulator'
+} from "@material-ui/core";
+import { lighten } from "@material-ui/core/styles/colorManipulator";
 
 class EnhancedTableHead extends React.Component {
   render() {
-    const { onSelectAllClick, numSelected, rowCount } = this.props
+    const { onSelectAllClick, numSelected, rowCount } = this.props;
 
     return (
       <TableHead>
@@ -32,7 +32,7 @@ class EnhancedTableHead extends React.Component {
           <TableCell padding="none">Field Name</TableCell>
         </TableRow>
       </TableHead>
-    )
+    );
   }
 }
 
@@ -40,14 +40,14 @@ EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
   rowCount: PropTypes.number.isRequired
-}
+};
 
 const toolbarStyles = theme => ({
   root: {
-    paddingRight: theme.spacing.unit
+    paddingRight: theme.spacing(1)
   },
   highlight:
-    theme.palette.type === 'light'
+    theme.palette.type === "light"
       ? {
           color: theme.palette.secondary.main,
           backgroundColor: lighten(theme.palette.secondary.light, 0.85)
@@ -60,12 +60,12 @@ const toolbarStyles = theme => ({
     color: theme.palette.text.secondary
   },
   title: {
-    flex: '0 0 auto'
+    flex: "0 0 auto"
   }
-})
+});
 
 let EnhancedTableToolbar = props => {
-  const { numSelected, classes } = props
+  const { numSelected, classes } = props;
 
   return (
     <Toolbar
@@ -85,40 +85,40 @@ let EnhancedTableToolbar = props => {
         )}
       </div>
     </Toolbar>
-  )
-}
+  );
+};
 
 EnhancedTableToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired
-}
+};
 
-EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar)
+EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 
 const styles = theme => ({
   root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3
+    width: "100%",
+    marginTop: theme.spacing(3)
   },
   table: {
     minWidth: 1020
   },
   tableWrapper: {
-    overflowX: 'auto'
+    overflowX: "auto"
   }
-})
+});
 
 class FieldSelector extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       selected: []
-    }
+    };
   }
 
   render() {
-    const { classes, fields, handleSelect } = this.props
+    const { classes, fields, handleSelect } = this.props;
 
     return (
       <Paper className={classes.root}>
@@ -142,18 +142,18 @@ class FieldSelector extends React.Component {
                       {n.name}
                     </TableCell>
                   </TableRow>
-                )
+                );
               })}
             </TableBody>
           </Table>
         </div>
       </Paper>
-    )
+    );
   }
 }
 
 FieldSelector.propTypes = {
   classes: PropTypes.object.isRequired
-}
+};
 
-export default withStyles(styles)(FieldSelector)
+export default withStyles(styles)(FieldSelector);

@@ -1,160 +1,108 @@
-import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import React from "react";
+import { useHistory } from "react-router-dom";
 
-import { withStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Dialog from '@material-ui/core/Dialog'
-import DialogContent from '@material-ui/core/DialogContent'
-import Divider from '@material-ui/core/Divider'
-import green from '@material-ui/core/colors/green'
-import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
-import withMobileDialog from '@material-ui/core/withMobileDialog'
+import {
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogContent,
+  Divider,
+  TextField,
+  Typography,
+  withMobileDialog
+} from "@material-ui/core";
 
-import * as routes from '../../routes'
-import * as auth from '../../helpers/auth'
-import * as firestore from '../../helpers/firestore.js'
+import * as routes from "../../routes";
+import * as auth from "../../helpers/auth";
+import * as firestore from "../../helpers/firestore.js";
+
+// Styles
+import { makeStyles } from "@material-ui/core/styles";
+import { styles } from "./styles";
+const useStyles = makeStyles(styles);
 
 const INITIAL_STATE = {
-  email: 'demo@demo.com',
+  email: "demo@demo.com",
   error: null,
-  familyName: '',
-  givenName: '',
-  loading: false,
-  password: 'letmeinplease',
-  option: 'login'
-}
+  familyName: "",
+  givenName: "",
+  password: "letmeinplease",
+  option: "login"
+};
 
-const styles = theme => ({
-  buttonSuccess: {
-    backgroundColor: green[500],
-    marginTop: '1rem',
-    marginBottom: '1.5rem',
-    '&:hover': {
-      backgroundColor: green[700]
-    }
-  },
-  buttonProgress: {
-    color: green[500],
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -12
-  },
-  link: {
-    cursor: 'pointer'
-  },
-  paper: {
-    [theme.breakpoints.up('sm')]: {
-      width: '400px'
-    }
-  },
-  register: {
-    marginTop: '1rem'
-  }
-})
+export default function LoginModal({ closeLogin, loginModal, toggleModal }) {
+  const classes = useStyles();
+  const history = useHistory();
 
-class LoginModal extends Component {
-  constructor(props) {
-    super(props)
+  const [errors, setErrors] = React.useState(null);
+  const [form, setForm] = React.useState(INITIAL_STATE);
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
 
-    this.state = { ...INITIAL_STATE }
-  }
+  const onCloseModal = () => {
+    closeLogin();
+    setForm(INITIAL_STATE);
+  };
 
-  onCloseModal = () => {
-    this.props.toggleLogin()
-    this.setState(() => ({ ...INITIAL_STATE }))
-  }
-
-  changeComponent = obj => {
-    this.setState((prevState, props) => {
+  const changeComponent = obj => {
+    setForm(prevState => {
       return {
+        ...prevState,
         option: obj.value
-      }
-    })
-  }
+      };
+    });
+  };
 
-  updateByPropertyName = obj => {
-    const { key } = obj
-    this.setState((prevState, props) => {
-      return { [key]: obj.value }
-    })
-  }
+  const updateByPropertyName = obj => {
+    const { key } = obj;
+    setForm(prevState => {
+      return {
+        ...prevState,
+        [key]: obj.value
+      };
+    });
+  };
 
-  componentWillUnmount() {
-    // clearTimeout(this.timer)
-  }
+  // componentWillUnmount() {
+  //   // clearTimeout(this.timer)
+  // }
 
-  handleLogin = event => {
-    const { history, closeLogin } = this.props
-    const { email, password } = this.state
-    if (!this.state.loading && this.state.email === 'demo@demo.com') {
-      this.setState(
-        {
-          loading: true
-        },
-        () => {
-          auth
-            .doAnonymousSignIn()
-            .then(() => {
-              this.setState({
-                ...INITIAL_STATE,
-                success: true
-              })
-              history.push(routes.DASHBOARD)
-              closeLogin()
-            })
-            .catch(error => {
-              this.setState(prevState => {
-                return {
-                  ...prevState,
-                  error
-                }
-              })
-            })
-        }
-      )
+  const handleLogin = event => {
+    event.preventDefault();
+
+    if (!loading && form.email === "demo@demo.com") {
+      setLoading(true);
+
+      auth
+        .doAnonymousSignIn()
+        .then(() => {
+          setSuccess(true);
+          history.push(routes.DASHBOARD);
+          closeLogin();
+        })
+        .catch(error => {
+          setErrors(error);
+        });
+    } else {
+      // user has changed email address. login email address
+      setLoading(true);
+      auth
+        .doSignInWithEmailAndPassword(form.email, form.password)
+        .then(() => {
+          this.timer = setTimeout(() => {
+            setSuccess(true);
+          }, 1000);
+          history.push(routes.DASHBOARD);
+          closeLogin();
+        })
+        .catch(error => {
+          setErrors(error);
+        });
     }
-    // user has changed email address. login email address
-    else {
-      this.setState(
-        prevState => {
-          return {
-            ...prevState,
-            loading: true
-          }
-        },
-        () => {
-          auth
-            .doSignInWithEmailAndPassword(email, password)
-            .then(() => {
-              this.timer = setTimeout(() => {
-                this.setState({
-                  ...INITIAL_STATE,
-                  success: true
-                })
-              }, 1000)
-              history.push(routes.DASHBOARD)
-              closeLogin()
-            })
-            .catch(error => {
-              this.setState(prevState => {
-                return {
-                  ...prevState,
-                  error
-                }
-              })
-            })
-        }
-      )
-    }
-    event.preventDefault()
-  }
+  };
 
-  handleReset = event => {
-    const { email } = this.state
+  const handleReset = event => {
+    const { email } = this.state;
 
     if (!this.state.loading) {
       this.setState(
@@ -162,31 +110,31 @@ class LoginModal extends Component {
           return {
             ...prevState,
             loading: true
-          }
+          };
         },
         () => {
           auth
             .doPasswordReset(email)
             .then(() => {
-              this.setState(() => ({ ...INITIAL_STATE }))
+              this.setState(() => ({ ...INITIAL_STATE }));
             })
             .catch(error => {
               this.setState(prevState => {
                 return {
                   ...prevState,
                   error
-                }
-              })
-            })
+                };
+              });
+            });
         }
-      )
+      );
     }
-    event.preventDefault()
-  }
+    event.preventDefault();
+  };
 
-  handleRegister = event => {
-    const { email, familyName, givenName, password } = this.state
-    const { history } = this.props
+  const handleRegister = event => {
+    const { email, familyName, givenName, password } = this.state;
+    const { history } = this.props;
 
     if (!this.state.loading) {
       this.setState(
@@ -194,7 +142,7 @@ class LoginModal extends Component {
           return {
             ...prevState,
             loading: true
-          }
+          };
         },
         () => {
           auth
@@ -204,167 +152,211 @@ class LoginModal extends Component {
               firestore
                 .doCreateUser(authUser.user.uid, familyName, givenName, email)
                 .then(() => {
-                  this.setState(() => ({ ...INITIAL_STATE }))
-                  history.push(routes.DASHBOARD)
+                  this.setState(() => ({ ...INITIAL_STATE }));
+                  history.push(routes.DASHBOARD);
                 })
                 .catch(error => {
                   this.setState(prevState => {
                     return {
                       ...prevState,
                       error
-                    }
-                  })
-                })
+                    };
+                  });
+                });
             })
             .catch(error => {
               this.setState(prevState => {
                 return {
                   ...prevState,
                   error
-                }
-              })
-            })
+                };
+              });
+            });
         }
-      )
+      );
     }
-    event.preventDefault()
-  }
+    event.preventDefault();
+  };
 
-  render() {
-    const { loginModal, classes } = this.props
-    const {
-      email,
-      familyName,
-      givenName,
-      loading,
-      option,
-      password
-    } = this.state
-
-    const screen = {
-      login: {
-        title: 'Log in to your account',
-        altLink: 'Forgot your password',
-        altLinkTarget: 'reset',
-        buttonText: 'Login',
-        fields: [
-          {
-            id: 'email',
-            label: 'Email Address',
-            type: 'email',
-            autoFocus: true,
-            autoComplete: 'email',
-            value: this.state.email
-          },
-          {
-            id: 'password',
-            label: 'Password',
-            type: 'password',
-            autoComplete: 'current-password',
-            value: this.state.password
-          }
-        ],
-        isValid: password === '' || email === '' || loading,
-        onSubmit: this.handleLogin
-      },
-      reset: {
-        title: 'Reset your password',
-        altLink: 'Remembered it? Go back to login?',
-        altLinkTarget: 'login',
-        buttonText: 'Reset',
-        fields: [
-          {
-            id: 'email',
-            autoFocus: true,
-            label: 'Email Address',
-            type: 'email',
-            autoComplete: 'email',
-            value: this.state.email
-          }
-        ],
-        isValid: email === '' || loading,
-        onSubmit: this.handleReset
-      },
-      register: {
-        title: 'Register for a New Account',
-        altLink: '',
-        buttonText: 'Register',
-        fields: [
-          {
-            id: 'givenName',
-            label: 'First Name',
-            type: 'text',
-            autoFocus: true,
-            autoComplete: 'given-name',
-            value: this.state.givenName
-          },
-          {
-            id: 'familyName',
-            label: 'Surname',
-            type: 'text',
-            autoComplete: 'family-name',
-            value: this.state.familyName
-          },
-          {
-            id: 'email',
-            label: 'Email Address',
-            type: 'email',
-            autoComplete: 'email',
-            value: this.state.email
-          },
-          {
-            id: 'password',
-            label: 'Password',
-            type: 'password',
-            autoComplete: 'current-password',
-            value: this.state.password
-          }
-        ],
-        isValid:
-          givenName === '' ||
-          familyName === '' ||
-          email === '' ||
-          password === '' ||
-          loading,
-        onSubmit: this.handleRegister
-      }
+  const screen = {
+    login: {
+      title: "Log in to your account",
+      altLink: "Forgot your password",
+      altLinkTarget: "reset",
+      buttonText: "Login",
+      fields: [
+        {
+          id: "email",
+          label: "Email Address",
+          type: "email",
+          autoFocus: true,
+          autoComplete: "email",
+          value: form.email
+        },
+        {
+          id: "password",
+          label: "Password",
+          type: "password",
+          autoComplete: "current-password",
+          value: form.password
+        }
+      ],
+      isValid: form.password === "" || form.email === "" || loading,
+      onSubmit: handleLogin
+    },
+    reset: {
+      title: "Reset your password",
+      altLink: "Remembered it? Go back to login?",
+      altLinkTarget: "login",
+      buttonText: "Reset",
+      fields: [
+        {
+          id: "email",
+          autoFocus: true,
+          label: "Email Address",
+          type: "email",
+          autoComplete: "email",
+          value: form.email
+        }
+      ],
+      isValid: form.email === "" || loading,
+      onSubmit: handleReset
+    },
+    register: {
+      title: "Register for a New Account",
+      altLink: "",
+      buttonText: "Register",
+      fields: [
+        {
+          id: "givenName",
+          label: "First Name",
+          type: "text",
+          autoFocus: true,
+          autoComplete: "given-name",
+          value: form.givenName
+        },
+        {
+          id: "familyName",
+          label: "Surname",
+          type: "text",
+          autoComplete: "family-name",
+          value: form.familyName
+        },
+        {
+          id: "email",
+          label: "Email Address",
+          type: "email",
+          autoComplete: "email",
+          value: form.email
+        },
+        {
+          id: "password",
+          label: "Password",
+          type: "password",
+          autoComplete: "current-password",
+          value: form.password
+        }
+      ],
+      isValid:
+        form.givenName === "" ||
+        form.familyName === "" ||
+        form.email === "" ||
+        form.password === "" ||
+        loading,
+      onSubmit: handleRegister
     }
+  };
 
-    return (
-      <Dialog
-        open={loginModal}
-        onBackdropClick={this.onCloseModal}
-        transitionDuration={100}
-        classes={{ paper: classes.paper }}
-      >
-        <DialogContent>
-          <Typography align="center" variant="headline">
-            {screen[option].title}
+  return (
+    <Dialog
+      open={loginModal}
+      onBackdropClick={onCloseModal}
+      transitionDuration={100}
+      classes={{ paper: classes.paper }}
+    >
+      <DialogContent>
+        <Typography align="center" variant="h5">
+          {screen[form.option].title}
+        </Typography>
+        <form onSubmit={screen[form.option].onSubmit}>
+          {screen[form.option].fields.map(field => {
+            return (
+              <TextField
+                key={field.id}
+                autoFocus={field.autoFocus}
+                fullWidth
+                margin="dense"
+                id={field.id}
+                label={field.label}
+                type={field.type}
+                autoComplete={field.autoComplete}
+                value={field.value}
+                disabled={loading}
+                onChange={event => {
+                  updateByPropertyName({
+                    key: field.id,
+                    value: event.target.value
+                  });
+                }}
+              />
+            );
+          })}
+          <Typography align="right">
+            <Button
+              disabled={loading}
+              disableFocusRipple={true}
+              disableRipple={true}
+              size="small"
+              color="primary"
+              onClick={() =>
+                changeComponent({
+                  value: screen[form.option].altLinkTarget
+                })
+              }
+            >
+              {screen[form.option].altLink}
+            </Button>
           </Typography>
-          <form onSubmit={screen[option].onSubmit}>
-            {screen[option].fields.map(field => {
-              return (
-                <TextField
-                  key={field.id}
-                  autoFocus={field.autoFocus}
-                  fullWidth
-                  margin="dense"
-                  id={field.id}
-                  label={field.label}
-                  type={field.type}
-                  autoComplete={field.autoComplete}
-                  value={field.value}
-                  disabled={loading}
-                  onChange={event => {
-                    this.updateByPropertyName({
-                      key: field.id,
-                      value: event.target.value
-                    })
-                  }}
-                />
-              )
-            })}
-            <Typography align="right">
+
+          <Button
+            fullWidth={true}
+            variant="contained"
+            color="primary"
+            className={classes.buttonSuccess}
+            disabled={screen[form.option].isValid}
+            type="submit"
+            onClick={screen[form.option].onSubmit}
+          >
+            {screen[form.option].buttonText}
+            {loading && (
+              <CircularProgress size={24} className={classes.buttonProgress} />
+            )}
+          </Button>
+        </form>
+
+        <Divider />
+        {form.option !== "register" ? (
+          <div className={classes.register}>
+            <Typography align="center" paragraph={true} variant="body1">
+              Don't have an account?
+            </Typography>
+            <Button
+              fullWidth={true}
+              variant="contained"
+              color="secondary"
+              disabled={loading}
+              onClick={() =>
+                changeComponent({
+                  value: "register"
+                })
+              }
+            >
+              Create a Trial Account
+            </Button>
+          </div>
+        ) : (
+          <div className={classes.register}>
+            <Typography align="center">
               <Button
                 disabled={loading}
                 disableFocusRipple={true}
@@ -372,84 +364,25 @@ class LoginModal extends Component {
                 size="small"
                 color="primary"
                 onClick={() =>
-                  this.changeComponent({
-                    value: screen[option].altLinkTarget
+                  changeComponent({
+                    value: "login"
                   })
                 }
               >
-                {screen[option].altLink}
+                Go back to login
               </Button>
             </Typography>
-
-            <Button
-              fullWidth={true}
-              variant="raised"
-              color="primary"
-              className={classes.buttonSuccess}
-              disabled={screen[option].isValid}
-              type="submit"
-              onClick={this.onSubmit}
-            >
-              {screen[option].buttonText}
-              {loading && (
-                <CircularProgress
-                  size={24}
-                  className={classes.buttonProgress}
-                />
-              )}
-            </Button>
-          </form>
-
-          <Divider />
-          {option !== 'register' ? (
-            <div className={classes.register}>
-              <Typography align="center" paragraph={true} variant="body1">
-                Don't have an account?
-              </Typography>
-              <Button
-                fullWidth={true}
-                variant="raised"
-                color="secondary"
-                disabled={loading}
-                onClick={() =>
-                  this.changeComponent({
-                    value: 'register'
-                  })
-                }
-              >
-                Create a Trial Account
-              </Button>
-            </div>
-          ) : (
-            <div className={classes.register}>
-              <Typography align="center">
-                <Button
-                  disabled={loading}
-                  disableFocusRipple={true}
-                  disableRipple={true}
-                  size="small"
-                  color="primary"
-                  onClick={() =>
-                    this.changeComponent({
-                      value: 'login'
-                    })
-                  }
-                >
-                  Go back to login
-                </Button>
-              </Typography>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
-    )
-  }
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
 }
 
-const LoginModalWithRouter = withRouter(LoginModal)
+// const LoginModalWithRouter = withRouter(LoginModal);
 
-const StyledModal = withStyles(styles, { withTheme: true })(
-  LoginModalWithRouter
-)
+// const StyledModal = withStyles(styles, { withTheme: true })(
+//   LoginModalWithRouter
+// );
 
-export default withMobileDialog()(StyledModal)
+// export default withMobileDialog()(StyledModal);
